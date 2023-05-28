@@ -11,7 +11,7 @@ const LogInPage = () => {
   if (!auth) {
     return <div>LogIn</div>;
   } else {
-    location.replace("/home_page");
+    location.replace("user/home_page");
   }
 };
 

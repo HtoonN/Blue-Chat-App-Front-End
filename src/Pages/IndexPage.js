@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-//import RouterBrower from "../Router/RouterBrower";
-import RoutesApp from "../Router/Blog";
+import RouterBrower from "../Router/RouterBrower";
 
 const IndexPage = () => {
   useEffect(() => {
@@ -9,7 +8,7 @@ const IndexPage = () => {
 
   return (
     <div>
-      <RoutesApp />
+      <RouterBrower />
     </div>
   );
 };

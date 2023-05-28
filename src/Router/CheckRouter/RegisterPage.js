@@ -11,7 +11,7 @@ const RegisterPage = () => {
   if (!auth) {
     return <div>Register</div>;
   } else {
-    location.replace("/home_page");
+    location.replace("user/home_page");
   }
 };
 

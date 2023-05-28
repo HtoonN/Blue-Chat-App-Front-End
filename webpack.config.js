@@ -25,7 +25,7 @@ const webpackPlugins = [
   // new InjectManifest({
   //   swSrc: "./src/src-sw.js",
   //   swDest: "sw.js",
-  // })
+  // }),
 ];
 
 module.exports = {
@@ -42,6 +42,7 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
     filename: "[name][contenthash].js",
     clean: true,
+    publicPath: "/",
   },
 
   devtool: "source-map",
@@ -51,7 +52,7 @@ module.exports = {
     },
     port: 3000,
     open: true,
-    // hot: true,
+    hot: true,
     historyApiFallback: true,
   },
   module: {

@@ -1,10 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
 import rootForRouter from "./RootForRouter";
-//import BlogApp from "./Blog";
+import UserRootForRouter from "./UserRootForRouter";
 
 const RouterBrower = () => {
-  const router = createBrowserRouter([{ path: "*", Component: rootForRouter }]);
+  const router = createBrowserRouter([
+    { path: "/*", Component: rootForRouter },
+    { path: "/user/*", Component: UserRootForRouter },
+  ]);
   return <RouterProvider router={router} />;
 };
 
