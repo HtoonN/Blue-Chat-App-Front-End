@@ -19,7 +19,6 @@ const webpackPlugins = [
       { from: "./public/manifest.json", to: "./public" },
       { from: "./public/logo192.png", to: "./public" },
       { from: "./public/logo512.png", to: "./public" },
-      { from: "./public/favicon3.ico", to: "./public" },
     ],
   }),
   // new InjectManifest({

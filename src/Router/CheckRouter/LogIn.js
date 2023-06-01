@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import checkAuth from "../Utilities/CheckAuth";
+import checkAuth from "../../Utlities/CheckAuth";
 
-const HomePage = () => {
+const LogIn = () => {
   const [auth, setAuth] = useState(checkAuth());
 
   useEffect(() => {
     setAuth(checkAuth());
   }, [localStorage.getItem("auth")]);
 
-  if (auth) {
-    return <div>HomePage</div>;
+  if (!auth) {
+    return <div>LogIn</div>;
   } else {
-    location.replace("/login");
+    location.assign("user/home_page");
   }
 };
 
-export default HomePage;
+export default LogIn;
