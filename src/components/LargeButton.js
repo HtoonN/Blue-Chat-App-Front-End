@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSeen, setText, setUnseen } from "../Redux/Reducer/SetAlert";
 
 const LargeButton = (props) => {
   const [onButton, setOnButton] = useState(false);
+  const dispatch = useDispatch();
 
   const fun = async () => {
     setOnButton(true);
@@ -9,7 +12,15 @@ const LargeButton = (props) => {
     const ans = props.onClickFun();
 
     if (!ans.error) {
-      alert(ans.information);
+      dispatch(setText(ans.information));
+      dispatch(setSeen());
+      setTimeout(() => {
+        dispatch(setUnseen());
+        setOnButton(false);
+        setTimeout(() => {
+          dispatch(setText("Alert"));
+        }, 500);
+      }, 2500);
       // localStorage.setItem("auth", "true");
       //location.assign("user/home_page");
     } else {
