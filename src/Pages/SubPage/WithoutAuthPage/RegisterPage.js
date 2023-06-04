@@ -5,12 +5,14 @@ import LabelAndInputText from "../../../components/LabelAndInputText";
 import LabelAndInputPassword from "../../../components/LabelAndInputPassword";
 import LargeButton from "../../../components/LargeButton";
 import registerControl from "../../../Utlities/RegisterControl";
+import { useDispatch } from "react-redux";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -44,14 +46,20 @@ const RegisterPage = () => {
           <LargeButton
             name="Submit"
             onClickFun={() =>
-              registerControl({ username, email, password, rePassword })
+              registerControl({
+                username,
+                email,
+                password,
+                rePassword,
+                dispatch,
+              })
             }
           />
 
           {/* Already Account User */}
           <div>
             <h1 className="mt-3 text-center text-sm ">
-              Already account ?
+              Already have an account?
               <span
                 className="underline px-2 cursor-pointer"
                 onClick={() => location.assign("login")}

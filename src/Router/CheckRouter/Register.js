@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import checkAuth from "../../Utlities/CheckAuth";
-import RegisterPage from "../../Pages/SubPage/WithAuthPage/RegisterPage";
+import RegisterPage from "../../Pages/SubPage/WithoutAuthPage/RegisterPage";
 
 const Register = () => {
   const [auth, setAuth] = useState(checkAuth());

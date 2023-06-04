@@ -9,7 +9,7 @@ const LabelAndInputText = (props) => {
         value={props.value}
         type="text"
         placeholder="more than 7 character"
-        className="outline-none border-2 w-58 px-2 py-1 rounded-xl bg-white min-w-[300px] border-blue-800 placeholder-gray-500 placeholder-opacity-40"
+        className="outline-none border-2 w-58 px-2 py-1 rounded-xl bg-white min-w-[300px] border-blue-800 placeholder-gray-500 placeholder-opacity-40 text-black"
       />
     </div>
   );

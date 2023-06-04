@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import checkAuth from "../../Utlities/CheckAuth";
+import LoginPage from "../../Pages/SubPage/WithoutAuthPage/LoginPage";
 
 const LogIn = () => {
   const [auth, setAuth] = useState(checkAuth());
@@ -9,7 +10,7 @@ const LogIn = () => {
   }, [localStorage.getItem("auth")]);
 
   if (!auth) {
-    return <div>LogIn</div>;
+    return <LoginPage />;
   } else {
     location.assign("user/home_page");
   }

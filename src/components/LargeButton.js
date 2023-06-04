@@ -1,30 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSeen, setText, setUnseen } from "../Redux/Reducer/SetAlert";
+import {
+  setAlertDialogSeen,
+  setBody,
+  setHeader,
+} from "../Redux/Reducer/AlertDialogReducer";
 
 const LargeButton = (props) => {
   const [onButton, setOnButton] = useState(false);
   const dispatch = useDispatch();
 
-  const fun = async () => {
+  const fun = () => {
     setOnButton(true);
 
     const ans = props.onClickFun();
 
-    if (!ans.error) {
-      dispatch(setText(ans.information));
-      dispatch(setSeen());
-      setTimeout(() => {
-        dispatch(setUnseen());
-        setOnButton(false);
-        setTimeout(() => {
-          dispatch(setText("Alert"));
-        }, 500);
-      }, 2500);
-      // localStorage.setItem("auth", "true");
-      //location.assign("user/home_page");
-    } else {
-      alert(ans.information);
+    if (ans.error) {
+      dispatch(setHeader(ans.header));
+      dispatch(setBody(ans.information));
+      dispatch(setAlertDialogSeen());
       setOnButton(false);
     }
   };
