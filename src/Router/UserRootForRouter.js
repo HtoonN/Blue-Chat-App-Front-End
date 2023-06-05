@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./CheckRouter/Home";
+import ErrorPage from "../Pages/SubPage/WithoutAuthPage/ErrorPage";
 
 function UserRootForRouter() {
   return (
@@ -10,7 +11,7 @@ function UserRootForRouter() {
         <Route exact path="" element={<Home />} />
         <Route exact path="detail" element={<div>Detail</div>} />
       </Route>
-      <Route path="*" element={<div>Error - 404</div>} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
