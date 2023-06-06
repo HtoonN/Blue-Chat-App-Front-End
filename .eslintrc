@@ -16,6 +16,7 @@
   "rules": {
     "no-unused-vars": 1,
     "no-alert": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "max-depth": 0
   }
 }

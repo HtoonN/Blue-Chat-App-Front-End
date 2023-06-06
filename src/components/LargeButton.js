@@ -1,24 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  setAlertDialogSeen,
-  setBody,
-  setHeader,
-} from "../Redux/Reducer/AlertDialogReducer";
 
 const LargeButton = (props) => {
   const [onButton, setOnButton] = useState(false);
-  const dispatch = useDispatch();
 
-  const fun = () => {
+  const fun = async () => {
     setOnButton(true);
 
-    const ans = props.onClickFun();
+    const ans = await props.onClickFun();
 
     if (ans.error) {
-      dispatch(setHeader(ans.header));
-      dispatch(setBody(ans.information));
-      dispatch(setAlertDialogSeen());
       setOnButton(false);
     }
   };

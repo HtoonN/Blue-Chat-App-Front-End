@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userDatasReducer = createSlice({
   name: "userDatas",
   initialState: {
-    name: "mg mg",
+    auth: "false",
     profileDatas: {},
     friendsDatas: {},
     messages: {},
@@ -20,9 +20,13 @@ export const userDatasReducer = createSlice({
     setMessages: (state, action) => {
       state.messages = action.payload;
     },
+
+    setAuth: (state, action) => {
+      state.auth = action.payload;
+    },
   },
 });
 
-export const { setProfileDatas, setFriendsDatas, setMessages } =
+export const { setProfileDatas, setFriendsDatas, setMessages, setAuth } =
   userDatasReducer.actions;
 export default userDatasReducer.reducer;

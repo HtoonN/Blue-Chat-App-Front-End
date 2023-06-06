@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react";
-import checkAuth from "../../Utlities/CheckAuth";
+import React, { useEffect } from "react";
 import LoginPage from "../../Pages/SubPage/WithoutAuthPage/LoginPage";
+import { useDispatch, useSelector } from "react-redux";
+import getData from "../../Utlities/GetUpdateDatas";
 
 const LogIn = () => {
-  const [auth, setAuth] = useState(checkAuth());
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setAuth(checkAuth());
-  }, [localStorage.getItem("auth")]);
+    async function get() {
+      await getData("/user/home_page", dispatch, "noauth");
+    }
+    get();
+  }, []);
 
-  if (!auth) {
-    return <LoginPage />;
-  } else {
-    location.assign("user/home_page");
-  }
+  return (
+    <div>
+      {useSelector((state) => state.userDatas.auth) === "false" ? (
+        <LoginPage />
+      ) : (
+        <div>loading...</div>
+      )}
+    </div>
+  );
 };
 
 export default LogIn;

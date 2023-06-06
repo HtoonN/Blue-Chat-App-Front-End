@@ -3,10 +3,16 @@ import {
   setLoadingUnseen,
   setSuccess,
   setTitle,
-  setUnsuccess,
 } from "../Redux/Reducer/LoadingReducer";
+import {
+  setAlertDialogSeen,
+  setBody,
+  setHeader,
+} from "../Redux/Reducer/AlertDialogReducer";
+import register from "./API_Call/Register";
+import { setProfileDatas } from "../Redux/Reducer/UserDataREducer";
 
-const registerControl = ({
+const registerControl = async ({
   username,
   password,
   email,
@@ -14,41 +20,62 @@ const registerControl = ({
   dispatch,
 }) => {
   if (username && password && email && rePassword) {
+    let information = "";
     if (password === rePassword) {
-      console.log("Sending data to data base and get result");
-
       dispatch(setTitle("Registering"));
       dispatch(setLoadingSeen());
 
-      setTimeout(() => {
-        dispatch(setSuccess());
-        setTimeout(() => {
-          dispatch(setTitle("Log In"));
-          dispatch(setUnsuccess());
-          setTimeout(() => {
-            localStorage.setItem("auth", "true");
-            dispatch(setLoadingUnseen());
-            location.assign("/user/home_page");
-          }, 3000);
-        }, 1000);
-      }, 3000);
+      const ans = await register({ username, email, password }, dispatch);
 
-      return {
-        error: false,
-        information: "Success !",
-      };
+      if (!ans.error) {
+        dispatch(setSuccess());
+        dispatch(setProfileDatas(ans.data));
+
+        setTimeout(() => {
+          dispatch(setLoadingUnseen());
+          location.assign("/user/home_page");
+        }, 2000);
+
+        return {
+          error: false,
+        };
+      } else {
+        if (ans.information.email) {
+          information += `${ans.information.email}\n`;
+        }
+        if (ans.information.username) {
+          information += `${ans.information.username}\n`;
+        }
+        if (ans.information.password) {
+          information += `${ans.information.password}\n`;
+        }
+        if (ans.information.data) {
+          information += `${ans.information.data}\n`;
+        }
+
+        dispatch(setHeader("Register Fail"));
+        dispatch(setBody(information));
+        dispatch(setLoadingUnseen());
+        dispatch(setAlertDialogSeen());
+
+        return {
+          error: true,
+        };
+      }
     } else {
+      dispatch(setHeader("Password"));
+      dispatch(setBody("Password don't match!"));
+      dispatch(setAlertDialogSeen());
       return {
         error: true,
-        header: "Password",
-        information: "Password don't match!",
       };
     }
   } else {
+    dispatch(setHeader("Data Require"));
+    dispatch(setBody("You have to fill all fields"));
+    dispatch(setAlertDialogSeen());
     return {
       error: true,
-      header: "Data Require",
-      information: "You have to fill all fields",
     };
   }
 };
