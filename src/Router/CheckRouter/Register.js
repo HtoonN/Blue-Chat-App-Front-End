@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import RegisterPage from "../../Pages/SubPage/WithoutAuthPage/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
 import getData from "../../Utlities/GetUpdateDatas";
+import LoadingComponents from "../../components/LoadingComponents";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Register = () => {
       {useSelector((state) => state.userDatas.auth) === "false" ? (
         <RegisterPage />
       ) : (
-        <div>loading...</div>
+         <LoadingComponents/>
       )}
     </div>
   );

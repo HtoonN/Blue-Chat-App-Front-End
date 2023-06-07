@@ -14,7 +14,8 @@ import logout from "./API_Call/LogOut";
 const logOutControl = async (dispatch) => {
   dispatch(setTitle("Logging Out"));
   dispatch(setLoadingSeen());
-  const ans = await logout(dispatch);
+
+  const ans = await logout();
 
   if (!ans.error) {
     dispatch(setSuccess());
@@ -28,9 +29,11 @@ const logOutControl = async (dispatch) => {
     };
   } else {
     dispatch(setLoadingUnseen());
+
     dispatch(setHeader("Logout"));
     dispatch(setBody(ans.information));
     dispatch(setAlertDialogSeen());
+
     return {
       error: true,
     };

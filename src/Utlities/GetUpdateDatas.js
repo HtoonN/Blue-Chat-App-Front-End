@@ -6,16 +6,20 @@ const {
 } = require("../Redux/Reducer/UserDataREducer");
 
 async function getData(redirect, dispatch, status) {
+  const url = `${process.env.REACT_APP_API_A}/get_updated_user_datas_and_update_user_age`;
+
   dispatch(setAuth("loading"));
+
   const result = await axios({
     method: "get",
-    url: "http://localhost:3001/api/v1/account/user/get_updated_user_datas_and_update_user_age",
+    url,
     withCredentials: true,
   }).catch((error) => {
     return {
       status: error.response.status,
     };
   });
+
   if (status === "auth") {
     if (result.status === 200) {
       dispatch(setProfileDatas(result.data.profile));
@@ -26,6 +30,7 @@ async function getData(redirect, dispatch, status) {
       location.assign(redirect);
     }
   }
+
   if (status === "noauth") {
     if (result.status === 200) {
       location.assign(redirect);

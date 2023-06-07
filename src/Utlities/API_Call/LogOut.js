@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const logout = async (dispatch) => {
+const logout = async () => {
+  const url = `${process.env.REACT_APP_API_A}/logout`;
+
   const result = await axios({
     method: "delete",
-    url: "http://localhost:3001/api/v1/account/user/logout",
+    url,
     withCredentials: true,
   }).catch((error) => {
     return {

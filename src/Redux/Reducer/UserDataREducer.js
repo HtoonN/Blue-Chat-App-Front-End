@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userDatasReducer = createSlice({
   name: "userDatas",
   initialState: {
-    auth: "false",
+    auth: "loading",
     profileDatas: {},
     friendsDatas: {},
     messages: {},
