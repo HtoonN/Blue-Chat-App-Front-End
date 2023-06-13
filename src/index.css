@@ -7,5 +7,9 @@
         font-family: Roboto;
     }
 
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
 
 }

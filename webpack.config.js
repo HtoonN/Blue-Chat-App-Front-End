@@ -17,8 +17,11 @@ const webpackPlugins = [
     patterns: [
       { from: "./public/favicon.ico", to: "./public" },
       { from: "./public/manifest.json", to: "./public" },
+      { from: "./public/manifest.json", to: "./user/public" },
       { from: "./public/logo192.png", to: "./public" },
+      { from: "./public/logo192.png", to: "./user/public" },
       { from: "./public/logo512.png", to: "./public" },
+      { from: "./public/logo512.png", to: "./user/public" },
     ],
   }),
   // new InjectManifest({

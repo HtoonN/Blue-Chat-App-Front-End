@@ -36,7 +36,7 @@ const ErrorPageUser = () => {
         className="uppercase text-xs padd py-2 px-5 bg-white rounded-lg hover:shadow-2xl text-blue-900 font-semibold mt-10"
         onClick={redirectToHomepage}
       >
-        _Back to Home_
+        npm startnpm _Back to Home_
       </button>
       <button
         className="uppercase text-xs padd py-2 px-5 bg-white rounded-lg hover:shadow-2xl text-blue-900 font-semibold mt-10"

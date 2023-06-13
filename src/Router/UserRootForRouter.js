@@ -6,7 +6,6 @@ import ErrorPageUser from "../Pages/SubPage/WithAuthPage/ErrorPageUser";
 function UserRootForRouter() {
   return (
     <Routes>
-      <Route path="" element={<div>user</div>} />
       <Route path="home_page">
         <Route exact path="" element={<Home />} />
         <Route exact path="detail" element={<div>Detail</div>} />
