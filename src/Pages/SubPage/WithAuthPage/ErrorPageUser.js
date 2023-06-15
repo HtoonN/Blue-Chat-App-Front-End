@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import ErrorPeople from "../../../Images/pngwing.com.png";
-import logOutControl from "../../../Utlities/LogOutControl";
 
 const ErrorPageUser = () => {
   const [count, setCount] = useState(10);
-  const dispatch = useDispatch();
 
   const redirectToHomepage = () => {
     location.assign("/user/home_page");
@@ -36,13 +33,7 @@ const ErrorPageUser = () => {
         className="uppercase text-xs padd py-2 px-5 bg-white rounded-lg hover:shadow-2xl text-blue-900 font-semibold mt-10"
         onClick={redirectToHomepage}
       >
-        npm startnpm _Back to Home_
-      </button>
-      <button
-        className="uppercase text-xs padd py-2 px-5 bg-white rounded-lg hover:shadow-2xl text-blue-900 font-semibold mt-10"
-        onClick={() => logOutControl(dispatch)}
-      >
-        Logout
+        _Back to Home_
       </button>
     </div>
   );

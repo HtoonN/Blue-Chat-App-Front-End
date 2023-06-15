@@ -18,7 +18,12 @@ import Button from "@mui/material/Button";
 import SendRounded from "@mui/icons-material/SendRounded";
 import ArrowForwardIos from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriendListSideBar } from "../Redux/Reducer/OpenCloseReducer";
+import {
+  setFindFriendsModel,
+  setFriendListSideBar,
+} from "../Redux/Reducer/OpenCloseReducer";
+import { setFindFriendsData } from "../Redux/Reducer/DataReducer";
+import logOutControl from "../Utlities/LogOutControl";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,6 +67,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const dispatch = useDispatch();
+  const profileDatas = useSelector((state) => state.userDatas.profileDatas);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -94,6 +100,8 @@ export default function PrimarySearchAppBar() {
   };
 
   const searchControl = (text) => {
+    dispatch(setFindFriendsData("searching"));
+    dispatch(setFindFriendsModel());
     console.log(text);
   };
 
@@ -121,7 +129,14 @@ export default function PrimarySearchAppBar() {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleMenuClose}>Dashboard</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose();
+          logOutControl(dispatch);
+        }}
+      >
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -158,6 +173,7 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+      <MenuItem>{profileDatas.username}</MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -210,6 +226,10 @@ export default function PrimarySearchAppBar() {
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
+            className="cursor-pointer active:saturate-200 "
+            onClick={() => {
+              location.reload();
+            }}
           >
             <img src={Logo} className="w-16 h-full" />
           </Typography>
@@ -231,6 +251,11 @@ export default function PrimarySearchAppBar() {
                 inputProps={{ "aria-label": "search" }}
                 onChange={(e) => setSearchText(e.target.value)}
                 value={searchText}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchControl(searchText);
+                  }
+                }}
               />
             </Search>
             <Button onClick={() => searchControl(searchText)}>
@@ -238,7 +263,13 @@ export default function PrimarySearchAppBar() {
             </Button>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
@@ -251,6 +282,11 @@ export default function PrimarySearchAppBar() {
                 <NotificationsIcon sx={{ color: "#1e3a8a" }} />
               </Badge>
             </IconButton>
+
+            <Typography className="text-blue-900 pl-5">
+              {profileDatas.username}
+            </Typography>
+
             <IconButton
               size="large"
               edge="end"

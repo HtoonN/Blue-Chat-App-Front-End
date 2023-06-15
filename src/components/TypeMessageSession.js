@@ -2,6 +2,7 @@ import { AttachFile, Close, Send } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const TypeMessageSession = () => {
   const [text, setText] = useState("");
@@ -17,7 +18,10 @@ const TypeMessageSession = () => {
     }
   };
 
+  const userData = useSelector((state) => state.userDatas.profileDatas);
+
   const sendController = () => {
+    console.log(userData);
     console.log(file);
     console.log(text);
     console.log("Send Data...");

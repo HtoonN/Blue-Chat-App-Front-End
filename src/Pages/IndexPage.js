@@ -5,11 +5,13 @@ import LoadingComponent from "./SubPage/InforamtionPage/LoadingComponent";
 import AlertDialogComponent from "./SubPage/InforamtionPage/AlertDialogComponent";
 import { Provider } from "react-redux";
 import store from "../Redux/Store";
+import FindFriendModel from "../components/FindFriendModel";
 
 const IndexPage = () => {
   return (
     <div>
       <Provider store={store}>
+        <FindFriendModel />
         <AlertComponent />
         <AlertDialogComponent />
         <LoadingComponent />

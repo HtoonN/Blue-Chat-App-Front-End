@@ -4,6 +4,7 @@ import loadingReducer from "./Reducer/LoadingReducer";
 import alertDialogReducer from "./Reducer/AlertDialogReducer";
 import userDataREducer from "./Reducer/UserDataREducer";
 import openCloseReducer from "./Reducer/OpenCloseReducer";
+import dataReducer from "./Reducer/DataReducer";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     alertDialog: alertDialogReducer,
     userDatas: userDataREducer,
     openClose: openCloseReducer,
+    dataReducer: dataReducer,
   },
 });
 
