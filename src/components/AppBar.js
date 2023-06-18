@@ -18,12 +18,9 @@ import Button from "@mui/material/Button";
 import SendRounded from "@mui/icons-material/SendRounded";
 import ArrowForwardIos from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setFindFriendsModel,
-  setFriendListSideBar,
-} from "../Redux/Reducer/OpenCloseReducer";
-import { setFindFriendsData } from "../Redux/Reducer/DataReducer";
+import { setFriendListSideBar } from "../Redux/Reducer/OpenCloseReducer";
 import logOutControl from "../Utlities/LogOutControl";
+import findFriendsControl from "../Utlities/FindFriendsControl";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -97,12 +94,6 @@ export default function PrimarySearchAppBar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const searchControl = (text) => {
-    dispatch(setFindFriendsData("searching"));
-    dispatch(setFindFriendsModel());
-    console.log(text);
   };
 
   const friendListControl = () => {
@@ -253,12 +244,12 @@ export default function PrimarySearchAppBar() {
                 value={searchText}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    searchControl(searchText);
+                    findFriendsControl(searchText, dispatch);
                   }
                 }}
               />
             </Search>
-            <Button onClick={() => searchControl(searchText)}>
+            <Button onClick={() => findFriendsControl(searchText, dispatch)}>
               <SendRounded sx={{ color: "#1e3a8a" }} />
             </Button>
           </Box>

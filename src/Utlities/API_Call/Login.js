@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const login = async (email, password, dispatch) => {
+const login = async (email, password) => {
   const url = `${process.env.REACT_APP_API_WA}/login`;
 
   const result = await axios({

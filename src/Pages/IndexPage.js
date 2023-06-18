@@ -11,9 +11,9 @@ const IndexPage = () => {
   return (
     <div>
       <Provider store={store}>
-        <FindFriendModel />
         <AlertComponent />
         <AlertDialogComponent />
+        <FindFriendModel />
         <LoadingComponent />
         <RouterBrower />
       </Provider>
