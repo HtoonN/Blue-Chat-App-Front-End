@@ -32,7 +32,7 @@ const GroupMenuList = ({ isAdmin, isMember, arr, profileimage }) => {
                           leaveGroup(arr.groupId, setBtnLeave);
                         }}
                         disabled={BtnLeave}
-                        sx={{ color: "#1e3a8a" }}
+                        sx={{ color: "#ff0000" }}
                       >
                         Leave
                       </Button>

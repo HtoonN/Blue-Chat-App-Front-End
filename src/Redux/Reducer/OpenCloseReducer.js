@@ -5,6 +5,8 @@ export const openCloseReducer = createSlice({
   initialState: {
     friendListSideBar: false,
     findFriendsModel: false,
+    friendRequestModel: false,
+    blockedListModel: false,
   },
   reducers: {
     setFriendListSideBar: (state) => {
@@ -13,10 +15,20 @@ export const openCloseReducer = createSlice({
     setFindFriendsModel: (state) => {
       state.findFriendsModel = !state.findFriendsModel;
     },
+    setFriendRequestModel: (state) => {
+      state.friendRequestModel = !state.friendRequestModel;
+    },
+    setBlockListModel: (state) => {
+      state.blockedListModel = !state.blockedListModel;
+    },
   },
 });
 
-export const { setFriendListSideBar, setFindFriendsModel } =
-  openCloseReducer.actions;
+export const {
+  setFriendListSideBar,
+  setFindFriendsModel,
+  setFriendRequestModel,
+  setBlockListModel,
+} = openCloseReducer.actions;
 
 export default openCloseReducer.reducer;

@@ -18,9 +18,14 @@ import Button from "@mui/material/Button";
 import SendRounded from "@mui/icons-material/SendRounded";
 import ArrowForwardIos from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriendListSideBar } from "../Redux/Reducer/OpenCloseReducer";
+import {
+  setFriendListSideBar,
+  setFriendRequestModel,
+} from "../Redux/Reducer/OpenCloseReducer";
 import logOutControl from "../Utlities/LogOutControl";
 import findFriendsControl from "../Utlities/FindFriendsControl";
+import { AccountCircle, PersonAdd } from "@mui/icons-material";
+import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -65,6 +70,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const dispatch = useDispatch();
   const profileDatas = useSelector((state) => state.userDatas.profileDatas);
+  let profileimage = {};
+
+  if (profileDatas.profileImage) {
+    profileimage = changeImageStringToObj(profileDatas.profileImage);
+  }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -118,8 +128,8 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Dashboard</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Blocked List</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Waiting Accept</MenuItem>
       <MenuItem
         onClick={() => {
           handleMenuClose();
@@ -127,6 +137,9 @@ export default function PrimarySearchAppBar() {
         }}
       >
         Logout
+      </MenuItem>
+      <MenuItem sx={{ color: "red" }} onClick={handleMenuClose}>
+        Delete Account
       </MenuItem>
     </Menu>
   );
@@ -159,11 +172,29 @@ export default function PrimarySearchAppBar() {
           color="inherit"
         >
           <Badge badgeContent={notibadge} color="error">
-            <NotificationsIcon />
+            <NotificationsIcon sx={{ color: "#1e3a8a" }} />
           </Badge>
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          console.log("NOit");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={notibadge} color="error">
+            <PersonAdd sx={{ color: "#1e3a8a" }} />
+          </Badge>
+        </IconButton>
+        <p>Friend Request</p>
+      </MenuItem>
+
       <MenuItem>{profileDatas.username}</MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -173,10 +204,15 @@ export default function PrimarySearchAppBar() {
           aria-haspopup="true"
           color="inherit"
         >
-          <Avatar
-            alt="profileimage"
-            src="https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png"
-          />
+          <Avatar>
+            {profileDatas.profileImage ? (
+              <img
+                src={`http://localhost:3001/api/v1/account/user/get_image/${profileimage.public_id}/${profileimage.version}/${profileimage.format}/${profileimage.resource_type}`}
+              />
+            ) : (
+              <AccountCircle className="text-blue-900" />
+            )}
+          </Avatar>
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -274,6 +310,19 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
 
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={() => {
+                dispatch(setFriendRequestModel());
+              }}
+            >
+              <Badge badgeContent={notibadge} color="error">
+                <PersonAdd sx={{ color: "#1e3a8a" }} />
+              </Badge>
+            </IconButton>
+
             <Typography className="text-blue-900 pl-5">
               {profileDatas.username}
             </Typography>
@@ -287,10 +336,15 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar
-                alt="profileimage"
-                src="https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png"
-              />
+              <Avatar>
+                {profileDatas.profileImage ? (
+                  <img
+                    src={`http://localhost:3001/api/v1/account/user/get_image/${profileimage.public_id}/${profileimage.version}/${profileimage.format}/${profileimage.resource_type}`}
+                  />
+                ) : (
+                  <AccountCircle className="text-blue-900" />
+                )}
+              </Avatar>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "#1e3a8a" }}>

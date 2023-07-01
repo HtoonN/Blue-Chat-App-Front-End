@@ -16,7 +16,6 @@ const findFriendsControl = async (text, dispatch) => {
       dispatch(
         setFindFriendsData({ friends: result.peoples, groups: result.groups })
       );
-      console.log(result);
     }
   }
 };

@@ -17,6 +17,7 @@
     "no-unused-vars": 1,
     "no-alert": 0,
     "react/prop-types": 0,
-    "max-depth": 0
+    "max-depth": 0,
+    "no-nested-ternary":0
   }
 }

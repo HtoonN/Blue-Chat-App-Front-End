@@ -2,6 +2,7 @@ import React from "react";
 import NoResult from "./NoResult";
 import { useSelector } from "react-redux";
 import GroupMenuList from "./GroupMenuList";
+import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
 
 const GroupMenu = ({ mode }) => {
   const arr = useSelector((state) => state.dataReducer.findFriendsData);
@@ -21,10 +22,7 @@ const GroupMenu = ({ mode }) => {
             let isAdmin = false;
 
             if (arr.profileImage) {
-              profileimage = JSON.parse(arr.profileImage);
-              profileimage.public_id = profileimage.public_id
-                .toString()
-                .replace("/", "_");
+              profileimage = changeImageStringToObj(arr.profileImage);
             }
 
             groups.map((group) => {
@@ -51,7 +49,7 @@ const GroupMenu = ({ mode }) => {
       );
     } else {
       return (
-        <div className="w-full h-full">
+        <div className={`w-full h-full ${mode === "groups" ? "" : "hidden"}`}>
           <NoResult />
         </div>
       );
