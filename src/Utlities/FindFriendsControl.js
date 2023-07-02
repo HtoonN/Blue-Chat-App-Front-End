@@ -10,6 +10,7 @@ const findFriendsControl = async (text, dispatch) => {
     dispatch(setFindFriendsData("searching"));
     dispatch(setFindFriendsModel());
     const result = await findFriends(text);
+    console.log(result);
     if (result.error) {
       console.log(result.information);
     } else {

@@ -93,6 +93,68 @@ export const userDatasReducer = createSlice({
       state.blockedList.list = action.payload.data;
       state.blockedList.nextPage = action.payload.nextPage;
     },
+
+    removeBlock: (state, action) => {
+      const result1 = state.blockedList.list.filter((element) => {
+        if (element.userId !== action.payload) {
+          return element;
+        }
+      });
+      state.blockedList.list = result1;
+
+      const result = state.friendsDatas.blockedFriends.blockedList.filter(
+        (element) => {
+          if (element !== action.payload) {
+            return element;
+          }
+        }
+      );
+      state.friendsDatas.blockedFriends.blockedList = result;
+    },
+
+    addBlockList: (state, action) => {
+      state.friendsDatas.blockedFriends.blockedList.push(action.payload);
+
+      const requestedResult = state.requested.list.filter((element) => {
+        if (element.userId !== action.payload) {
+          return element;
+        }
+      });
+      state.requested.list = requestedResult;
+
+      const addResult = state.friendsDatas.add.list.filter((element) => {
+        if (element !== action.payload) {
+          return element;
+        }
+      });
+
+      state.friendsDatas.add.list = addResult;
+
+      const reqResult = state.friendsDatas.requested.list.filter((element) => {
+        if (element !== action.payload) {
+          return element;
+        }
+      });
+
+      state.friendsDatas.requested.list = reqResult;
+
+      const friendResult = state.friendsDatas.friends.filter((element) => {
+        if (element !== action.payload) {
+          return element;
+        }
+      });
+
+      state.friendsDatas.friends = friendResult;
+
+      const messagedFriendsResult =
+        state.friendsDatas.messagedFriends.friendsList.filter((element) => {
+          if (element !== action.payload) {
+            return element;
+          }
+        });
+
+      state.friendsDatas.messagedFriends.friendsList = messagedFriendsResult;
+    },
   },
 });
 
@@ -110,5 +172,7 @@ export const {
   removeRequested,
   addMoreRequested,
   setBlock,
+  removeBlock,
+  addBlockList,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

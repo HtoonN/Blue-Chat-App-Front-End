@@ -9,8 +9,22 @@ export const dataReducer = createSlice({
     setFindFriendsData: (state, action) => {
       state.findFriendsData = action.payload;
     },
+
+    removeFindFriendsData: (state, action) => {
+      if (Array.isArray(state.findFriendsData.friends.friendsList)) {
+        const res = state.findFriendsData.friends.friendsList.filter(
+          (element) => {
+            if (element.userId !== action.payload) {
+              return element;
+            }
+          }
+        );
+        state.findFriendsData.friends.friendsList = res;
+      }
+    },
   },
 });
 
-export const { setFindFriendsData } = dataReducer.actions;
+export const { setFindFriendsData, removeFindFriendsData } =
+  dataReducer.actions;
 export default dataReducer.reducer;

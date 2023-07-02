@@ -1,5 +1,33 @@
-const blockPeople = (userId, setBtnDisabled) => {
+const { default: axios } = require("axios");
+const { addBlockList } = require("../../Redux/Reducer/UserDataREducer");
+const { removeFindFriendsData } = require("../../Redux/Reducer/DataReducer");
+
+const blockPeople = (userId, dispatch, setBtnDisabled) => {
   setBtnDisabled(true);
-  console.log(userId);
+
+  if (userId) {
+    axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_API_A}/block_user`,
+      data: {
+        data: {
+          friendId: userId,
+        },
+      },
+      withCredentials: true,
+    })
+      .then((result) => {
+        console.log(result);
+        if (result.status === 201) {
+          dispatch(addBlockList(userId));
+          dispatch(removeFindFriendsData(userId));
+          setBtnDisabled(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e.respond.data);
+        setBtnDisabled(false);
+      });
+  }
 };
 module.exports = blockPeople;

@@ -99,7 +99,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
             )}
             <Button
               onClick={() => {
-                blockPeople(arr.userId, setBtnBlock);
+                blockPeople(arr.userId, dispatch, setBtnBlock);
               }}
               sx={{ color: "#ff0000" }}
               disabled={BtnBlock}

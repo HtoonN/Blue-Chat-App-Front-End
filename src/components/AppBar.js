@@ -19,6 +19,7 @@ import SendRounded from "@mui/icons-material/SendRounded";
 import ArrowForwardIos from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setBlockListModel,
   setFriendListSideBar,
   setFriendRequestModel,
 } from "../Redux/Reducer/OpenCloseReducer";
@@ -128,7 +129,14 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Blocked List</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose();
+          dispatch(setBlockListModel());
+        }}
+      >
+        Blocked List
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>Waiting Accept</MenuItem>
       <MenuItem
         onClick={() => {
@@ -180,7 +188,7 @@ export default function PrimarySearchAppBar() {
 
       <MenuItem
         onClick={() => {
-          console.log("NOit");
+          dispatch(setFriendRequestModel());
         }}
       >
         <IconButton

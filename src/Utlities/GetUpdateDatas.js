@@ -22,6 +22,7 @@ async function getData(redirect, dispatch, status) {
 
   if (status === "auth") {
     if (result.status === 200) {
+      console.log(result);
       dispatch(setProfileDatas(result.data.profile));
       dispatch(setFriendsDatas(result.data.friend));
 

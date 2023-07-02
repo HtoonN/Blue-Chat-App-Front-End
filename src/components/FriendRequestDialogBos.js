@@ -72,7 +72,7 @@ const FriendRequestDialogBos = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="text-gray-500 opacity-50 w-full h-full flex items-center justify-center">
             No Friend Request
           </div>
         )}
