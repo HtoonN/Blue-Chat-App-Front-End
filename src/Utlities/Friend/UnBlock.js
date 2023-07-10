@@ -15,7 +15,6 @@ const unBlock = (userId, dispatch, btnDisabled) => {
       withCredentials: true,
     })
       .then((result) => {
-        console.log(result);
         if (result.status === 201) {
           dispatch(removeBlock(userId));
           btnDisabled(false);

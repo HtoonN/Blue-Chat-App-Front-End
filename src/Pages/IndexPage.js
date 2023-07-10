@@ -8,6 +8,7 @@ import store from "../Redux/Store";
 import FindFriendModel from "../components/FindFriendModel";
 import FriendRequestModel from "../components/FriendRequestModel";
 import BlockListModel from "../components/BlockListModel/BlockListModel";
+import AddedListModel from "../components/AddedListModel/AddedListModel";
 
 const IndexPage = () => {
   return (
@@ -18,6 +19,7 @@ const IndexPage = () => {
         <FindFriendModel />
         <FriendRequestModel />
         <BlockListModel />
+        <AddedListModel />
         <LoadingComponent />
         <RouterBrower />
       </Provider>

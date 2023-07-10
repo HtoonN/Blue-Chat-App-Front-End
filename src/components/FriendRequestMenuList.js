@@ -59,7 +59,7 @@ const FriendRequestMenuList = ({ arr }) => {
             </Button>
             <Button
               onClick={() => {
-                blockPeople(arr.userId, setBtnBlock, dispatch);
+                blockPeople(arr.userId, dispatch, setBtnBlock);
               }}
               sx={{ color: "#ff0000" }}
               disabled={BtnBlock}

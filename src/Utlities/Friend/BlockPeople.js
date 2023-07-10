@@ -17,7 +17,6 @@ const blockPeople = (userId, dispatch, setBtnDisabled) => {
       withCredentials: true,
     })
       .then((result) => {
-        console.log(result);
         if (result.status === 201) {
           dispatch(addBlockList(userId));
           dispatch(removeFindFriendsData(userId));
@@ -25,7 +24,7 @@ const blockPeople = (userId, dispatch, setBtnDisabled) => {
         }
       })
       .catch((e) => {
-        console.log(e.respond.data);
+        console.log(e);
         setBtnDisabled(false);
       });
   }

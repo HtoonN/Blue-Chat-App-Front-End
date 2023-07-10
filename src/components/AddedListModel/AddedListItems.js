@@ -7,12 +7,15 @@ import {
   ListItemText,
 } from "@mui/material";
 import React, { useState } from "react";
-import unBlock from "../../Utlities/Friend/UnBlock";
 import { useDispatch } from "react-redux";
 import changeImageStringToObj from "../../Utlities/ChangeImageStringToObj";
+import blockPeople from "../../Utlities/Friend/BlockPeople";
+import cancelAddFriend from "../../Utlities/Friend/CancelAddFriend";
 
-const BlockListItems = ({ obj }) => {
-  const [BtnUnblock, setBtnUnblock] = useState(false);
+const AddedListItems = ({ obj }) => {
+  const [Btnblock, setBtnblock] = useState(false);
+  const [BtnCancel, setBtnCancel] = useState(false);
+
   const dispatch = useDispatch();
   const data = {
     userId: obj.userId,
@@ -28,13 +31,22 @@ const BlockListItems = ({ obj }) => {
     <ListItem
       className="border-b-2"
       secondaryAction={
-        <Button
-          onClick={() => unBlock(data.userId, dispatch, setBtnUnblock)}
-          disabled={BtnUnblock}
-          sx={{ color: "#ff0000" }}
-        >
-          remove
-        </Button>
+        <>
+          <Button
+            onClick={() => cancelAddFriend(data.userId, setBtnCancel, dispatch)}
+            disabled={BtnCancel}
+            sx={{ color: "#1e3a8a" }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => blockPeople(data.userId, dispatch, setBtnblock)}
+            disabled={Btnblock}
+            sx={{ color: "#ff0000" }}
+          >
+            Block
+          </Button>
+        </>
       }
     >
       <ListItemAvatar>
@@ -53,4 +65,4 @@ const BlockListItems = ({ obj }) => {
   );
 };
 
-export default BlockListItems;
+export default AddedListItems;

@@ -19,14 +19,19 @@ import SendRounded from "@mui/icons-material/SendRounded";
 import ArrowForwardIos from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAddedListModel,
   setBlockListModel,
   setFriendListSideBar,
   setFriendRequestModel,
+  setNotiMenuMobileModel,
+  setNotiMenuModel,
 } from "../Redux/Reducer/OpenCloseReducer";
 import logOutControl from "../Utlities/LogOutControl";
 import findFriendsControl from "../Utlities/FindFriendsControl";
 import { AccountCircle, PersonAdd } from "@mui/icons-material";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
+import NotiMenu from "./NotiMenu/NotiMenu";
+import NotiMenuMobile from "./NotificationBoxForMobileView/NotiMenuMobile";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -69,8 +74,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const notiMenuRef = React.useRef();
+  const notiMenuRefMobile = React.useRef();
   const dispatch = useDispatch();
   const profileDatas = useSelector((state) => state.userDatas.profileDatas);
+  const isFriendRequested = useSelector(
+    (state) => state.userDatas.friendsDatas.requested.list
+  ).length;
+
   let profileimage = {};
 
   if (profileDatas.profileImage) {
@@ -79,9 +90,7 @@ export default function PrimarySearchAppBar() {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const [searchText, setSearchText] = React.useState("");
-  const [notibadge] = React.useState(1);
 
   const friendListSideBar = useSelector(
     (state) => state.openClose.friendListSideBar
@@ -137,7 +146,14 @@ export default function PrimarySearchAppBar() {
       >
         Blocked List
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>Waiting Accept</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose();
+          dispatch(setAddedListModel());
+        }}
+      >
+        Waiting Accept
+      </MenuItem>
       <MenuItem
         onClick={() => {
           handleMenuClose();
@@ -168,10 +184,11 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      ref={notiMenuRefMobile}
     >
       <MenuItem
         onClick={() => {
-          console.log("NOit");
+          dispatch(setNotiMenuMobileModel());
         }}
       >
         <IconButton
@@ -179,9 +196,7 @@ export default function PrimarySearchAppBar() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={notibadge} color="error">
-            <NotificationsIcon sx={{ color: "#1e3a8a" }} />
-          </Badge>
+          <NotificationsIcon sx={{ color: "#1e3a8a" }} />
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
@@ -196,7 +211,7 @@ export default function PrimarySearchAppBar() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={notibadge} color="error">
+          <Badge variant={isFriendRequested ? "dot" : ""} color="error">
             <PersonAdd sx={{ color: "#1e3a8a" }} />
           </Badge>
         </IconButton>
@@ -284,8 +299,10 @@ export default function PrimarySearchAppBar() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
-                onChange={(e) => setSearchText(e.target.value)}
                 value={searchText}
+                onChange={(e) => {
+                  setSearchText(e.target.value);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     findFriendsControl(searchText, dispatch);
@@ -293,7 +310,11 @@ export default function PrimarySearchAppBar() {
                 }}
               />
             </Search>
-            <Button onClick={() => findFriendsControl(searchText, dispatch)}>
+            <Button
+              onClick={() => {
+                findFriendsControl(searchText, dispatch);
+              }}
+            >
               <SendRounded sx={{ color: "#1e3a8a" }} />
             </Button>
           </Box>
@@ -310,13 +331,13 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
               onClick={() => {
-                console.log("NOit");
+                dispatch(setNotiMenuModel());
               }}
+              ref={notiMenuRef}
             >
-              <Badge badgeContent={notibadge} color="error">
-                <NotificationsIcon sx={{ color: "#1e3a8a" }} />
-              </Badge>
+              <NotificationsIcon sx={{ color: "#1e3a8a" }} />
             </IconButton>
+            <NotiMenu notiMenuRef={notiMenuRef} />
 
             <IconButton
               size="large"
@@ -326,7 +347,7 @@ export default function PrimarySearchAppBar() {
                 dispatch(setFriendRequestModel());
               }}
             >
-              <Badge badgeContent={notibadge} color="error">
+              <Badge variant={isFriendRequested ? "dot" : ""} color="error">
                 <PersonAdd sx={{ color: "#1e3a8a" }} />
               </Badge>
             </IconButton>
@@ -371,6 +392,7 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      <NotiMenuMobile />
     </Box>
   );
 }

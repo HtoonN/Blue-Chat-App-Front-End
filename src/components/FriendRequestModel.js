@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriendRequestModel } from "../Redux/Reducer/OpenCloseReducer";
 
@@ -16,9 +16,12 @@ const FriendRequestModel = () => {
   };
 
   const friendRequest = useSelector((state) => state.userDatas.requested.list);
-  const nextPage = useSelector((state) => state.userDatas.requested.nextPage);
 
-  getRequestedUserData(dispatch, nextPage);
+  useEffect(() => {
+    if (!friendRequest && open) {
+      getRequestedUserData(dispatch);
+    }
+  }, [open]);
 
   return (
     <div>

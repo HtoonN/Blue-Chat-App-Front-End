@@ -9,6 +9,9 @@ export const userDatasReducer = createSlice({
     messages: {},
     requested: { nextPage: 1, list: "" },
     blockedList: { nextPage: 1, list: "" },
+    addedList: { nextPage: 1, list: "" },
+    friendsList: { nextPage: 1, list: [] },
+    notiList: { nextPage: 1, list: [], no: 0 },
   },
   reducers: {
     //Profile
@@ -30,6 +33,15 @@ export const userDatasReducer = createSlice({
         return element !== action.payload;
       });
       state.friendsDatas.add.list = result;
+
+      if (Array.isArray(state.addedList.list)) {
+        const result2 = state.addedList.list.filter((element) => {
+          if (element.userId !== action.payload) {
+            return element;
+          }
+        });
+        state.addedList.list = result2;
+      }
     },
 
     setUnFriend: (state, action) => {
@@ -37,6 +49,14 @@ export const userDatasReducer = createSlice({
         return element !== action.payload;
       });
       state.friendsDatas.friends = result;
+
+      const result2 = state.friendsList.list.filter((element) => {
+        if (element.userId !== action.payload) {
+          return element;
+        }
+      });
+
+      state.friendsList.list = result2;
     },
 
     acceptFriend: (state, action) => {
@@ -71,12 +91,22 @@ export const userDatasReducer = createSlice({
     },
 
     removeRequested: (state, action) => {
-      const result = state.requested.list.filter((element) => {
-        if (element.userId !== action.payload) {
+      if (Array.isArray(state.requested.list)) {
+        const result = state.requested.list.filter((element) => {
+          if (element.userId !== action.payload) {
+            return element;
+          }
+        });
+        state.requested.list = result;
+      }
+
+      const result2 = state.friendsDatas.requested.list.filter((element) => {
+        if (element !== action.payload) {
           return element;
         }
       });
-      state.requested.list = result;
+
+      state.friendsDatas.requested.list = result2;
     },
 
     addMoreRequested: (state) => {
@@ -115,12 +145,23 @@ export const userDatasReducer = createSlice({
     addBlockList: (state, action) => {
       state.friendsDatas.blockedFriends.blockedList.push(action.payload);
 
-      const requestedResult = state.requested.list.filter((element) => {
-        if (element.userId !== action.payload) {
-          return element;
-        }
-      });
-      state.requested.list = requestedResult;
+      if (Array.isArray(state.requested.list)) {
+        const requestedResult = state.requested.list.filter((element) => {
+          if (element.userId !== action.payload) {
+            return element;
+          }
+        });
+        state.requested.list = requestedResult;
+      }
+
+      if (Array.isArray(state.addedList.list)) {
+        const addedResult = state.addedList.list.filter((element) => {
+          if (element.userId !== action.payload) {
+            return element;
+          }
+        });
+        state.addedList.list = addedResult;
+      }
 
       const addResult = state.friendsDatas.add.list.filter((element) => {
         if (element !== action.payload) {
@@ -154,6 +195,74 @@ export const userDatasReducer = createSlice({
         });
 
       state.friendsDatas.messagedFriends.friendsList = messagedFriendsResult;
+
+      const resultFL = state.friendsList.list.filter((element) => {
+        if (element.userId !== action.payload) {
+          return element;
+        }
+      });
+
+      state.friendsList.list = resultFL;
+    },
+
+    //added
+    setAddedList: (state, action) => {
+      state.addedList.list = action.payload.data;
+      state.addedList.nextPage = action.payload.nextPage;
+    },
+
+    removeAddedList: (state, action) => {
+      const result = state.addedList.list.filter((element) => {
+        if (element.userId !== action.payload) {
+          return element;
+        }
+      });
+      state.addedList.list = result;
+    },
+
+    //FriendsList
+    setFriendsList: (state, action) => {
+      let isHas = false;
+      state.friendsList.list.map((arr) => {
+        if (arr.userId === action.payload.userId) {
+          isHas = true;
+        }
+      });
+      if (!isHas) {
+        state.friendsList.list.push(action.payload);
+      }
+    },
+
+    removeFriendList: (state, action) => {
+      const result = state.friendsList.list.filter((element) => {
+        if (element.userId !== action.payload) {
+          return element;
+        }
+      });
+
+      state.friendsList.list = result;
+    },
+
+    //Noti
+    setNotiList: (state, action) => {
+      state.notiList.list = action.payload.data;
+      state.notiList.nextPage = action.payload.nextPage;
+    },
+
+    addMoreNotiList: (state, action) => {
+      state.notiList.nextPage = action.payload.nextPage;
+      const addArray = state.notiList.list.concat(action.payload.data);
+      state.notiList.list = addArray;
+    },
+    setNotiItemSeen: (state, action) => {
+      state.notiList.list[action.payload.index].seen = true;
+    },
+
+    addNotiNo: (state) => {
+      state.notiList.no = state.notiList.no + 1;
+    },
+    setNotiZero: (state) => {
+      state.notiList.no = 0;
     },
   },
 });
@@ -174,5 +283,15 @@ export const {
   setBlock,
   removeBlock,
   addBlockList,
+  setAddedList,
+  removeAddedList,
+  setFriendsList,
+  removeFriendList,
+  setEmptyFriendsList,
+  setNotiList,
+  addMoreNotiList,
+  setNotiItemSeen,
+  addNotiNo,
+  setNotiZero,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

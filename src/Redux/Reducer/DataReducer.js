@@ -11,15 +11,17 @@ export const dataReducer = createSlice({
     },
 
     removeFindFriendsData: (state, action) => {
-      if (Array.isArray(state.findFriendsData.friends.friendsList)) {
-        const res = state.findFriendsData.friends.friendsList.filter(
-          (element) => {
-            if (element.userId !== action.payload) {
-              return element;
+      if (state.findFriendsData.friends) {
+        if (Array.isArray(state.findFriendsData.friends.friendsList)) {
+          const res = state.findFriendsData.friends.friendsList.filter(
+            (element) => {
+              if (element.userId !== action.payload) {
+                return element;
+              }
             }
-          }
-        );
-        state.findFriendsData.friends.friendsList = res;
+          );
+          state.findFriendsData.friends.friendsList = res;
+        }
       }
     },
   },

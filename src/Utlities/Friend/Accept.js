@@ -3,6 +3,7 @@ const {
   acceptFriend,
   removeRequested,
 } = require("../../Redux/Reducer/UserDataREducer");
+const { default: getAFriendsData } = require("./GetAFriendsData");
 
 const accFriend = async (userId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
@@ -15,6 +16,7 @@ const accFriend = async (userId, setBtnDisabled, dispatch) => {
   if (result.status === 201) {
     dispatch(acceptFriend(userId));
     dispatch(removeRequested(userId));
+    getAFriendsData([userId], dispatch);
   }
   setBtnDisabled(false);
 };

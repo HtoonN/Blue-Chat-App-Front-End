@@ -6,9 +6,6 @@ import MessageBox from "../../../components/MessageBox";
 import FriendsBar from "../../../components/FriendsBar";
 
 const HomePage = () => {
-  //const profile = useSelector((state) => state.userDatas.profileDatas);
-  //const friends = useSelector((state) => state.userDatas.friendsDatas);
-
   return (
     <div>
       <PrimarySearchAppBar />
