@@ -15,6 +15,7 @@ async function getData(redirect, dispatch, status) {
     url,
     withCredentials: true,
   }).catch((error) => {
+    console.log(error.response.data.information);
     return {
       status: error.response.status,
     };

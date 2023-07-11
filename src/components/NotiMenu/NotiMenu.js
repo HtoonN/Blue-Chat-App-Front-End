@@ -65,6 +65,8 @@ const NotiMenu = ({ notiMenuRef }) => {
                   <div>
                     <MenuList>
                       {data.map((data, index) => {
+                        console.log(index);
+
                         return (
                           <div key={index}>
                             <MenuListItem data={data} index={index} />

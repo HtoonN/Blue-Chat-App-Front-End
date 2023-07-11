@@ -8,7 +8,6 @@ const getAddedUsers = async (dispatch) => {
     withCredentials: true,
   })
     .then((result) => {
-      console.log(result);
       if (result.status === 200) {
         dispatch(
           setAddedList({

@@ -14,10 +14,10 @@ import {
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import unFriend from "../Utlities/Friend/Unfriend";
-import blockPeople from "../Utlities/Friend/BlockPeople";
-import messageControl from "../Utlities/MessageControl";
-import startMessageControl from "../Utlities/StartMessageControl";
+import unFriend from "../../Utlities/Friend/Unfriend";
+import blockPeople from "../../Utlities/Friend/BlockPeople";
+import messageControl from "../../Utlities/MessageControl";
+import startMessageControl from "../../Utlities/StartMessageControl";
 
 const FriendBarIteam = ({ arr, profileimage }) => {
   const messagedList = useSelector(

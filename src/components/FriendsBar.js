@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getAFriendsData from "../Utlities/Friend/GetAFriendsData";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
-import FriendBarIteam from "../FriendBar/FriendBarIteam";
+import FriendBarIteam from "./FriendBar/FriendBarIteam";
 
 const FriendsBar = () => {
   const arr = useSelector((state) => state.userDatas.friendsList.list);

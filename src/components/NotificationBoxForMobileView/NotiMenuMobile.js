@@ -57,17 +57,9 @@ const NotiMenuMobile = () => {
             <div>
               <MenuList>
                 {data.map((data, index) => {
-                  const data2 = {
-                    _id: data._id,
-                    userId: data.userId,
-                    header: data.header,
-                    text: data.text,
-                    createdAt: data.createdAt,
-                    seen: data.seen,
-                  };
                   return (
                     <div key={index}>
-                      <MenuListItem data={data2} />
+                      <MenuListItem data={data} index={index} />
                       <Divider />
                     </div>
                   );
