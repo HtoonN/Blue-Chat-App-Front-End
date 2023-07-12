@@ -26,7 +26,7 @@ const BlockListItems = ({ obj }) => {
 
   return (
     <ListItem
-      className="border-b-2"
+      className="border-b-2  hover:bg-gray-100 cursor-pointer"
       secondaryAction={
         <Button
           onClick={() => unBlock(data.userId, dispatch, setBtnUnblock)}

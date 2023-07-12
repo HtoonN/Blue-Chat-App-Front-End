@@ -1,17 +1,13 @@
-import { AccountCircle } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from "@mui/material";
+import { Box, List } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyMessagedComponent from "./EmptyMessagedComponent";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
-import { setChatFriend } from "../Redux/Reducer/UserDataREducer";
+import {
+  setChatFriend,
+  setSelectedUser,
+} from "../Redux/Reducer/UserDataREducer";
+import FriendsList from "./FriendsSideBox/FriendsList";
 
 const FriendListBox = () => {
   const active = "text-blue-900 font-extrabold my-1 cursor-pointer ";
@@ -20,7 +16,10 @@ const FriendListBox = () => {
 
   const [query, setQuery] = useState("friends");
   const [messagedFriObj, setMessagedFriObj] = useState([]);
-  const [selectedUser, setSelectedUser] = useState("");
+  const selectedUser = useSelector(
+    (state) => state.userDatas.selectedUser.user
+  );
+
   const dispatch = useDispatch();
 
   const change = (option) => {
@@ -61,8 +60,9 @@ const FriendListBox = () => {
     }
   };
 
-  const selectFunction = (userId, dispatch) => {
+  const selectFunction = (userId, dispatch, index) => {
     dispatch(setChatFriend(userId));
+    dispatch(setSelectedUser(index));
   };
 
   useEffect(() => {
@@ -120,51 +120,16 @@ const FriendListBox = () => {
                 }
 
                 return (
-                  <div key={index} className=" border-b-2">
-                    <ListItem
-                      className={`cursor-pointer hover:bg-gray-100 active:bg-gray-200 ${
-                        index === selectedUser ? "bg-gray-300" : ""
-                      } `}
-                      onClick={() => {
-                        if (index !== selectedUser) {
-                          setSelectedUser(index);
-                        }
-                        selectFunction(data.userId, dispatch);
-                      }}
-                    >
-                      <ListItemAvatar>
-                        <Avatar>
-                          {data.profileImage ? (
-                            <img
-                              src={`http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
-                            />
-                          ) : (
-                            <AccountCircle className="text-blue-900" />
-                          )}
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={data.username}
-                        secondary={
-                          data.status ? (
-                            <span
-                              className=" bg-green-400 w-14 h-5 flex justify-center items-center rounded-md 
-                            text-xs text-white"
-                            >
-                              <span>Online</span>
-                            </span>
-                          ) : (
-                            <span
-                              className=" bg-yellow-400 w-14 h-5 flex justify-center items-center rounded-md 
-                            text-xs text-white"
-                            >
-                              <span>Offline</span>
-                            </span>
-                          )
-                        }
-                      />
-                    </ListItem>
-                  </div>
+                  <FriendsList
+                    key={index}
+                    index={index}
+                    data={data}
+                    profileImage={profileImage}
+                    selectedUser={selectedUser}
+                    setSelectedUser={setSelectedUser}
+                    selectFunction={selectFunction}
+                    dispatch={dispatch}
+                  />
                 );
               })}
             </List>

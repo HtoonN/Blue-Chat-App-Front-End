@@ -1,7 +1,13 @@
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { Box, List, Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import EmptyMessagedComponent from "./EmptyMessagedComponent";
+import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
+import {
+  setChatFriend,
+  setSelectedUser,
+} from "../Redux/Reducer/UserDataREducer";
+import FriendsList from "./FriendsSideBox/FriendsList";
 
 const FriendListSideBar = () => {
   const friendListSideBar = useSelector(
@@ -10,15 +16,64 @@ const FriendListSideBar = () => {
 
   const active = "text-blue-900 font-extrabold my-1 cursor-pointer ";
   const noActive =
-    "text-blue-grey font-thin my-1 opacity-40 cursor-pointer active:opacity-20 ";
+    "text-blue-grey font-thin my-1 opacity-50 cursor-pointer active:opacity-20 ";
 
   const [query, setQuery] = useState("friends");
+  const [messagedFriObj, setMessagedFriObj] = useState([]);
+  const selectedUser = useSelector(
+    (state) => state.userDatas.selectedUser.user
+  );
+  const dispatch = useDispatch();
 
   const change = (option) => {
     if (option !== query) {
       setQuery(option);
     }
   };
+  //idOnly
+  const messagedFriends = useSelector(
+    (state) => state.userDatas.friendsDatas.messagedFriends.friendsList
+  );
+
+  const friends = useSelector((state) => state.userDatas.friendsList.list);
+
+  const getMessagedFri = () => {
+    let leftUser = [];
+    let arr = [];
+
+    if (messagedFriends.length) {
+      messagedFriends.map((id) => {
+        let foundUser = false;
+
+        friends.map((element) => {
+          if (element.userId === id) {
+            foundUser = true;
+            arr.push(element);
+          }
+        });
+
+        //CheckFound
+        if (!foundUser) {
+          leftUser.push(id);
+        }
+      });
+
+      setMessagedFriObj(arr);
+    }
+  };
+
+  const selectFunction = (userId, dispatch, index) => {
+    dispatch(setChatFriend(userId));
+    dispatch(setSelectedUser(index));
+  };
+
+  useEffect(() => {
+    if (messagedFriends.length !== messagedFriObj.length) {
+      if (messagedFriends.length) {
+        getMessagedFri();
+      }
+    }
+  }, [messagedFriends, friends]);
 
   return (
     <Box
@@ -31,8 +86,12 @@ const FriendListSideBar = () => {
     >
       <Paper className="w-[75vw] h-[100vh] md:w-[45vw]" elevation={3}>
         <div className="w-full  bg-blue-900 text-white px-2 py-3 ">
-          <div className="text-bold mb-2">Messages List</div>
-          <h1 className="text-xs font-thin opacity-70">Total - 3</h1>
+          <div className="text-bold mb-2">
+            {query === "friends" ? "Messages" : "Groups"} List
+          </div>
+          <h1 className="text-xs font-thin opacity-70">
+            Total - {query === "friends" ? messagedFriends.length : "9"}
+          </h1>
         </div>
 
         <div className="flex w-full justify-around">
@@ -53,7 +112,50 @@ const FriendListSideBar = () => {
             Groups
           </div>
         </div>
-        <div className="w-full h-[calc(100%_-_109px)] ">Hello</div>
+        <div className="w-full h-[calc(100%_-_109px)] ">
+          {query === "friends" ? (
+            <div
+              className={`w-full h-full  ${
+                query === "friends" ? "" : "hidden"
+              } overflow-y-auto set-scrollbar color-scrollbar`}
+            >
+              {messagedFriObj?.length ? (
+                <List>
+                  {messagedFriObj.map((data, index) => {
+                    let profileImage;
+
+                    if (data.profileImage) {
+                      profileImage = changeImageStringToObj(data.profileImage);
+                    }
+
+                    return (
+                      <FriendsList
+                        key={index}
+                        index={index}
+                        data={data}
+                        profileImage={profileImage}
+                        selectedUser={selectedUser}
+                        setSelectedUser={setSelectedUser}
+                        selectFunction={selectFunction}
+                        dispatch={dispatch}
+                      />
+                    );
+                  })}
+                </List>
+              ) : (
+                <EmptyMessagedComponent message="No Messaged Friend" />
+              )}
+            </div>
+          ) : (
+            <div
+              className={`w-full h-full bg-red-500 ${
+                query === "groups" ? "" : "hidden"
+              }`}
+            >
+              Groups
+            </div>
+          )}
+        </div>
       </Paper>
     </Box>
   );

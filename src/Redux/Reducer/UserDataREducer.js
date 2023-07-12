@@ -14,6 +14,7 @@ export const userDatasReducer = createSlice({
     notiList: { nextPage: 1, list: [] },
     messagedFriendsList: { nextPage: 1, list: [] },
     chatFriend: "",
+    selectedUser: { user: "", group: "" },
   },
   reducers: {
     //Profile
@@ -281,6 +282,11 @@ export const userDatasReducer = createSlice({
     setChatFriend: (state, action) => {
       state.chatFriend = action.payload;
     },
+
+    //Set selected
+    setSelectedUser: (state, action) => {
+      state.selectedUser.user = action.payload;
+    },
   },
 });
 
@@ -313,5 +319,6 @@ export const {
   setChatFriend,
   addMessagedFriend,
   setMessagedFriendList,
+  setSelectedUser,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;
