@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyMessagedComponent from "./EmptyMessagedComponent";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
-import {
-  setChatFriend,
-  setSelectedUser,
-} from "../Redux/Reducer/UserDataREducer";
+import { setSelectedUser } from "../Redux/Reducer/UserDataREducer";
 import FriendsList from "./FriendsSideBox/FriendsList";
+import getMessagedFri from "../Utlities/GetMessagedFri";
+import selectFunction from "../Utlities/SelectedFunction";
 
 const FriendListSideBar = () => {
   const friendListSideBar = useSelector(
@@ -37,40 +36,10 @@ const FriendListSideBar = () => {
 
   const friends = useSelector((state) => state.userDatas.friendsList.list);
 
-  const getMessagedFri = () => {
-    let leftUser = [];
-    let arr = [];
-
-    if (messagedFriends.length) {
-      messagedFriends.map((id) => {
-        let foundUser = false;
-
-        friends.map((element) => {
-          if (element.userId === id) {
-            foundUser = true;
-            arr.push(element);
-          }
-        });
-
-        //CheckFound
-        if (!foundUser) {
-          leftUser.push(id);
-        }
-      });
-
-      setMessagedFriObj(arr);
-    }
-  };
-
-  const selectFunction = (userId, dispatch, index) => {
-    dispatch(setChatFriend(userId));
-    dispatch(setSelectedUser(index));
-  };
-
   useEffect(() => {
     if (messagedFriends.length !== messagedFriObj.length) {
       if (messagedFriends.length) {
-        getMessagedFri();
+        getMessagedFri(messagedFriends, friends, setMessagedFriObj);
       }
     }
   }, [messagedFriends, friends]);
