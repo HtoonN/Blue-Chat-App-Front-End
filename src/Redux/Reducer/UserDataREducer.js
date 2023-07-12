@@ -11,7 +11,9 @@ export const userDatasReducer = createSlice({
     blockedList: { nextPage: 1, list: "" },
     addedList: { nextPage: 1, list: "" },
     friendsList: { nextPage: 1, list: [] },
-    notiList: { nextPage: 1, list: [], no: 0 },
+    notiList: { nextPage: 1, list: [] },
+    messagedFriendsList: { nextPage: 1, list: [] },
+    chatFriend: "",
   },
   reducers: {
     //Profile
@@ -264,6 +266,21 @@ export const userDatasReducer = createSlice({
     setNotiZero: (state) => {
       state.notiList.no = 0;
     },
+
+    //Messaged Friends
+    setMessagedFriendList: (state, action) => {
+      state.messagedFriendsList.nextPage = action.payload.nextPage;
+      state.messagedFriendsList.list = action.payload.data;
+    },
+
+    addMessagedFriend: (state, action) => {
+      state.friendsDatas.messagedFriends.friendsList.push(action.payload);
+    },
+
+    //Chat Friend
+    setChatFriend: (state, action) => {
+      state.chatFriend = action.payload;
+    },
   },
 });
 
@@ -293,5 +310,8 @@ export const {
   setNotiItemSeen,
   addNotiNo,
   setNotiZero,
+  setChatFriend,
+  addMessagedFriend,
+  setMessagedFriendList,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

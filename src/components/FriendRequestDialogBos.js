@@ -50,9 +50,9 @@ const FriendRequestDialogBos = () => {
   return (
     <Box
       sx={{ pt: 0 }}
-      className="w-[350px] h-[500px] bg-white p-2 overflow-scroll md:w-[400px]"
+      className="w-[350px] h-[500px] bg-white p-2  md:w-[400px]"
     >
-      <div className="w-full h-[calc(100%_-_32px)] flex flex-col justify-start items-center">
+      <div className="w-full h-full flex flex-col justify-start items-center">
         {friendRequest.length ? (
           <div className="w-full h-full overflow-y-scroll">
             {/* <div

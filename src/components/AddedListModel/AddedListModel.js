@@ -4,6 +4,7 @@ import { setAddedListModel } from "../../Redux/Reducer/OpenCloseReducer";
 import getAddedUsers from "../../Utlities/Friend/GetAddedUser";
 import { Box, Dialog, DialogTitle, List } from "@mui/material";
 import AddedListItems from "./AddedListItems";
+import EmptyMessagedComponent from "../EmptyMessagedComponent";
 
 const AddedListModel = () => {
   const addedListPeoples = useSelector(
@@ -54,13 +55,13 @@ const AddedListModel = () => {
         </div>
         <Box
           sx={{ pt: 0 }}
-          className="w-[350px] h-[500px] bg-white p-2 overflow-scroll md:w-[400px]"
+          className="w-[350px] h-[500px] bg-white p-2  md:w-[400px]"
         >
           <div className="w-full h-full">
             {person ? (
               <div className="w-full h-full">
                 {addedListPeoples.length ? (
-                  <List className=" w-full  overflow-y-scroll">
+                  <List className=" w-full  overflow-y-scroll h-full">
                     {addedListPeoples.map((data, index) => {
                       return <AddedListItems obj={data} key={index} />;
                     })}
@@ -74,11 +75,11 @@ const AddedListModel = () => {
             ) : (
               <Box className="w-full h-full">
                 {addedListGroups.length ? (
-                  <List className=" w-full  overflow-y-scroll">Groups</List>
+                  <List className=" w-full  overflow-y-scroll h-full">
+                    Groups
+                  </List>
                 ) : (
-                  <div className="text-gray-500 opacity-50 w-full h-full flex justify-center items-center">
-                    No Waiting Accept
-                  </div>
+                  <EmptyMessagedComponent message="No Waiting Accept" />
                 )}
               </Box>
             )}

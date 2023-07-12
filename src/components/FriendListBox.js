@@ -1,16 +1,17 @@
-import { MoreVert, Person } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 import {
   Avatar,
-  Badge,
   Box,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
-//import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import EmptyMessagedComponent from "./EmptyMessagedComponent";
+import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
+import { setChatFriend } from "../Redux/Reducer/UserDataREducer";
 
 const FriendListBox = () => {
   const active = "text-blue-900 font-extrabold my-1 cursor-pointer ";
@@ -18,6 +19,9 @@ const FriendListBox = () => {
     "text-blue-grey font-thin my-1 opacity-50 cursor-pointer active:opacity-20 ";
 
   const [query, setQuery] = useState("friends");
+  const [messagedFriObj, setMessagedFriObj] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
+  const dispatch = useDispatch();
 
   const change = (option) => {
     if (option !== query) {
@@ -25,22 +29,49 @@ const FriendListBox = () => {
     }
   };
 
-  const messageFriends = [
-    "1",
-    "2",
-    "3",
-    "1",
-    "2",
-    "3",
-    "1",
-    "2",
-    "3",
-    "1",
-    "2",
-    "3",
-  ];
+  //idOnly
+  const messagedFriends = useSelector(
+    (state) => state.userDatas.friendsDatas.messagedFriends.friendsList
+  );
 
-  //console.log(useSelector((state) => state.userDatas.friendsDatas));
+  const friends = useSelector((state) => state.userDatas.friendsList.list);
+
+  const getMessagedFri = () => {
+    let leftUser = [];
+    let arr = [];
+
+    if (messagedFriends.length) {
+      messagedFriends.map((id) => {
+        let foundUser = false;
+
+        friends.map((element) => {
+          if (element.userId === id) {
+            foundUser = true;
+            arr.push(element);
+          }
+        });
+
+        //CheckFound
+        if (!foundUser) {
+          leftUser.push(id);
+        }
+      });
+
+      setMessagedFriObj(arr);
+    }
+  };
+
+  const selectFunction = (userId, dispatch) => {
+    dispatch(setChatFriend(userId));
+  };
+
+  useEffect(() => {
+    if (messagedFriends.length !== messagedFriObj.length) {
+      if (messagedFriends.length) {
+        getMessagedFri();
+      }
+    }
+  }, [messagedFriends, friends]);
 
   return (
     <Box
@@ -48,8 +79,12 @@ const FriendListBox = () => {
       sx={{ display: { xs: "none", md: "block" } }}
     >
       <div className="w-full  bg-blue-900 text-white px-2 pt-1 h-16 overflow-hidden">
-        <div className="text-bold mb-2">Messages List</div>
-        <h1 className="text-xs font-thin opacity-70">Total - 3</h1>
+        <div className="text-bold mb-2">
+          {query === "friends" ? "Messages" : "Groups"} List
+        </div>
+        <h1 className="text-xs font-thin opacity-70">
+          Total - {query === "friends" ? messagedFriends.length : "9"}
+        </h1>
       </div>
       <div className="flex w-full justify-around">
         <div
@@ -73,48 +108,69 @@ const FriendListBox = () => {
         <div
           className={`w-full h-full  ${
             query === "friends" ? "" : "hidden"
-          } overflow-y-auto`}
+          } overflow-y-auto set-scrollbar color-scrollbar`}
         >
-          {messageFriends.map((value, index) => {
-            return (
-              <div key={index} className=" border-b-2">
-                <List>
-                  <ListItem
-                    secondaryAction={
-                      <IconButton>
-                        <MoreVert />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemAvatar>
-                      <Badge
-                        overlap="circular"
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right",
-                        }}
-                        badgeContent={
-                          <div className="w-4 h-4 bg-green-400 rounded-full border-2" />
+          {messagedFriObj?.length ? (
+            <List>
+              {messagedFriObj.map((data, index) => {
+                let profileImage;
+
+                if (data.profileImage) {
+                  profileImage = changeImageStringToObj(data.profileImage);
+                }
+
+                return (
+                  <div key={index} className=" border-b-2">
+                    <ListItem
+                      className={`cursor-pointer hover:bg-gray-100 active:bg-gray-200 ${
+                        index === selectedUser ? "bg-gray-300" : ""
+                      } `}
+                      onClick={() => {
+                        if (index !== selectedUser) {
+                          setSelectedUser(index);
                         }
-                      >
-                        <Avatar className="border-2">
-                          <Person />
+                        selectFunction(data.userId, dispatch);
+                      }}
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          {data.profileImage ? (
+                            <img
+                              src={`http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
+                            />
+                          ) : (
+                            <AccountCircle className="text-blue-900" />
+                          )}
                         </Avatar>
-                      </Badge>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary="Name"
-                      secondary={
-                        <span className="border-2 border-green-300 w-14 h-5 flex justify-center items-center rounded-md text-xs text-green-400">
-                          <span>Online</span>
-                        </span>
-                      }
-                    />
-                  </ListItem>
-                </List>
-              </div>
-            );
-          })}
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={data.username}
+                        secondary={
+                          data.status ? (
+                            <span
+                              className=" bg-green-400 w-14 h-5 flex justify-center items-center rounded-md 
+                            text-xs text-white"
+                            >
+                              <span>Online</span>
+                            </span>
+                          ) : (
+                            <span
+                              className=" bg-yellow-400 w-14 h-5 flex justify-center items-center rounded-md 
+                            text-xs text-white"
+                            >
+                              <span>Offline</span>
+                            </span>
+                          )
+                        }
+                      />
+                    </ListItem>
+                  </div>
+                );
+              })}
+            </List>
+          ) : (
+            <EmptyMessagedComponent message="No Messaged Friend" />
+          )}
         </div>
         <div
           className={`w-full h-full bg-red-500 ${

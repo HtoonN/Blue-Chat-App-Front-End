@@ -37,7 +37,6 @@ const FriendBarIteam = ({ arr, profileimage }) => {
   };
 
   messagedList.map((data) => {
-    console.log("Check");
     if (data === arr.userId) {
       isMessaged = true;
     }
@@ -95,7 +94,7 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                         sx={{ color: "blue" }}
                         disabled={BtnMessage}
                       >
-                        Message
+                        Chat Friend
                       </MenuItem>
                     ) : (
                       <MenuItem

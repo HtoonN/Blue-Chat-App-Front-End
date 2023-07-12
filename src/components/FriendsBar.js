@@ -16,7 +16,7 @@ const FriendsBar = () => {
   return (
     <div>
       {arr.length ? (
-        <div className="flex h-24 w-full overflow-x-auto items-center pl-1 overflow-y-hidden border-b-2 pr-10">
+        <div className="flex h-24 w-full overflow-x-scroll items-center pl-1 overflow-y-hidden border-b-2 pr-10 set-scrollbar color-scrollbar">
           {arr.map((arr, index) => {
             let profileimage;
 

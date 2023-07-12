@@ -28,7 +28,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
 
   return (
     <div>
-      <List className=" w-full border-b-2 ">
+      <List className=" w-full border-b-2 hover:bg-gray-100 cursor-pointer">
         <div>
           <ListItem>
             <ListItemAvatar>

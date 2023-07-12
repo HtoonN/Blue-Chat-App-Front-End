@@ -16,9 +16,9 @@ const FriendMenu = ({ mode }) => {
     if (arr.friends.friendsList.length) {
       return (
         <div
-          className={`h-full overflow-scroll ${
+          className={`h-full overflow-y-scroll ${
             mode === "friends" ? "" : "hidden"
-          }`}
+          } set-scrollbar color-scrollbar`}
         >
           {arr.friends.friendsList.map((arr, index) => {
             let profileimage = {};

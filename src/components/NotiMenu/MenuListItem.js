@@ -22,6 +22,7 @@ const MenuListItem = ({ data, index }) => {
         cursor: "pointer",
         borderRadius: "2px",
       }}
+      className="hover:bg-gray-100 active:bg-gray-200"
     >
       <Box>
         <Typography

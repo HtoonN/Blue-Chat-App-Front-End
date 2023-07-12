@@ -52,6 +52,7 @@ const NotiMenuMobile = () => {
             height: { xs: "500px", md: "600px" },
             overflowY: "scroll",
           }}
+          className="set-scrollbar color-scrollbar"
         >
           {data.length ? (
             <div>

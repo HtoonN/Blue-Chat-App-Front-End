@@ -1,6 +1,8 @@
+import setMessagedFriends from "./SetMessagedFriends";
+
 const startMessageControl = (userId, dispatch, setBtnDisabled) => {
   setBtnDisabled(true);
-  console.log(userId);
+  setMessagedFriends(userId, dispatch);
   setBtnDisabled(false);
 };
 export default startMessageControl;

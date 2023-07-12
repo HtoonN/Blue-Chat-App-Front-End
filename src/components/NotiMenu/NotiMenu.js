@@ -59,14 +59,13 @@ const NotiMenu = ({ notiMenuRef }) => {
                 overflowX: "hidden",
                 padding: "5px",
               }}
+              className="set-scrollbar color-scrollbar"
             >
               <ClickAwayListener onClickAway={handleClose}>
                 {data.length ? (
                   <div>
                     <MenuList>
                       {data.map((data, index) => {
-                        console.log(index);
-
                         return (
                           <div key={index}>
                             <MenuListItem data={data} index={index} />

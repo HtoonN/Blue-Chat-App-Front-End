@@ -33,7 +33,7 @@ const FindFriendModel = () => {
         </DialogTitle>
         <Box
           sx={{ pt: 0 }}
-          className="w-[350px] h-[500px] bg-white p-2 overflow-scroll md:w-[400px]"
+          className="w-[350px] h-[500px] bg-white p-2  md:w-[400px]"
         >
           <div className="w-full flex justify-around">
             <div className="w-full flex flex-row justify-around">

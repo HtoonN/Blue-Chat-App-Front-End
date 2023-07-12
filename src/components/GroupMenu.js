@@ -12,9 +12,9 @@ const GroupMenu = ({ mode }) => {
     if (arr.groups.groupsList.length) {
       return (
         <div
-          className={`h-full overflow-scroll ${
+          className={`h-full overflow-y-scroll ${
             mode === "groups" ? "" : "hidden"
-          }`}
+          } set-scrollbar color-scrollbar`}
         >
           {arr.groups.groupsList.map((arr, index) => {
             let profileimage = {};

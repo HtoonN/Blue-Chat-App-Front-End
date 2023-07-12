@@ -10,6 +10,17 @@
     ::-webkit-scrollbar {
         display: none;
     }
+}
 
+@layer utilities {
+    .set-scrollbar::-webkit-scrollbar {
+        width: 2px;
+        display: block;
+    }
+
+    .color-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #1e3a8a;
+        border-radius: 1px;
+    }
 
 }

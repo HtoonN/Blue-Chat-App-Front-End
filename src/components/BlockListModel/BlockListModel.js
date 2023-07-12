@@ -28,10 +28,10 @@ const BlockListModel = () => {
           </DialogTitle>
           <Box
             sx={{ pt: 0 }}
-            className="w-[350px] h-[500px] bg-white p-2 overflow-scroll md:w-[400px]"
+            className="w-[350px] h-[500px] bg-white p-2  md:w-[400px]"
           >
             {blockedList.length ? (
-              <List className=" w-full  overflow-y-scroll">
+              <List className=" w-full  overflow-y-scroll h-full">
                 {blockedList.map((data, index) => {
                   return <BlockListItems obj={data} key={index} />;
                 })}
