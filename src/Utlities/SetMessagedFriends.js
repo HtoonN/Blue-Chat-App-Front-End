@@ -17,7 +17,7 @@ const setMessagedFriends = (userId, dispatch) => {
       dispatch(addMessagedFriend(userId));
     })
     .catch((e) => {
-      console.log(e);
+      console.log(e.response.data);
     });
 };
 export default setMessagedFriends;

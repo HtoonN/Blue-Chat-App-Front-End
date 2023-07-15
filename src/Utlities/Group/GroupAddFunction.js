@@ -9,7 +9,7 @@ const groupAddFun = (groupId, setBtnDisabled, dispatch) => {
     withCredentials: true,
   })
     .then((result) => {
-      console.log(result);
+      console.log(result.data.data);
       if (result.status === 201) {
         dispatch(addAddedGroup(groupId));
       }

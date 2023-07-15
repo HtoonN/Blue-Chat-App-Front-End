@@ -1,7 +1,24 @@
+import axios from "axios";
+import { cancelAddedGroup } from "../../Redux/Reducer/UserDataREducer";
+
 const cancelAdd = (groupId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
-  console.log(groupId);
-  setBtnDisabled(false);
+  axios({
+    method: "patch",
+    url: `${process.env.REACT_APP_API_A}/cancel_group_added/${groupId}`,
+    withCredentials: true,
+  })
+    .then((result) => {
+      if (result.status === 201) {
+        console.log(result.data);
+        dispatch(cancelAddedGroup(groupId));
+      }
+      setBtnDisabled(false);
+    })
+    .catch((e) => {
+      console.log(e.response.data);
+      setBtnDisabled(false);
+    });
 };
 
 export default cancelAdd;

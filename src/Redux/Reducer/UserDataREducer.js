@@ -306,6 +306,20 @@ export const userDatasReducer = createSlice({
         state.addedGroupList.list.push(action.payload);
       }
     },
+
+    cancelAddedGroup: (state, action) => {
+      const arr = state.friendsDatas.add.groups.filter((id) => {
+        return id !== action.payload;
+      });
+      state.friendsDatas.add.groups = arr;
+
+      const arr2 = state.addedGroupList.list.filter((obj) => {
+        if (obj.groupId !== action.payload) {
+          return obj;
+        }
+      });
+      state.addedGroupList.list = arr2;
+    },
   },
 });
 
@@ -341,5 +355,6 @@ export const {
   setSelectedUser,
   addAddedGroup,
   addAddedGroupList,
+  cancelAddedGroup,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;
