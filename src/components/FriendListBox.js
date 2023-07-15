@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyMessagedComponent from "./EmptyMessagedComponent";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
-import { setSelectedUser } from "../Redux/Reducer/UserDataREducer";
 import FriendsList from "./FriendsSideBox/FriendsList";
 import getMessagedFri from "../Utlities/GetMessagedFri";
 import selectFunction from "../Utlities/SelectedFunction";
@@ -93,7 +92,6 @@ const FriendListBox = () => {
                     data={data}
                     profileImage={profileImage}
                     selectedUser={selectedUser}
-                    setSelectedUser={setSelectedUser}
                     selectFunction={selectFunction}
                     dispatch={dispatch}
                   />

@@ -8,14 +8,18 @@ import {
   ListItemText,
 } from "@mui/material";
 import React, { useState } from "react";
-import addGroup from "../Utlities/Group/AddGroup";
 import leaveGroup from "../Utlities/Group/LeaveGroup";
 import editGroup from "../Utlities/Group/EditGRoup";
+import groupAddFun from "../Utlities/Group/GroupAddFunction";
+import { useDispatch } from "react-redux";
+import cancelAdd from "../Utlities/Group/CancelAdd";
 
-const GroupMenuList = ({ isAdmin, isMember, arr, profileimage }) => {
+const GroupMenuList = ({ isAdmin, isMember, arr, profileimage, added }) => {
   const [BtnAdd, setBtnAdd] = useState(false);
   const [BtnLeave, setBtnLeave] = useState(false);
   const [BtnManage, setBtnManage] = useState(false);
+  const [BtnCancel, setBtnCancel] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -37,15 +41,29 @@ const GroupMenuList = ({ isAdmin, isMember, arr, profileimage }) => {
                         Leave
                       </Button>
                     ) : (
-                      <Button
-                        onClick={() => {
-                          addGroup(arr.groupId, setBtnAdd);
-                        }}
-                        disabled={BtnAdd}
-                        sx={{ color: "#1e3a8a" }}
-                      >
-                        Add
-                      </Button>
+                      <div>
+                        {added ? (
+                          <Button
+                            onClick={() => {
+                              cancelAdd(arr.groupId, setBtnCancel, dispatch);
+                            }}
+                            disabled={BtnCancel}
+                            sx={{ color: "#1e3a8a" }}
+                          >
+                            Cancel Request
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              groupAddFun(arr.groupId, setBtnAdd, dispatch);
+                            }}
+                            disabled={BtnAdd}
+                            sx={{ color: "#1e3a8a" }}
+                          >
+                            Add
+                          </Button>
+                        )}
+                      </div>
                     )}
                   </div>
                 ) : (

@@ -1,13 +1,12 @@
-import { AccountCircle } from "@mui/icons-material";
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
+import { ListItem, ListItemText } from "@mui/material";
 import React from "react";
+import ProfileImageComponents from "../ProfileImageComponents";
 
 const FriendsList = ({
   index,
   data,
   profileImage,
   selectedUser,
-  setSelectedUser,
   selectFunction,
   dispatch,
 }) => {
@@ -19,22 +18,11 @@ const FriendsList = ({
         } `}
         onClick={() => {
           if (index !== selectedUser) {
-            setSelectedUser(index);
+            selectFunction(data.userId, dispatch, index);
           }
-          selectFunction(data.userId, dispatch, index);
         }}
       >
-        <ListItemAvatar>
-          <Avatar>
-            {data.profileImage ? (
-              <img
-                src={`http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
-              />
-            ) : (
-              <AccountCircle className="text-blue-900" />
-            )}
-          </Avatar>
-        </ListItemAvatar>
+        <ProfileImageComponents data={data} profileImage={profileImage} />
         <ListItemText
           primary={data.username}
           secondary={

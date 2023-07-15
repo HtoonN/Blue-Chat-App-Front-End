@@ -5,17 +5,21 @@ import getAddedUsers from "../../Utlities/Friend/GetAddedUser";
 import { Box, Dialog, DialogTitle, List } from "@mui/material";
 import AddedListItems from "./AddedListItems";
 import EmptyMessagedComponent from "../EmptyMessagedComponent";
+import getAddedGroup from "../../Utlities/Group/getAddedGroups";
+import AddedGRoupListItems from "./AddedGroupListItems";
 
 const AddedListModel = () => {
   const addedListPeoples = useSelector(
     (state) => state.userDatas.addedList.list
   );
-  const addedListGroups = [];
+  const addedGroupList = useSelector(
+    (state) => state.userDatas.addedGroupList.list
+  );
+
   const open = useSelector((state) => state.openClose.addedListModel);
   const dispatch = useDispatch();
   const [person, setPerson] = useState(true);
-  const personNo = 2;
-  const groupNo = 3;
+  const added = useSelector((state) => state.userDatas.friendsDatas.add);
 
   const active = "text-blue-900  my-1 cursor-pointer ";
   const noActive =
@@ -28,6 +32,7 @@ const AddedListModel = () => {
   useEffect(() => {
     if (open) {
       getAddedUsers(dispatch);
+      getAddedGroup(added.groups, dispatch);
     }
   }, [open]);
 
@@ -43,13 +48,13 @@ const AddedListModel = () => {
               className={person ? active : noActive}
               onClick={() => setPerson(true)}
             >
-              Peoples:{personNo}
+              Peoples:{added ? added.list.length : ""}
             </div>
             <div
               className={person ? noActive : active}
               onClick={() => setPerson(false)}
             >
-              Groups:{groupNo}
+              Groups:{added ? added.groups.length : ""}
             </div>
           </div>
         </div>
@@ -74,9 +79,11 @@ const AddedListModel = () => {
               </div>
             ) : (
               <Box className="w-full h-full">
-                {addedListGroups.length ? (
+                {addedGroupList.length ? (
                   <List className=" w-full  overflow-y-scroll h-full">
-                    Groups
+                    {addedGroupList.map((data, index) => {
+                      return <AddedGRoupListItems data={data} key={index} />;
+                    })}
                   </List>
                 ) : (
                   <EmptyMessagedComponent message="No Waiting Accept" />

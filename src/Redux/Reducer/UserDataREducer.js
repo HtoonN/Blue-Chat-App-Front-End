@@ -15,6 +15,7 @@ export const userDatasReducer = createSlice({
     messagedFriendsList: { nextPage: 1, list: [] },
     chatFriend: "",
     selectedUser: { user: "", group: "" },
+    addedGroupList: { nextPage: 1, list: [] },
   },
   reducers: {
     //Profile
@@ -287,6 +288,24 @@ export const userDatasReducer = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser.user = action.payload;
     },
+
+    //setAdded
+    addAddedGroup: (state, action) => {
+      state.friendsDatas.add.groups.push(action.payload);
+    },
+
+    //addGroupList
+    addAddedGroupList: (state, action) => {
+      let isHas = false;
+      state.addedGroupList.list.map((arr) => {
+        if (arr.groupId === action.payload.groupId) {
+          isHas = true;
+        }
+      });
+      if (!isHas) {
+        state.addedGroupList.list.push(action.payload);
+      }
+    },
   },
 });
 
@@ -320,5 +339,7 @@ export const {
   addMessagedFriend,
   setMessagedFriendList,
   setSelectedUser,
+  addAddedGroup,
+  addAddedGroupList,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;
