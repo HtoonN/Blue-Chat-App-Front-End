@@ -2,39 +2,27 @@ import { Diversity1 } from "@mui/icons-material";
 import {
   Avatar,
   Button,
-  ClickAwayListener,
-  Divider,
-  Grow,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  MenuItem,
-  MenuList,
-  Paper,
-  Popper,
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 import leaveGroup from "../Utlities/Group/LeaveGroup";
-import editGroup from "../Utlities/Group/EditGRoup";
 import groupAddFun from "../Utlities/Group/GroupAddFunction";
 import { useDispatch, useSelector } from "react-redux";
 import cancelAdd from "../Utlities/Group/CancelAdd";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
+import ManageMenuBar from "./FindFriendsModel/ManageMenuBar";
 
 const GroupMenuList = ({ arr }) => {
   const [BtnAdd, setBtnAdd] = useState(false);
   const [BtnLeave, setBtnLeave] = useState(false);
-  const [BtnManage, setBtnManage] = useState(false);
   const [BtnCancel, setBtnCancel] = useState(false);
 
   const [open, setOpen] = useState(false);
 
   const friendMenuRef = useRef();
-
-  /*  const [isMember, setIsMember] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [added, setAdded] = useState(false); */
 
   let isMember = false;
   let isAdmin = false;
@@ -53,25 +41,18 @@ const GroupMenuList = ({ arr }) => {
   }
   addedGroup.map((group) => {
     if (group === arr.groupId) {
-      //setAdded(true);
       added = true;
     }
   });
   groups.map((group) => {
     if (group.id === arr.groupId) {
       if (group.status === "owner") {
-        //setIsAdmin(true);
         isAdmin = true;
       } else {
-        //setIsMember(true);
         isMember = true;
       }
     }
   });
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div>
@@ -122,10 +103,8 @@ const GroupMenuList = ({ arr }) => {
                   <>
                     <Button
                       onClick={() => {
-                        editGroup(arr.groupId, setBtnManage);
-                        setOpen(true);
+                        setOpen((pre) => !pre);
                       }}
-                      disabled={BtnManage}
                       sx={{ color: "#1e3a8a" }}
                       ref={friendMenuRef}
                     >
@@ -133,52 +112,11 @@ const GroupMenuList = ({ arr }) => {
                     </Button>
 
                     {/* Menu for Manage */}
-                    <Popper
+                    <ManageMenuBar
                       open={open}
-                      anchorEl={friendMenuRef.current}
-                      placement="bottom-start"
-                      transition
-                      disablePortal
-                      sx={{ zIndex: "50" }}
-                    >
-                      {({ TransitionProps, placement }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{
-                            transformOrigin:
-                              placement === "bottom-start"
-                                ? "left-top"
-                                : "left-bottom",
-                          }}
-                        >
-                          <Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                              <MenuList>
-                                <MenuItem
-                                  onClick={() => {
-                                    handleClose();
-                                    console.log("Click");
-                                  }}
-                                  sx={{ color: "blue" }}
-                                >
-                                  Manage Members
-                                </MenuItem>
-                                <Divider />
-                                <MenuItem
-                                  onClick={() => {
-                                    handleClose();
-                                    console.log("Click");
-                                  }}
-                                  sx={{ color: "blue" }}
-                                >
-                                  Manage Profile
-                                </MenuItem>
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
+                      setOpen={setOpen}
+                      friendMenuRef={friendMenuRef}
+                    />
                   </>
                 )}
               </div>

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 const LabelAndInputPassword = (props) => {
   const [seenForPassword, setSeenForPassword] = useState(false);
+
   return (
     <div className="mb-5">
       <p className="mb-1 text-small lg:text-base">{props.name}</p>

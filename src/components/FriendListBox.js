@@ -6,6 +6,8 @@ import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
 import FriendsList from "./FriendsSideBox/FriendsList";
 import getMessagedFri from "../Utlities/GetMessagedFri";
 import selectFunction from "../Utlities/SelectedFunction";
+import GroupList from "./FriendsSideBox/GroupList";
+import getGroupDatasAsMember from "../Utlities/Group/GetGroupDatasAsmember";
 
 const FriendListBox = () => {
   const active = "text-blue-900 font-extrabold my-1 cursor-pointer ";
@@ -22,6 +24,7 @@ const FriendListBox = () => {
     (state) => state.userDatas.friendsDatas.messagedFriends.friendsList
   );
   const friends = useSelector((state) => state.userDatas.friendsList.list);
+  const groups = useSelector((state) => state.userDatas.profileDatas.groups);
 
   const dispatch = useDispatch();
 
@@ -39,6 +42,24 @@ const FriendListBox = () => {
     }
   }, [messagedFriends, friends]);
 
+  const groupListDatas = useSelector(
+    (state) => state.userDatas.groupListDatas.list
+  );
+
+  useEffect(() => {
+    if (!groupListDatas.length) {
+      if (groups.length) {
+        groups.map((group) => {
+          let status = "memeber";
+          if (group.status === "owner") {
+            status = "admin";
+          }
+          getGroupDatasAsMember(group.id, status, dispatch);
+        });
+      }
+    }
+  }, []);
+
   return (
     <Box
       className="w-[30vw] h-full border-r-2"
@@ -49,7 +70,7 @@ const FriendListBox = () => {
           {query === "friends" ? "Messages" : "Groups"} List
         </div>
         <h1 className="text-xs font-thin opacity-70">
-          Total - {query === "friends" ? messagedFriends.length : "9"}
+          Total - {query === "friends" ? messagedFriends.length : groups.length}
         </h1>
       </div>
       <div className="flex w-full justify-around">
@@ -102,13 +123,7 @@ const FriendListBox = () => {
             <EmptyMessagedComponent message="No Messaged Friend" />
           )}
         </div>
-        <div
-          className={`w-full h-full bg-red-500 ${
-            query === "groups" ? "" : "hidden"
-          }`}
-        >
-          Groups
-        </div>
+        <GroupList query={query} groupListDatas={groupListDatas} />
       </div>
     </Box>
   );

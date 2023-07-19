@@ -14,11 +14,11 @@ const FriendsList = ({
     <div className=" border-b-2">
       <ListItem
         className={`cursor-pointer hover:bg-gray-100 active:bg-gray-200 ${
-          index === selectedUser ? "bg-gray-300" : ""
+          data.userId === selectedUser ? "bg-gray-300" : ""
         } `}
         onClick={() => {
-          if (index !== selectedUser) {
-            selectFunction(data.userId, dispatch, index);
+          if (data.userId !== selectedUser) {
+            selectFunction(data.userId, dispatch, data.userId);
           }
         }}
       >

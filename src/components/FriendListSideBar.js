@@ -7,6 +7,7 @@ import { setSelectedUser } from "../Redux/Reducer/UserDataREducer";
 import FriendsList from "./FriendsSideBox/FriendsList";
 import getMessagedFri from "../Utlities/GetMessagedFri";
 import selectFunction from "../Utlities/SelectedFunction";
+import GroupList from "./FriendsSideBox/GroupList";
 
 const FriendListSideBar = () => {
   const friendListSideBar = useSelector(
@@ -33,6 +34,7 @@ const FriendListSideBar = () => {
   const messagedFriends = useSelector(
     (state) => state.userDatas.friendsDatas.messagedFriends.friendsList
   );
+  const groups = useSelector((state) => state.userDatas.profileDatas.groups);
 
   const friends = useSelector((state) => state.userDatas.friendsList.list);
 
@@ -43,6 +45,10 @@ const FriendListSideBar = () => {
       }
     }
   }, [messagedFriends, friends]);
+
+  const groupListDatas = useSelector(
+    (state) => state.userDatas.groupListDatas.list
+  );
 
   return (
     <Box
@@ -59,7 +65,8 @@ const FriendListSideBar = () => {
             {query === "friends" ? "Messages" : "Groups"} List
           </div>
           <h1 className="text-xs font-thin opacity-70">
-            Total - {query === "friends" ? messagedFriends.length : "9"}
+            Total -
+            {query === "friends" ? messagedFriends.length : groups.length}
           </h1>
         </div>
 
@@ -116,13 +123,7 @@ const FriendListSideBar = () => {
               )}
             </div>
           ) : (
-            <div
-              className={`w-full h-full bg-red-500 ${
-                query === "groups" ? "" : "hidden"
-              }`}
-            >
-              Groups
-            </div>
+            <GroupList query={query} groupListDatas={groupListDatas} />
           )}
         </div>
       </Paper>

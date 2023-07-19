@@ -3,9 +3,9 @@ import {
   setSelectedUser,
 } from "../Redux/Reducer/UserDataREducer";
 
-const selectFunction = (userId, dispatch, index) => {
-  dispatch(setChatFriend(userId));
-  dispatch(setSelectedUser(index));
+const selectFunction = (selectId, dispatch) => {
+  dispatch(setChatFriend(selectId));
+  dispatch(setSelectedUser(selectId));
 };
 
 export default selectFunction;

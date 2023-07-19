@@ -10,6 +10,7 @@ export const openCloseReducer = createSlice({
     addedListModel: false,
     notiMenuModel: false,
     notiMenuMobileModel: false,
+    createGroupModel: false,
   },
   reducers: {
     setFriendListSideBar: (state) => {
@@ -33,6 +34,9 @@ export const openCloseReducer = createSlice({
     setNotiMenuMobileModel: (state) => {
       state.notiMenuMobileModel = !state.notiMenuMobileModel;
     },
+    setCreateGroupModel: (state) => {
+      state.createGroupModel = !state.createGroupModel;
+    },
   },
 });
 
@@ -44,6 +48,7 @@ export const {
   setAddedListModel,
   setNotiMenuModel,
   setNotiMenuMobileModel,
+  setCreateGroupModel,
 } = openCloseReducer.actions;
 
 export default openCloseReducer.reducer;

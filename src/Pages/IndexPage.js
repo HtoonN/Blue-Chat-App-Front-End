@@ -9,6 +9,7 @@ import FindFriendModel from "../components/FindFriendModel";
 import FriendRequestModel from "../components/FriendRequestModel";
 import BlockListModel from "../components/BlockListModel/BlockListModel";
 import AddedListModel from "../components/AddedListModel/AddedListModel";
+import CreateGroup from "../components/CreateGroup";
 
 const IndexPage = () => {
   return (
@@ -21,6 +22,7 @@ const IndexPage = () => {
         <BlockListModel />
         <AddedListModel />
         <LoadingComponent />
+        <CreateGroup />
         <RouterBrower />
       </Provider>
     </div>
