@@ -17,9 +17,7 @@ const FriendListBox = () => {
   const [query, setQuery] = useState("friends");
   const [messagedFriObj, setMessagedFriObj] = useState([]);
 
-  const selectedUser = useSelector(
-    (state) => state.userDatas.selectedUser.user
-  );
+  const selectedUser = useSelector((state) => state.userDatas.selectedUser.id);
   const messagedFriends = useSelector(
     (state) => state.userDatas.friendsDatas.messagedFriends.friendsList
   );

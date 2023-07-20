@@ -1,4 +1,11 @@
-import { Diversity1 } from "@mui/icons-material";
+import {
+  Delete,
+  Diversity1,
+  Groups3,
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  ManageAccounts,
+} from "@mui/icons-material";
 import {
   Avatar,
   Button,
@@ -7,13 +14,12 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import leaveGroup from "../Utlities/Group/LeaveGroup";
 import groupAddFun from "../Utlities/Group/GroupAddFunction";
 import { useDispatch, useSelector } from "react-redux";
 import cancelAdd from "../Utlities/Group/CancelAdd";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
-import ManageMenuBar from "./FindFriendsModel/ManageMenuBar";
 
 const GroupMenuList = ({ arr }) => {
   const [BtnAdd, setBtnAdd] = useState(false);
@@ -21,8 +27,6 @@ const GroupMenuList = ({ arr }) => {
   const [BtnCancel, setBtnCancel] = useState(false);
 
   const [open, setOpen] = useState(false);
-
-  const friendMenuRef = useRef();
 
   let isMember = false;
   let isAdmin = false;
@@ -56,7 +60,7 @@ const GroupMenuList = ({ arr }) => {
 
   return (
     <div>
-      <List className=" w-full border-b-2  hover:bg-gray-100 cursor-pointer">
+      <List className=" w-full border-b-2  hover:bg-gray-100 ">
         <div>
           <ListItem
             secondaryAction={
@@ -106,17 +110,10 @@ const GroupMenuList = ({ arr }) => {
                         setOpen((pre) => !pre);
                       }}
                       sx={{ color: "#1e3a8a" }}
-                      ref={friendMenuRef}
                     >
+                      <>{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}</>
                       Manage
                     </Button>
-
-                    {/* Menu for Manage */}
-                    <ManageMenuBar
-                      open={open}
-                      setOpen={setOpen}
-                      friendMenuRef={friendMenuRef}
-                    />
                   </>
                 )}
               </div>
@@ -169,6 +166,42 @@ const GroupMenuList = ({ arr }) => {
           </Button>
         )}
       </div> */}
+        </div>
+        <div>
+          {isAdmin ? (
+            <div>
+              {open && (
+                <div className="flex items-center justify-around w-full h-full mt-5">
+                  <Button
+                    sx={{
+                      color: "#1e3a8a",
+                    }}
+                  >
+                    <Groups3 className="mr-2" />
+                    Members
+                  </Button>
+                  <Button
+                    sx={{
+                      color: "#1e3a8a",
+                    }}
+                  >
+                    <ManageAccounts className="mr-2" />
+                    Profile
+                  </Button>
+                  <Button
+                    sx={{
+                      color: "red",
+                    }}
+                  >
+                    <Delete className="mr-2" />
+                    Delete
+                  </Button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </List>
     </div>

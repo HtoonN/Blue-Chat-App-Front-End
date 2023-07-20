@@ -14,7 +14,7 @@ const GroupList = ({ query, groupListDatas }) => {
     <div className={`w-full h-full ${query === "groups" ? "" : "hidden"}`}>
       <CreateGroupButton />
       {groupListDatas.length ? (
-        <List className="w-full h-[calc(100%_-_40px)] overflow-x-hidden overflow-y-scroll">
+        <List className="w-full h-[calc(100%_-_40px)] overflow-x-hidden overflow-y-scroll set-scrollbar color-scrollbar">
           {groupListDatas.map((data, index) => {
             let profileImage;
             if (data.profileImage) {

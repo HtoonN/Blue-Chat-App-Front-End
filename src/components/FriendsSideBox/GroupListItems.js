@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import GroupImageComponent from "../GroupImageComponent";
 
 const GroupListItems = ({ data, profileImage, selectFunction, dispatch }) => {
-  const selectedUser = useSelector(
-    (state) => state.userDatas.selectedUser.user
-  );
+  const selectedUser = useSelector((state) => state.userDatas.selectedUser.id);
 
   const userId = useSelector((state) => state.userDatas.profileDatas.userId);
 
@@ -26,7 +24,7 @@ const GroupListItems = ({ data, profileImage, selectFunction, dispatch }) => {
         } `}
         onClick={() => {
           if (data.groupId !== selectedUser) {
-            selectFunction(data.groupId, dispatch);
+            selectFunction(data.groupId, "group", dispatch, data, owner);
           }
         }}
       >

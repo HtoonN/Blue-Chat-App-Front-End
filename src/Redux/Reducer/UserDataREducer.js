@@ -13,8 +13,8 @@ export const userDatasReducer = createSlice({
     friendsList: { nextPage: 1, list: [] },
     notiList: { nextPage: 1, list: [] },
     messagedFriendsList: { nextPage: 1, list: [] },
-    chatFriend: "",
-    selectedUser: "",
+    chatFriend: { data: "", status: "" },
+    selectedUser: { status: "", id: "" },
     addedGroupList: { nextPage: 1, list: [] },
     groupListDatas: { nextPage: 1, list: [] },
   },
@@ -287,7 +287,10 @@ export const userDatasReducer = createSlice({
 
     //Set selected
     setSelectedUser: (state, action) => {
-      state.selectedUser = action.payload;
+      state.selectedUser.id = action.payload.id;
+      state.selectedUser.status = action.payload.status;
+      state.chatFriend.data = action.payload.data;
+      state.chatFriend.status = action.payload.owner;
     },
 
     //setAdded
@@ -333,6 +336,15 @@ export const userDatasReducer = createSlice({
         state.groupListDatas.list.push(action.payload);
       }
     },
+
+    //GroupList
+    addGroupListAsOwner: (state, action) => {
+      state.profileDatas.groups.push({
+        id: action.payload.id,
+        status: "owner",
+      });
+      state.groupListDatas.list.unshift(action.payload);
+    },
   },
 });
 
@@ -370,5 +382,6 @@ export const {
   addAddedGroupList,
   cancelAddedGroup,
   setGroupListDatas,
+  addGroupListAsOwner,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

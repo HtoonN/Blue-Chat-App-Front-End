@@ -20,9 +20,7 @@ const FriendListSideBar = () => {
 
   const [query, setQuery] = useState("friends");
   const [messagedFriObj, setMessagedFriObj] = useState([]);
-  const selectedUser = useSelector(
-    (state) => state.userDatas.selectedUser.user
-  );
+  const selectedUser = useSelector((state) => state.userDatas.selectedUser.id);
   const dispatch = useDispatch();
 
   const change = (option) => {
@@ -88,7 +86,7 @@ const FriendListSideBar = () => {
             Groups
           </div>
         </div>
-        <div className="w-full h-[calc(100%_-_109px)] ">
+        <div className="w-full h-[calc(100%_-_149px)] ">
           {query === "friends" ? (
             <div
               className={`w-full h-full  ${

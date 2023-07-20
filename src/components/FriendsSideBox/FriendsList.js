@@ -3,7 +3,6 @@ import React from "react";
 import ProfileImageComponents from "../ProfileImageComponents";
 
 const FriendsList = ({
-  index,
   data,
   profileImage,
   selectedUser,
@@ -18,7 +17,7 @@ const FriendsList = ({
         } `}
         onClick={() => {
           if (data.userId !== selectedUser) {
-            selectFunction(data.userId, dispatch, data.userId);
+            selectFunction(data.userId, "friend", dispatch, data);
           }
         }}
       >

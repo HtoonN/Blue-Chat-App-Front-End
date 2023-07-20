@@ -1,11 +1,9 @@
-import {
-  setChatFriend,
-  setSelectedUser,
-} from "../Redux/Reducer/UserDataREducer";
+import { setSelectedUser } from "../Redux/Reducer/UserDataREducer";
 
-const selectFunction = (selectId, dispatch) => {
-  dispatch(setChatFriend(selectId));
-  dispatch(setSelectedUser(selectId));
+const selectFunction = (selectId, status, dispatch, data, owner) => {
+  dispatch(
+    setSelectedUser({ id: selectId, status: status, data: data, owner: owner })
+  );
 };
 
 export default selectFunction;
