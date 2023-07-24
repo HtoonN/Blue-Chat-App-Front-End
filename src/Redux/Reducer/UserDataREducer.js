@@ -340,10 +340,28 @@ export const userDatasReducer = createSlice({
     //GroupList
     addGroupListAsOwner: (state, action) => {
       state.profileDatas.groups.push({
-        id: action.payload.id,
+        id: action.payload.groupId,
         status: "owner",
       });
       state.groupListDatas.list.unshift(action.payload);
+    },
+
+    deleteGroupR: (state, action) => {
+      const result = state.profileDatas.groups.filter((groupInfo) => {
+        if (groupInfo.id !== action.payload) {
+          return groupInfo;
+        }
+      });
+
+      state.profileDatas.groups = result;
+
+      const resGroup = state.groupListDatas.list.filter((groupDatas) => {
+        if (groupDatas.groupId !== action.payload) {
+          return groupDatas;
+        }
+      });
+
+      state.groupListDatas.list = resGroup;
     },
   },
 });
@@ -383,5 +401,6 @@ export const {
   cancelAddedGroup,
   setGroupListDatas,
   addGroupListAsOwner,
+  deleteGroupR,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

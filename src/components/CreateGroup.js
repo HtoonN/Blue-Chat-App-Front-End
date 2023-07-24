@@ -7,14 +7,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import LabelAndInputText from "./LabelAndInputText";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateGroupModel } from "../Redux/Reducer/OpenCloseReducer";
-import createGroupFun from "../Utlities/CreateGroup";
+import createGroupFun from "../Utlities/Group/CreateGroup";
 
 export default function CreateGroup() {
   const open = useSelector((state) => state.openClose.createGroupModel);
   const [groupName, setGroupName] = React.useState("");
   const [groupType, setGroupType] = React.useState("General");
   const [BtnCreate, setBtnCreate] = React.useState(false);
-
   const dispatch = useDispatch();
 
   const handleClose = () => {

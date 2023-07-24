@@ -10,11 +10,13 @@ import FriendRequestModel from "../components/FriendRequestModel";
 import BlockListModel from "../components/BlockListModel/BlockListModel";
 import AddedListModel from "../components/AddedListModel/AddedListModel";
 import CreateGroup from "../components/CreateGroup";
+import ConfirmationDialog from "./SubPage/InforamtionPage/ConfirmationDialog";
 
 const IndexPage = () => {
   return (
     <div>
       <Provider store={store}>
+        <ConfirmationDialog />
         <AlertComponent />
         <AlertDialogComponent />
         <FindFriendModel />

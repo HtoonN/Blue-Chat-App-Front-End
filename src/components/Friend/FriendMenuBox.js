@@ -5,11 +5,15 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
+import { useDispatch } from "react-redux";
+import callFunForConformationDialog from "../../Utlities/ConformationDialogFunfciton/CallFunForConformationDialog";
 
-export default function FriendMenuBox({ open, setOpen, anchorRef }) {
+export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const dispatch = useDispatch();
 
   return (
     <Popper
@@ -19,6 +23,7 @@ export default function FriendMenuBox({ open, setOpen, anchorRef }) {
       placement="bottom-start"
       transition
       disablePortal
+      sx={{ zIndex: "100" }}
     >
       {({ TransitionProps, placement }) => (
         <Grow
@@ -35,11 +40,40 @@ export default function FriendMenuBox({ open, setOpen, anchorRef }) {
                 id="composition-menu"
                 aria-labelledby="composition-button"
               >
-                <MenuItem onClick={handleClose}>UnFriend</MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    callFunForConformationDialog(handleClose, dispatch, {
+                      header: "UnFriend",
+                      body: "Are you sure to UNFIREND with this user!",
+                      funName: "unfriend",
+                      data: data.userId,
+                    });
+                  }}
+                >
+                  UnFriend
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    callFunForConformationDialog(handleClose, dispatch, {
+                      header: "Block",
+                      body: "Are you sure to block the user!",
+                      funName: "blockUser",
+                      data: data.userId,
+                    });
+                  }}
+                >
                   <div className="text-red-500">Block</div>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    callFunForConformationDialog(handleClose, dispatch, {
+                      header: "Delete Chats",
+                      body: "Are you sure to delete chat with this user!",
+                      funName: "deleteChat",
+                      data: data.userId,
+                    });
+                  }}
+                >
                   <div className="text-red-500">Delete Chat</div>
                 </MenuItem>
               </MenuList>

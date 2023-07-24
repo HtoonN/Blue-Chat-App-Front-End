@@ -4,11 +4,13 @@ import TypeMessageSession from "./TypeMessageSession";
 import ChatHeaderSession from "./ChatHeaderSession";
 import MessageSession from "./MessageSession";
 import { useSelector } from "react-redux";
+import EmptyMessagedComponent from "./EmptyMessagedComponent";
 
 const ChatBox = () => {
   const chatFriendDatas = useSelector(
     (state) => state.userDatas.chatFriend.data
   );
+
   const isOwner = useSelector((state) => state.userDatas.chatFriend.status);
 
   return (
@@ -23,7 +25,7 @@ const ChatBox = () => {
           <TypeMessageSession />
         </Box>
       ) : (
-        <></>
+        <EmptyMessagedComponent message="Select a friends or group to Chat!" />
       )}
     </Box>
   );

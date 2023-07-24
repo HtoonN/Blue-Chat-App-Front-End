@@ -59,6 +59,7 @@ const ChatHeaderSession = ({ data, isOwner }) => {
               setOpen={setGroupOpen}
               anchorRef={groupEnchor}
               isOwner={isOwner}
+              data={data}
             />
           </div>
         </div>
@@ -102,6 +103,7 @@ const ChatHeaderSession = ({ data, isOwner }) => {
               open={FriOpen}
               setOpen={setFriOpen}
               anchorRef={friendEnchor}
+              data={data}
             />
           </div>
         </div>

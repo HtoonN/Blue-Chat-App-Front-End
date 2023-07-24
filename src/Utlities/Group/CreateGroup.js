@@ -1,5 +1,6 @@
 import axios from "axios";
-import { addGroupListAsOwner } from "../Redux/Reducer/UserDataREducer";
+import { addGroupListAsOwner } from "../../Redux/Reducer/UserDataREducer";
+import setAlertFun from "../SetAlertFun";
 
 const createGroupFun = ({
   groupName,
@@ -24,8 +25,10 @@ const createGroupFun = ({
     .then((res) => {
       if (res.status === 200) {
         dispatch(addGroupListAsOwner(res.data.data));
-        handleClose();
+        setAlertFun(dispatch, "Group Created");
         setGroupName("");
+        setBtnCreate(false);
+        handleClose();
       } else {
         setBtnCreate(false);
       }

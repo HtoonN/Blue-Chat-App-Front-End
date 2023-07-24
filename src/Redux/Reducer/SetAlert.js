@@ -4,7 +4,7 @@ export const alertSlice = createSlice({
   name: "alert",
   initialState: {
     value: false,
-    text: "Alert",
+    text: "Hello",
   },
 
   reducers: {
