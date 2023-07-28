@@ -10,11 +10,13 @@ const GroupListItems = ({ data, profileImage, selectFunction, dispatch }) => {
 
   let owner = false;
 
-  data.admin.map((data) => {
-    if (data.id === userId && data.status === "owner") {
-      owner = true;
-    }
-  });
+  if (data.admin) {
+    data.admin.map((data) => {
+      if (data.id === userId && data.status === "owner") {
+        owner = true;
+      }
+    });
+  }
 
   return (
     <div className=" border-b-2">
@@ -33,9 +35,11 @@ const GroupListItems = ({ data, profileImage, selectFunction, dispatch }) => {
           primary={
             <>
               <span>{data.name}</span>
-              <span className="ml-3 p-1 bg-blue-900 text-white font-bold rounded-lg text-xs">
-                {owner ? "Owner" : ""}
-              </span>
+              {owner && (
+                <span className="ml-3 p-1 bg-blue-900 text-white font-bold rounded-lg text-xs">
+                  Owner
+                </span>
+              )}
             </>
           }
           secondary={<span>{data.type}</span>}

@@ -11,6 +11,7 @@ import BlockListModel from "../components/BlockListModel/BlockListModel";
 import AddedListModel from "../components/AddedListModel/AddedListModel";
 import CreateGroup from "../components/CreateGroup";
 import ConfirmationDialog from "./SubPage/InforamtionPage/ConfirmationDialog";
+import ManageGroupMembersModel from "../components/Group/ManageGroupMembersModel";
 
 const IndexPage = () => {
   return (
@@ -25,6 +26,7 @@ const IndexPage = () => {
         <AddedListModel />
         <LoadingComponent />
         <CreateGroup />
+        <ManageGroupMembersModel />
         <RouterBrower />
       </Provider>
     </div>

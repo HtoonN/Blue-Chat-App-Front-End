@@ -1,11 +1,4 @@
-import {
-  Delete,
-  Diversity1,
-  Groups3,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-  ManageAccounts,
-} from "@mui/icons-material";
+import { Diversity1 } from "@mui/icons-material";
 import {
   Avatar,
   Button,
@@ -20,13 +13,14 @@ import groupAddFun from "../Utlities/Group/GroupAddFunction";
 import { useDispatch, useSelector } from "react-redux";
 import cancelAdd from "../Utlities/Group/CancelAdd";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
+import selectFunction from "../Utlities/SelectedFunction";
+import { setFindFriendsModel } from "../Redux/Reducer/OpenCloseReducer";
+import getGroupDatasFromGroupList from "../Utlities/GetGroupDatasFromGroupList";
 
 const GroupMenuList = ({ arr }) => {
   const [BtnAdd, setBtnAdd] = useState(false);
   const [BtnLeave, setBtnLeave] = useState(false);
   const [BtnCancel, setBtnCancel] = useState(false);
-
-  const [open, setOpen] = useState(false);
 
   let isMember = false;
   let isAdmin = false;
@@ -38,6 +32,9 @@ const GroupMenuList = ({ arr }) => {
   const groups = useSelector((state) => state.userDatas.profileDatas.groups);
   const addedGroup = useSelector(
     (state) => state.userDatas.friendsDatas.add.groups
+  );
+  const groupListDatas = useSelector(
+    (state) => state.userDatas.groupListDatas.list
   );
 
   if (arr.profileImage) {
@@ -70,7 +67,7 @@ const GroupMenuList = ({ arr }) => {
                     {isMember ? (
                       <Button
                         onClick={() => {
-                          leaveGroup(arr.groupId, setBtnLeave);
+                          leaveGroup(arr.groupId, setBtnLeave, dispatch);
                         }}
                         disabled={BtnLeave}
                         sx={{ color: "#ff0000" }}
@@ -107,11 +104,21 @@ const GroupMenuList = ({ arr }) => {
                   <>
                     <Button
                       onClick={() => {
-                        setOpen((pre) => !pre);
+                        const data = getGroupDatasFromGroupList(
+                          arr.groupId,
+                          groupListDatas
+                        );
+                        selectFunction(
+                          arr.groupId,
+                          "group",
+                          dispatch,
+                          data,
+                          "owner"
+                        );
+                        dispatch(setFindFriendsModel());
                       }}
                       sx={{ color: "#1e3a8a" }}
                     >
-                      <>{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}</>
                       Manage
                     </Button>
                   </>
@@ -166,42 +173,6 @@ const GroupMenuList = ({ arr }) => {
           </Button>
         )}
       </div> */}
-        </div>
-        <div>
-          {isAdmin ? (
-            <div>
-              {open && (
-                <div className="flex items-center justify-around w-full h-full mt-5">
-                  <Button
-                    sx={{
-                      color: "#1e3a8a",
-                    }}
-                  >
-                    <Groups3 className="mr-2" />
-                    Members
-                  </Button>
-                  <Button
-                    sx={{
-                      color: "#1e3a8a",
-                    }}
-                  >
-                    <ManageAccounts className="mr-2" />
-                    Profile
-                  </Button>
-                  <Button
-                    sx={{
-                      color: "red",
-                    }}
-                  >
-                    <Delete className="mr-2" />
-                    Delete
-                  </Button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <></>
-          )}
         </div>
       </List>
     </div>

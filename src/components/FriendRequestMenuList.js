@@ -1,17 +1,10 @@
-import { AccountCircle } from "@mui/icons-material";
-import {
-  Avatar,
-  Button,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from "@mui/material";
+import { Button, List, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import accFriend from "../Utlities/Friend/Accept";
 import { useDispatch } from "react-redux";
 import cancelRequest from "../Utlities/Friend/CancelRequest";
 import blockPeople from "../Utlities/Friend/BlockPeople";
+import ProfileImageComponents from "./ProfileImageComponents";
 
 const FriendRequestMenuList = ({ arr }) => {
   const [BtnAccept, setBtnAccept] = useState(false);
@@ -25,17 +18,7 @@ const FriendRequestMenuList = ({ arr }) => {
       <List className=" w-full border-b-2  hover:bg-gray-100 cursor-pointer">
         <div>
           <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                {arr.profileImage ? (
-                  <img
-                    src={`http://localhost:3001/api/v1/account/user/get_image/${arr.profileImage.public_id}/${arr.profileImage.version}/${arr.profileImage.format}/${arr.profileImage.resource_type}`}
-                  />
-                ) : (
-                  <AccountCircle className="text-blue-900" />
-                )}
-              </Avatar>
-            </ListItemAvatar>
+            <ProfileImageComponents data={arr} />
             <ListItemText primary={arr.username} />
           </ListItem>
           <div className="flex flex-row justify-around ">

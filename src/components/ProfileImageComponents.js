@@ -1,8 +1,13 @@
 import { AccountCircle } from "@mui/icons-material";
 import { Avatar, ListItemAvatar } from "@mui/material";
 import React from "react";
+import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
 
-const ProfileImageComponents = ({ data, profileImage }) => {
+const ProfileImageComponents = ({ data }) => {
+  let profileImage = {};
+  if (data.profileImage) {
+    profileImage = changeImageStringToObj(data.profileImage);
+  }
   return (
     <ListItemAvatar>
       <Avatar>

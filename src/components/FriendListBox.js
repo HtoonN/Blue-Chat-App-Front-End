@@ -15,7 +15,9 @@ const FriendListBox = () => {
     "text-blue-grey font-thin my-1 opacity-50 cursor-pointer active:opacity-20 ";
 
   const [query, setQuery] = useState("friends");
-  const [messagedFriObj, setMessagedFriObj] = useState([]);
+  const messagedFriObj = useSelector(
+    (state) => state.userDatas.messagedFriendsList.list
+  );
 
   const selectedUser = useSelector((state) => state.userDatas.selectedUser.id);
   const messagedFriends = useSelector(
@@ -35,7 +37,7 @@ const FriendListBox = () => {
   useEffect(() => {
     if (messagedFriends.length !== messagedFriObj.length) {
       if (messagedFriends.length) {
-        getMessagedFri(messagedFriends, friends, setMessagedFriObj);
+        getMessagedFri(messagedFriends, friends, dispatch);
       }
     }
   }, [messagedFriends, friends]);

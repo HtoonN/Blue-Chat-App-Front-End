@@ -10,7 +10,7 @@ const setNotiSeen = (index, id, dispatch) => {
   })
     .then((result) => {
       if (result.status === 200) {
-        console.log(result.statusText);
+        // console.log(result.statusText);
       }
     })
     .catch((e) => {

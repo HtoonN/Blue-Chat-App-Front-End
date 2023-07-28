@@ -1,5 +1,8 @@
 const { default: axios } = require("axios");
-const { addBlockList } = require("../../Redux/Reducer/UserDataREducer");
+const {
+  addBlockList,
+  removeMessagedFriend,
+} = require("../../Redux/Reducer/UserDataREducer");
 const { removeFindFriendsData } = require("../../Redux/Reducer/DataReducer");
 
 const blockPeople = (userId, dispatch, setBtnDisabled) => {
@@ -20,11 +23,12 @@ const blockPeople = (userId, dispatch, setBtnDisabled) => {
         if (result.status === 201) {
           dispatch(addBlockList(userId));
           dispatch(removeFindFriendsData(userId));
+          dispatch(removeMessagedFriend(userId));
           setBtnDisabled(false);
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response.data);
         setBtnDisabled(false);
       });
   }

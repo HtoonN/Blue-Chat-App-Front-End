@@ -9,15 +9,13 @@ const groupAddFun = (groupId, setBtnDisabled, dispatch) => {
     withCredentials: true,
   })
     .then((result) => {
-      console.log(result.data.data);
       if (result.status === 201) {
         dispatch(addAddedGroup(groupId));
       }
-
       setBtnDisabled(false);
     })
     .catch((e) => {
-      console.log(e);
+      console.log(e.response.data);
       setBtnDisabled(false);
     });
 };

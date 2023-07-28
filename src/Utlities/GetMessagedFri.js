@@ -1,6 +1,7 @@
-const getMessagedFri = (messagedFriends, friends, setMessagedFriObj) => {
+import { addMessagedFriendList } from "../Redux/Reducer/UserDataREducer";
+
+const getMessagedFri = (messagedFriends, friends, dispatch) => {
   let leftUser = [];
-  let arr = [];
 
   if (messagedFriends.length) {
     messagedFriends.map((id) => {
@@ -9,7 +10,7 @@ const getMessagedFri = (messagedFriends, friends, setMessagedFriObj) => {
       friends.map((element) => {
         if (element.userId === id) {
           foundUser = true;
-          arr.push(element);
+          dispatch(addMessagedFriendList(element));
         }
       });
 
@@ -18,8 +19,6 @@ const getMessagedFri = (messagedFriends, friends, setMessagedFriObj) => {
         leftUser.push(id);
       }
     });
-
-    setMessagedFriObj(arr);
   }
 };
 

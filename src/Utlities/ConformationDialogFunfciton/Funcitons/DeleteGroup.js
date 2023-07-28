@@ -14,7 +14,7 @@ const deleteGroup = (dispatch, groupId) => {
           setAlertFun(dispatch, "Group Deleted");
           setTimeout(() => {
             dispatch(deleteGroupR(groupId));
-          }, 1500);
+          }, 1000);
         }
       })
       .catch((e) => {

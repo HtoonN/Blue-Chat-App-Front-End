@@ -10,7 +10,6 @@ const cancelAdd = (groupId, setBtnDisabled, dispatch) => {
   })
     .then((result) => {
       if (result.status === 201) {
-        console.log(result.data);
         dispatch(cancelAddedGroup(groupId));
       }
       setBtnDisabled(false);

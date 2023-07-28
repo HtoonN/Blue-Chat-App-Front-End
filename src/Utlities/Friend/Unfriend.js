@@ -1,5 +1,9 @@
 const axios = require("axios");
-const { setUnFriend } = require("../../Redux/Reducer/UserDataREducer");
+const {
+  setUnFriend,
+  removeMessagedFriend,
+} = require("../../Redux/Reducer/UserDataREducer");
+const { default: setAlertFun } = require("../SetAlertFun");
 
 const unFriend = async (userId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
@@ -15,6 +19,8 @@ const unFriend = async (userId, setBtnDisabled, dispatch) => {
   });
 
   if (result.status === 201) {
+    dispatch(removeMessagedFriend(userId));
+    setAlertFun(dispatch, "Unfriend");
     dispatch(setUnFriend(userId));
   }
   setBtnDisabled(false);

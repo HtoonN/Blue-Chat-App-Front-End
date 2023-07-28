@@ -16,8 +16,8 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import unFriend from "../../Utlities/Friend/Unfriend";
 import blockPeople from "../../Utlities/Friend/BlockPeople";
-import messageControl from "../../Utlities/MessageControl";
 import startMessageControl from "../../Utlities/StartMessageControl";
+import selectFunction from "../../Utlities/SelectedFunction";
 
 const FriendBarIteam = ({ arr, profileimage }) => {
   const messagedList = useSelector(
@@ -27,7 +27,6 @@ const FriendBarIteam = ({ arr, profileimage }) => {
   const [open, setOpen] = useState(false);
   let isMessaged = false;
   const [BtnBlock, setBtnBlock] = useState(false);
-  const [BtnMessage, setBtnMessage] = useState(false);
   const [BtnStartMessage, setBtnStartMessage] = useState(false);
   const [BtnUnfriend, setBtnUnfriend] = useState(false);
   const dispatch = useDispatch();
@@ -89,10 +88,9 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                       <MenuItem
                         onClick={() => {
                           handleClose();
-                          messageControl(arr.userId, dispatch, setBtnMessage);
+                          selectFunction(arr.userId, "friend", dispatch, arr);
                         }}
                         sx={{ color: "blue" }}
-                        disabled={BtnMessage}
                       >
                         Chat Friend
                       </MenuItem>
@@ -105,6 +103,7 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                             dispatch,
                             setBtnStartMessage
                           );
+                          selectFunction(arr.userId, "friend", dispatch, arr);
                         }}
                         sx={{ color: "blue" }}
                         disabled={BtnStartMessage}

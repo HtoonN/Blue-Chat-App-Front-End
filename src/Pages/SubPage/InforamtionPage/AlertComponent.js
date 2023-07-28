@@ -10,7 +10,7 @@ const AlertComponent = () => {
     <Alert
       severity="success"
       variant="filled"
-      className="z-[100] fixed top-2 left-[50%] -translate-x-[50%] w-[90%] md:w-[50%]"
+      className="z-[100] fixed top-2 left-[50%] -translate-x-[50%] w-[90%] md:w-[35%]"
       sx={{
         translate: `${open ? "0 0" : "0 -200%"}`,
         transition: "ease-in-out",

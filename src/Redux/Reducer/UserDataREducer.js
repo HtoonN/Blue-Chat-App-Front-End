@@ -17,6 +17,11 @@ export const userDatasReducer = createSlice({
     selectedUser: { status: "", id: "" },
     addedGroupList: { nextPage: 1, list: [] },
     groupListDatas: { nextPage: 1, list: [] },
+    groupMembersList: {
+      members: [],
+      accept: [],
+      add: [],
+    },
   },
   reducers: {
     //Profile
@@ -148,8 +153,10 @@ export const userDatasReducer = createSlice({
     },
 
     addBlockList: (state, action) => {
+      //add to block list
       state.friendsDatas.blockedFriends.blockedList.push(action.payload);
 
+      //remove from requested
       if (Array.isArray(state.requested.list)) {
         const requestedResult = state.requested.list.filter((element) => {
           if (element.userId !== action.payload) {
@@ -159,6 +166,7 @@ export const userDatasReducer = createSlice({
         state.requested.list = requestedResult;
       }
 
+      //remove from added
       if (Array.isArray(state.addedList.list)) {
         const addedResult = state.addedList.list.filter((element) => {
           if (element.userId !== action.payload) {
@@ -168,6 +176,7 @@ export const userDatasReducer = createSlice({
         state.addedList.list = addedResult;
       }
 
+      //remove from add (id)
       const addResult = state.friendsDatas.add.list.filter((element) => {
         if (element !== action.payload) {
           return element;
@@ -176,6 +185,7 @@ export const userDatasReducer = createSlice({
 
       state.friendsDatas.add.list = addResult;
 
+      //remove from requested (id)
       const reqResult = state.friendsDatas.requested.list.filter((element) => {
         if (element !== action.payload) {
           return element;
@@ -184,6 +194,7 @@ export const userDatasReducer = createSlice({
 
       state.friendsDatas.requested.list = reqResult;
 
+      //remove from friend (id)
       const friendResult = state.friendsDatas.friends.filter((element) => {
         if (element !== action.payload) {
           return element;
@@ -192,6 +203,7 @@ export const userDatasReducer = createSlice({
 
       state.friendsDatas.friends = friendResult;
 
+      //reomve from messagedFriend (id)
       const messagedFriendsResult =
         state.friendsDatas.messagedFriends.friendsList.filter((element) => {
           if (element !== action.payload) {
@@ -201,6 +213,7 @@ export const userDatasReducer = createSlice({
 
       state.friendsDatas.messagedFriends.friendsList = messagedFriendsResult;
 
+      //remove from friendList (Id)
       const resultFL = state.friendsList.list.filter((element) => {
         if (element.userId !== action.payload) {
           return element;
@@ -276,8 +289,40 @@ export const userDatasReducer = createSlice({
       state.messagedFriendsList.list = action.payload.data;
     },
 
+    addMessagedFriendList: (state, action) => {
+      let isHas = false;
+      state.messagedFriendsList.list.filter((obj) => {
+        if (obj.userId === action.payload.userId) {
+          isHas = true;
+        }
+      });
+
+      if (!isHas) {
+        state.messagedFriendsList.list.push(action.payload);
+      }
+    },
+
     addMessagedFriend: (state, action) => {
       state.friendsDatas.messagedFriends.friendsList.push(action.payload);
+    },
+
+    removeMessagedFriend: (state, action) => {
+      const result = state.friendsDatas.messagedFriends.friendsList.filter(
+        (userId) => {
+          if (userId !== action.payload) {
+            return userId;
+          }
+        }
+      );
+      state.friendsDatas.messagedFriends.friendsList = result;
+
+      const result2 = state.messagedFriendsList.list.filter((data) => {
+        if (data.userId !== action.payload) {
+          return data;
+        }
+      });
+
+      state.messagedFriendsList.list = result2;
     },
 
     //Chat Friend
@@ -291,6 +336,11 @@ export const userDatasReducer = createSlice({
       state.selectedUser.status = action.payload.status;
       state.chatFriend.data = action.payload.data;
       state.chatFriend.status = action.payload.owner;
+      state.groupMembersList = {
+        members: [],
+        accept: [],
+        add: [],
+      };
     },
 
     //setAdded
@@ -363,6 +413,202 @@ export const userDatasReducer = createSlice({
 
       state.groupListDatas.list = resGroup;
     },
+
+    addGroupMember: (state, action) => {
+      let get = false;
+      let i = 0;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          state.groupListDatas.list[i].members.memberList.push(
+            action.payload.userId
+          );
+          state.groupListDatas.list[i].members.totalMember =
+            parseInt(state.groupListDatas.list[i].members.totalMember, 10) + 1;
+          state.chatFriend.data.members.totalMember =
+            parseInt(state.chatFriend.data.members.totalMember, 10) + 1;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+    },
+
+    decreaseTotalGroupMemberFromGroup: (state, action) => {
+      let get = false;
+      let i = 0;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        if (state.groupListDatas.list[i].groupId === action.payload) {
+          state.groupListDatas.list[i].members.totalMember =
+            parseInt(state.groupListDatas.list[i].members.totalMember, 10) - 1;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+    },
+
+    //groupMemberList
+    addGroupMemberList: (state, action) => {
+      let isHas = false;
+      state.groupMembersList.members.map((data) => {
+        if (data.userId === action.payload.userId) {
+          isHas = true;
+        }
+      });
+      if (!isHas) {
+        state.groupMembersList.members.push(action.payload);
+      }
+    },
+
+    addGroupAcceptList: (state, action) => {
+      let isHas = false;
+      state.groupMembersList.accept.map((data) => {
+        if (data.userId === action.payload.userId) {
+          isHas = true;
+        }
+      });
+      if (!isHas) {
+        state.groupMembersList.accept.push(action.payload);
+      }
+    },
+
+    removeGroupAcceptList: (state, action) => {
+      const result = state.groupMembersList.accept.filter((obj) => {
+        if (obj.userId !== action.payload.userId) {
+          return obj;
+        }
+      });
+      state.groupMembersList.accept = result;
+
+      let get = false;
+      let i = 0;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          const result = state.groupListDatas.list[i].requested.filter(
+            (data) => {
+              if (data !== action.payload.userId) {
+                return data;
+              }
+            }
+          );
+          state.groupListDatas.list[i].requested = result;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+
+      const result2 = state.chatFriend.data.requested.filter((id) => {
+        if (id !== action.payload.userId) {
+          return id;
+        }
+      });
+      state.chatFriend.data.requested = result2;
+    },
+
+    removeGroupMemberFromList: (state, action) => {
+      const result = state.groupMembersList.members.filter((obj) => {
+        if (obj.userId !== action.payload.userId) {
+          return obj;
+        }
+      });
+      state.groupMembersList.members = result;
+
+      let get = false;
+      let i = 0;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          const result = state.groupListDatas.list[i].members.memberList.filter(
+            (data) => {
+              if (data !== action.payload.userId) {
+                return data;
+              }
+            }
+          );
+          state.groupListDatas.list[i].members.memberList = result;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+
+      const result2 = state.chatFriend.data.members.memberList.filter((id) => {
+        if (id !== action.payload.userId) {
+          return id;
+        }
+      });
+      state.chatFriend.data.members.memberList = result2;
+
+      state.chatFriend.data.members.totalMember =
+        parseInt(state.chatFriend.data.members.totalMember, 10) - 1;
+    },
+
+    addAddMemberList: (state, action) => {
+      let isHas = false;
+      state.groupMembersList.add.map((data) => {
+        if (data.userId === action.payload.userId) {
+          isHas = true;
+        }
+      });
+
+      if (!isHas) {
+        state.groupMembersList.add.push(action.payload);
+      }
+    },
+
+    addGroupMemberByAdminR: (state, action) => {
+      state.groupMembersList.members.push(action.payload.data);
+
+      const result = state.groupMembersList.add.filter((data) => {
+        if (data.userId !== action.payload.data.userId) {
+          return data;
+        }
+      });
+
+      state.groupMembersList.add = result;
+
+      let i = 0;
+      let get = false;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          state.groupListDatas.list[i].members.memberList.push(
+            action.payload.data.userId
+          );
+          state.groupListDatas.list[i].members.totalMember =
+            state.groupListDatas.list[i].members.totalMember + 1;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+
+      state.chatFriend.data.members.memberList.push(action.payload.data.userId);
+      state.chatFriend.data.members.totalMember =
+        state.chatFriend.data.members.totalMember + 1;
+    },
+
+    //remove from groupslist leave form a group
+    leaveFromaGroupR: (state, action) => {
+      const result = state.profileDatas.groups.filter((obj) => {
+        if (obj.id !== action.payload) {
+          return obj;
+        }
+      });
+
+      state.profileDatas.groups = result;
+
+      const result2 = state.groupListDatas.list.filter((obj) => {
+        if (obj.groupId !== action.payload) {
+          return obj;
+        }
+      });
+      state.groupListDatas.list = result2;
+    },
   },
 });
 
@@ -395,6 +641,7 @@ export const {
   setChatFriend,
   addMessagedFriend,
   setMessagedFriendList,
+  addMessagedFriendList,
   setSelectedUser,
   addAddedGroup,
   addAddedGroupList,
@@ -402,5 +649,15 @@ export const {
   setGroupListDatas,
   addGroupListAsOwner,
   deleteGroupR,
+  removeMessagedFriend,
+  addGroupMemberList,
+  addGroupAcceptList,
+  addGroupMember,
+  removeGroupAcceptList,
+  removeGroupMemberFromList,
+  decreaseTotalGroupMemberFromGroup,
+  addAddMemberList,
+  addGroupMemberByAdminR,
+  leaveFromaGroupR,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

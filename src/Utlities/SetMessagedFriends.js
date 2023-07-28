@@ -13,7 +13,6 @@ const setMessagedFriends = (userId, dispatch) => {
     withCredentials: true,
   })
     .then((result) => {
-      console.log(result);
       dispatch(addMessagedFriend(userId));
     })
     .catch((e) => {
