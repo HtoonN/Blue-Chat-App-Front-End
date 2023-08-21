@@ -13,7 +13,7 @@ const LabelAndInputPassword = (props) => {
           onChange={(e) => props.setValue(e.target.value)}
           type={seenForPassword ? "text" : "password"}
           placeholder="more then 7 character"
-          className=" outline-none w-11/12 placeholder-gray-500 placeholder-opacity-40 text-black"
+          className="outline-none w-11/12 placeholder-gray-500 placeholder-opacity-40 text-black"
         />
         <span
           onClick={() => setSeenForPassword(!seenForPassword)}

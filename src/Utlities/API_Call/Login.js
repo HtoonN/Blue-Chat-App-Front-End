@@ -24,6 +24,7 @@ const login = async (email, password) => {
   if (result.status === 200) {
     return {
       error: false,
+      data: result,
     };
   } else {
     return {

@@ -1,4 +1,4 @@
-import { RemoveCircle } from "@mui/icons-material";
+import { RemoveCircleOutline } from "@mui/icons-material";
 import { IconButton, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import ProfileImageComponents from "../ProfileImageComponents";
@@ -11,7 +11,7 @@ const GroupMemberListItem = ({ data, isAdmin }) => {
 
   const [BtnRemove, setBtnRemove] = useState(false);
   return (
-    <ListItem>
+    <ListItem className="mb-1  hover:bg-gray-50">
       <ProfileImageComponents data={data} />
       <ListItemText
         primary={data.username}
@@ -25,7 +25,7 @@ const GroupMemberListItem = ({ data, isAdmin }) => {
           }}
           disabled={BtnRemove}
         >
-          <RemoveCircle className="text-red-500 " />
+          <RemoveCircleOutline className="text-red-500 " />
         </IconButton>
       )}
     </ListItem>

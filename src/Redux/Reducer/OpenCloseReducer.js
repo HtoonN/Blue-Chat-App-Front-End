@@ -12,6 +12,10 @@ export const openCloseReducer = createSlice({
     notiMenuMobileModel: false,
     createGroupModel: false,
     manageGroupMembersModel: false,
+    seeGroupMemberModel: false,
+    profileModel: false,
+    groupProfileModel: false,
+    scroll: false,
   },
   reducers: {
     setFriendListSideBar: (state) => {
@@ -41,6 +45,18 @@ export const openCloseReducer = createSlice({
     setManageGroupMembersModel: (state) => {
       state.manageGroupMembersModel = !state.manageGroupMembersModel;
     },
+    setSeeGroupMemberModel: (state) => {
+      state.seeGroupMemberModel = !state.seeGroupMemberModel;
+    },
+    setProfileModel: (state) => {
+      state.profileModel = !state.profileModel;
+    },
+    setGroupProfileModel: (state) => {
+      state.groupProfileModel = !state.groupProfileModel;
+    },
+    setScroll: (state) => {
+      state.scroll = !state.scroll;
+    },
   },
 });
 
@@ -54,6 +70,10 @@ export const {
   setNotiMenuMobileModel,
   setCreateGroupModel,
   setManageGroupMembersModel,
+  setSeeGroupMemberModel,
+  setProfileModel,
+  setGroupProfileModel,
+  setScroll,
 } = openCloseReducer.actions;
 
 export default openCloseReducer.reducer;

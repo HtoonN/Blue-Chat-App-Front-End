@@ -10,7 +10,7 @@ const GroupAddListItem = ({ data, groupId }) => {
   const dispatch = useDispatch();
 
   return (
-    <ListItem className="mb-1 py-3 hover:bg-gray-200">
+    <ListItem className="mb-1  hover:bg-gray-50">
       <ProfileImageComponents data={data} />
       <ListItemText primary={data.username} />
       <IconButton

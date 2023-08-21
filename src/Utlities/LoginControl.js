@@ -22,8 +22,10 @@ const loginControl = async ({ email, password, dispatch }) => {
       dispatch(setSuccess());
       setTimeout(() => {
         dispatch(setLoadingUnseen());
+        localStorage.setItem("data", result.data.data.cookie);
         location.assign("/user/home_page");
       }, 1500);
+
       return {
         error: false,
       };

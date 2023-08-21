@@ -11,11 +11,12 @@ const GroupAcceptList = () => {
   const groupRequestedList = useSelector(
     (state) => state.userDatas.groupMembersList.accept
   );
+  const chatFriend = useSelector((state) => state.userDatas.chatFriend);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (selectedUser.status === "group") {
+    if (selectedUser.status === "group" && chatFriend.status) {
       getGroupRequestedData(groupDatas.requested, dispatch, groupRequestedList);
     }
   }, [selectedUser]);

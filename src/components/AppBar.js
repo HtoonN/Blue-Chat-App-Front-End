@@ -25,6 +25,7 @@ import {
   setFriendRequestModel,
   setNotiMenuMobileModel,
   setNotiMenuModel,
+  setProfileModel,
 } from "../Redux/Reducer/OpenCloseReducer";
 import logOutControl from "../Utlities/LogOutControl";
 import findFriendsControl from "../Utlities/FindFriendsControl";
@@ -32,6 +33,7 @@ import { AccountCircle, PersonAdd } from "@mui/icons-material";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
 import NotiMenu from "./NotiMenu/NotiMenu";
 import NotiMenuMobile from "./NotificationBoxForMobileView/NotiMenuMobile";
+import ProfileImageComponents from "./ProfileImageComponents";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -137,7 +139,14 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem
+        onClick={() => {
+          dispatch(setProfileModel());
+          handleMenuClose();
+        }}
+      >
+        Profile
+      </MenuItem>
       <MenuItem
         onClick={() => {
           handleMenuClose();
@@ -227,15 +236,7 @@ export default function PrimarySearchAppBar() {
           aria-haspopup="true"
           color="inherit"
         >
-          <Avatar>
-            {profileDatas.profileImage ? (
-              <img
-                src={`http://localhost:3001/api/v1/account/user/get_image/${profileimage.public_id}/${profileimage.version}/${profileimage.format}/${profileimage.resource_type}`}
-              />
-            ) : (
-              <AccountCircle className="text-blue-900" />
-            )}
-          </Avatar>
+          <ProfileImageComponents data={profileDatas} />
         </IconButton>
         <p>Profile</p>
       </MenuItem>

@@ -15,9 +15,10 @@ const GroupAddList = () => {
 
   const groupId = groupDatas.data.groupId;
   const members = groupDatas.data.members.memberList;
+  const accepts = groupDatas.data.requested;
 
   useEffect(() => {
-    removeMembersFromFriends(friendList, members, dispatch);
+    removeMembersFromFriends(friendList, members, accepts, dispatch);
   }, [members]);
 
   return (

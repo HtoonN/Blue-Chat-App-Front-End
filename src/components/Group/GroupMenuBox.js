@@ -7,7 +7,11 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useDispatch } from "react-redux";
 import callFunForConformationDialog from "../../Utlities/ConformationDialogFunfciton/CallFunForConformationDialog";
-import { setManageGroupMembersModel } from "../../Redux/Reducer/OpenCloseReducer";
+import {
+  setGroupProfileModel,
+  setManageGroupMembersModel,
+  setSeeGroupMemberModel,
+} from "../../Redux/Reducer/OpenCloseReducer";
 
 export default function GroupMenuBox({
   open,
@@ -52,7 +56,14 @@ export default function GroupMenuBox({
                   >
                     Mange Members
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>Edit Group</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      dispatch(setGroupProfileModel());
+                    }}
+                  >
+                    Edit Group
+                  </MenuItem>
                   <MenuItem
                     onClick={() => {
                       callFunForConformationDialog(handleClose, dispatch, {
@@ -68,10 +79,24 @@ export default function GroupMenuBox({
                 </MenuList>
               ) : (
                 <MenuList>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem
+                    onClick={() => {
+                      dispatch(setSeeGroupMemberModel());
+                      handleClose();
+                    }}
+                  >
                     <div className="text-blue-900">Members</div>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem
+                    onClick={() => {
+                      callFunForConformationDialog(handleClose, dispatch, {
+                        header: "Leave",
+                        body: "You can add again",
+                        funName: "leaveGroup",
+                        data: data.groupId,
+                      });
+                    }}
+                  >
                     <div className="text-red-500">Leave Group</div>
                   </MenuItem>
                 </MenuList>

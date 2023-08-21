@@ -17,7 +17,7 @@ const AlertComponent = () => {
         transitionDuration: "1s",
       }}
     >
-      <AlertTitle>Success!</AlertTitle>
+      <AlertTitle>Success</AlertTitle>
       {text ? (
         <Typography sx={{ fontSize: "13px", opacity: "0.6" }}>
           {text}

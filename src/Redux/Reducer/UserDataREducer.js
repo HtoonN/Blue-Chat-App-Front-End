@@ -6,7 +6,7 @@ export const userDatasReducer = createSlice({
     auth: "loading",
     profileDatas: {},
     friendsDatas: {},
-    messages: {},
+    messages: { nextPage: 1, list: [] },
     requested: { nextPage: 1, list: "" },
     blockedList: { nextPage: 1, list: "" },
     addedList: { nextPage: 1, list: "" },
@@ -22,6 +22,9 @@ export const userDatasReducer = createSlice({
       accept: [],
       add: [],
     },
+    memberList: { nextPage: 1, list: [] },
+    sendingMessageQueue: {},
+    sendingFileStatusQueue: {},
   },
   reducers: {
     //Profile
@@ -86,7 +89,32 @@ export const userDatasReducer = createSlice({
 
     //Messages
     setMessages: (state, action) => {
-      state.messages = action.payload;
+      if (!state.messages.list.length) {
+        action.payload.data.map((data) => {
+          state.messages.list.unshift(data);
+        });
+        state.messages.nextPage = action.payload.nextPage;
+      }
+    },
+
+    addPreMessages: (state, action) => {
+      action.payload.data.data.map((data) => {
+        state.messages.list.unshift(data);
+      });
+      state.messages.nextPage = action.payload.data.nextPage;
+    },
+
+    //Set Message Empty
+    setMessageEmpty: (state) => {
+      state.messages.list = [];
+      state.messages.nextPage = 1;
+    },
+
+    //Unshift Message
+    pushMessage: (state, action) => {
+      if (state.selectedUser.id === action.payload.receiver) {
+        state.messages.list.push(action.payload);
+      }
     },
 
     //Authorization
@@ -117,15 +145,6 @@ export const userDatasReducer = createSlice({
       });
 
       state.friendsDatas.requested.list = result2;
-    },
-
-    addMoreRequested: (state) => {
-      //const conc = action.payload.concat(state.requested.list);
-      state.requested.list.unshift({
-        userId: "add",
-        username: "Add Start",
-        profileImage: "",
-      });
     },
 
     //blcked
@@ -341,6 +360,7 @@ export const userDatasReducer = createSlice({
         accept: [],
         add: [],
       };
+      state.memberList.list = [];
     },
 
     //setAdded
@@ -507,6 +527,8 @@ export const userDatasReducer = createSlice({
         }
       });
       state.chatFriend.data.requested = result2;
+
+      state.chatFriend.data.members.memberList.push(action.payload.userId);
     },
 
     removeGroupMemberFromList: (state, action) => {
@@ -609,6 +631,200 @@ export const userDatasReducer = createSlice({
       });
       state.groupListDatas.list = result2;
     },
+
+    //Remove From GroupRequested List for CancelGroupRequested
+    cancelGroupRequested: (state, action) => {
+      let i = 0;
+      let get = false;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        //Remove from groupListDatas
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          const ans = state.groupListDatas.list[i].requested.filter((data) => {
+            if (data !== action.payload.userId) {
+              return data;
+            }
+          });
+
+          state.groupListDatas.list[i].requested = ans;
+          get = true;
+        } else {
+          i++;
+        }
+        //Reomve from selected group
+        const result = state.chatFriend.data.requested.filter((data) => {
+          if (data !== action.payload.userId) {
+            return data;
+          }
+        });
+
+        state.chatFriend.data.requested = result;
+
+        //remove form membersList.accepts
+        const result2 = state.groupMembersList.accept.filter((data) => {
+          if (data.userId !== action.payload.userId) {
+            return data;
+          }
+        });
+        state.groupMembersList.accept = result2;
+      }
+    },
+
+    addAddMemberListForMember: (state, action) => {
+      state.memberList.list.push(action.payload);
+    },
+
+    setUsername: (state, aciton) => {
+      state.profileDatas.username = aciton.payload;
+    },
+    setEmail: (state, aciton) => {
+      state.profileDatas.email = aciton.payload;
+    },
+    setProfileImage: (state, action) => {
+      state.profileDatas.profileImage = action.payload;
+    },
+
+    setGroupName: (state, action) => {
+      state.chatFriend.data.name = action.payload.name;
+
+      let i = 0;
+      let get = false;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        //Remove from groupListDatas
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          state.groupListDatas.list[i].name = action.payload.name;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+    },
+
+    setGroupType: (state, action) => {
+      state.chatFriend.data.type = action.payload.type;
+
+      let i = 0;
+      let get = false;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        //Remove from groupListDatas
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          state.groupListDatas.list[i].type = action.payload.type;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+    },
+
+    setGroupProfileImage: (state, action) => {
+      state.chatFriend.data.profileImage = action.payload.profileImage;
+
+      let i = 0;
+      let get = false;
+
+      while (!get && state.groupListDatas.list.length > i) {
+        //Remove from groupListDatas
+        if (state.groupListDatas.list[i].groupId === action.payload.groupId) {
+          state.groupListDatas.list[i].profileImage =
+            action.payload.profileImage;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+    },
+
+    setActiveUser: (state, action) => {
+      if (state.chatFriend.data.userId) {
+        if (action.payload.userId === state.chatFriend.data.userId) {
+          state.chatFriend.data.status = action.payload.status;
+        }
+      }
+
+      //setFriendsList
+      let i = 0;
+      let get = false;
+
+      while (!get && state.friendsList.list.length > i) {
+        if (state.friendsList.list[i].userId === action.payload.userId) {
+          state.friendsList.list[i].status = action.payload.status;
+          get = true;
+        } else {
+          i++;
+        }
+      }
+
+      //setMessagedFriendsList
+      let index = 0;
+      let get2 = false;
+
+      while (!get2 && state.messagedFriendsList.list.length !== index) {
+        if (
+          state.messagedFriendsList.list[index].userId === action.payload.userId
+        ) {
+          state.messagedFriendsList.list[index].status = action.payload.status;
+          get2 = true;
+        } else {
+          index++;
+        }
+      }
+    },
+
+    //set Messages
+    setMessageForChat: (state, action) => {
+      state.messages.list = action.payload;
+    },
+
+    //Remove Messages
+    removeMessageForChat: (state, action) => {
+      state.messages.list[action.payload] = undefined;
+    },
+
+    //SendingMessageQueue
+    setSendingMessageQueue: (state, action) => {
+      state.sendingMessageQueue[action.payload.tempId] = action.payload;
+    },
+
+    setSendingMessageQueueReceivedSize: (state, action) => {
+      state.sendingMessageQueue[action.payload.tempId].receivedFileSize =
+        action.payload.receivedFileSize;
+    },
+
+    deleteObjFormSendingMessageQueue: (state, action) => {
+      state.sendingFileStatusQueue[action.payload.tempId] = undefined;
+    },
+
+    //sendingFileQueue
+    setSendingFileStatusQueue: (state, action) => {
+      state.sendingFileStatusQueue[action.payload.tempId] = action.payload;
+    },
+
+    setSentingFileReceivedSize: (state, action) => {
+      if (state.sendingFileStatusQueue[action.payload.tempId]) {
+        if (
+          state.sendingFileStatusQueue[action.payload.tempId].receivedSize <
+          action.payload.receivedSize
+        ) {
+          state.sendingFileStatusQueue[action.payload.tempId].receivedSize =
+            action.payload.receivedSize;
+        }
+      }
+    },
+
+    setSendingFileComplete: (state, action) => {
+      if (state.sendingFileStatusQueue[action.payload.tempId]) {
+        if (state.sendingFileStatusQueue[action.payload.tempId].fileSend) {
+          state.sendingFileStatusQueue[action.payload.tempId].fileSend = true;
+        }
+        state.sendingFileStatusQueue[action.payload.tempId].senting = true;
+      }
+    },
+
+    deleteObjFromSendingFileStatusQueue: (state, action) => {
+      state.sendingFileStatusQueue[action.payload.tempId] = undefined;
+    },
   },
 });
 
@@ -659,5 +875,26 @@ export const {
   addAddMemberList,
   addGroupMemberByAdminR,
   leaveFromaGroupR,
+  cancelGroupRequested,
+  addAddMemberListForMember,
+  setUsername,
+  setEmail,
+  setProfileImage,
+  setGroupName,
+  setGroupType,
+  setGroupProfileImage,
+  setActiveUser,
+  setMessageForChat,
+  setMessageEmpty,
+  pushMessage,
+  removeMessageForChat,
+  setSendingMessageQueue,
+  setSendingMessageQueueReceivedSize,
+  setSendingFileStatusQueue,
+  setSentingFileReceivedSize,
+  setSendingFileComplete,
+  deleteObjFormSendingMessageQueue,
+  deleteObjFromSendingFileStatusQueue,
+  addPreMessages,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

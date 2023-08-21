@@ -28,6 +28,7 @@
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "redux": "^4.2.1",
+    "socket.io-client": "^4.7.2",
     "styled-components": "^5.3.10",
     "workbox-core": "^6.5.4",
     "workbox-precaching": "^6.5.4",

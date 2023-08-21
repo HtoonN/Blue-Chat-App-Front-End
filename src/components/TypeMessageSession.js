@@ -2,27 +2,41 @@ import { AttachFile, Close, Send } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
+import sendingMessageController from "../Utlities/SendingMessageControl";
+import { useDispatch, useSelector } from "react-redux";
 
 const TypeMessageSession = () => {
   const [text, setText] = useState("");
   const [file, setFile] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const [filetype, setFileType] = useState("");
+  const [l, setl] = useState("");
+  const [buffer, setBuffer] = useState("");
+
+  const dispatch = useDispatch();
+
+  const receiverData = useSelector((state) => state.userDatas.chatFriend.data);
 
   const fileOnChangeController = (e) => {
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
       setFileUrl(URL.createObjectURL(e.target.files[0]));
       setFileType(e.target.files[0].type.toString().split("/")[0]);
+
+      let reader = new FileReader();
+
+      reader.onload = () => {
+        const prebuffer = reader.result.toString().split(",")[1];
+        setBuffer(prebuffer);
+        setl(prebuffer.length);
+      };
+
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
   const sendController = () => {
-    console.log(file);
-    console.log(text);
-    console.log("Send Data...");
-    setText("");
-    setFile("");
+    sendingMessageController({ text, file, receiverData, l, buffer, dispatch });
   };
 
   return (
@@ -60,7 +74,7 @@ const TypeMessageSession = () => {
             }
           }}
         />
-        <IconButton onClick={() => sendController()}>
+        <IconButton onClick={sendController}>
           <Send className="text-blue-900" />
         </IconButton>
         {fileUrl && (

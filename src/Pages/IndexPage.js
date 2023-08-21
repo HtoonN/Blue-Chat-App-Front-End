@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RouterBrower from "../Router/RouterBrower";
 import AlertComponent from "./SubPage/InforamtionPage/AlertComponent";
 import LoadingComponent from "./SubPage/InforamtionPage/LoadingComponent";
@@ -12,11 +12,31 @@ import AddedListModel from "../components/AddedListModel/AddedListModel";
 import CreateGroup from "../components/CreateGroup";
 import ConfirmationDialog from "./SubPage/InforamtionPage/ConfirmationDialog";
 import ManageGroupMembersModel from "../components/Group/ManageGroupMembersModel";
+import MemberListModel from "../components/Group/MemberListModel";
+import Profile from "../components/Profile";
+import GroupProfileChange from "../components/GroupProfileChange";
+import { socket } from "../socket";
+import ConnectionManager from "../components/ConnectionManager";
+import SocketListening from "../SocketListening";
 
 const IndexPage = () => {
+  useEffect(() => {
+    socket.on("connect", () => {});
+    socket.on("disconnect", () => {});
+
+    return () => {
+      socket.off("connect", () => {});
+      socket.off("disconnect", () => {});
+    };
+  }, []);
+
   return (
     <div>
       <Provider store={store}>
+        <ConnectionManager />
+        <SocketListening />
+        <Profile />
+        <MemberListModel />
         <ConfirmationDialog />
         <AlertComponent />
         <AlertDialogComponent />
@@ -27,6 +47,7 @@ const IndexPage = () => {
         <LoadingComponent />
         <CreateGroup />
         <ManageGroupMembersModel />
+        <GroupProfileChange />
         <RouterBrower />
       </Provider>
     </div>

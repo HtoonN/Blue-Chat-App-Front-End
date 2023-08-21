@@ -10,7 +10,6 @@ import loginControl from "../../../Utlities/LoginControl";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
   return (
     <div>

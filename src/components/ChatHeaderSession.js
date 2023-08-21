@@ -39,7 +39,7 @@ const ChatHeaderSession = ({ data, isOwner }) => {
               className="mt-1"
               primary={data.name}
               secondary={
-                <span className="text-white">
+                <span className="text-white opacity-60 font-thin">
                   {data.type} - ({` Members - ${data.members.totalMember} `})
                 </span>
               }
@@ -79,12 +79,16 @@ const ChatHeaderSession = ({ data, isOwner }) => {
                 data.status ? (
                   <span className="flex justify-start items-center w-24">
                     <span className=" bg-green-400 w-3 h-3 rounded-full mr-1" />
-                    <span className="text-white">online</span>
+                    <span className="text-white opacity-50 font-thin">
+                      online
+                    </span>
                   </span>
                 ) : (
                   <span className="flex justify-start items-center w-24">
                     <span className=" bg-yellow-400 w-3 h-3 rounded-full mr-1" />
-                    <span className="text-white">offline</span>
+                    <span className="text-white opacity-50 font-thin">
+                      offline
+                    </span>
                   </span>
                 )
               }

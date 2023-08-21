@@ -46,8 +46,8 @@ export default function ConfirmationDialog() {
           </Button>
           <Button
             onClick={() => {
-              conformationFunctions[funName](dispatch, data);
               handleClose();
+              conformationFunctions[funName](dispatch, data);
             }}
             sx={{ color: "#0d47a1" }}
           >

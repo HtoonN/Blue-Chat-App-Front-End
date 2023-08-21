@@ -7,7 +7,7 @@ import {
 
 const acceptGroupMember = (data, groupId, dispatch, setBtnDisabled) => {
   setBtnDisabled(true);
-  console.log(data.userId, groupId);
+
   if (data.userId && groupId) {
     axios({
       method: "patch",
