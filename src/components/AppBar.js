@@ -83,6 +83,9 @@ export default function PrimarySearchAppBar() {
   const isFriendRequested = useSelector(
     (state) => state.userDatas.friendsDatas.requested.list
   ).length;
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   let profileimage = {};
 
@@ -145,7 +148,7 @@ export default function PrimarySearchAppBar() {
           handleMenuClose();
         }}
       >
-        Profile
+        {activeLanguage.profileMenu.profile}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -153,7 +156,7 @@ export default function PrimarySearchAppBar() {
           dispatch(setBlockListModel());
         }}
       >
-        Blocked List
+        {activeLanguage.profileMenu.blocklist}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -161,7 +164,7 @@ export default function PrimarySearchAppBar() {
           dispatch(setAddedListModel());
         }}
       >
-        Waiting Accept
+        {activeLanguage.profileMenu.waitinglist}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -169,10 +172,10 @@ export default function PrimarySearchAppBar() {
           logOutControl(dispatch);
         }}
       >
-        Logout
+        {activeLanguage.profileMenu.logout}
       </MenuItem>
       <MenuItem sx={{ color: "red" }} onClick={handleMenuClose}>
-        Delete Account
+        {activeLanguage.profileMenu.deleteaccount}
       </MenuItem>
     </Menu>
   );
@@ -207,7 +210,7 @@ export default function PrimarySearchAppBar() {
         >
           <NotificationsIcon sx={{ color: "#1e3a8a" }} />
         </IconButton>
-        <p>Notifications</p>
+        <p>{activeLanguage.appBar.notification}</p>
       </MenuItem>
 
       <MenuItem
@@ -224,7 +227,7 @@ export default function PrimarySearchAppBar() {
             <PersonAdd sx={{ color: "#1e3a8a" }} />
           </Badge>
         </IconButton>
-        <p>Friend Request</p>
+        <p>{activeLanguage.appBar.friendrequest}</p>
       </MenuItem>
 
       <MenuItem>{profileDatas.username}</MenuItem>
@@ -238,7 +241,7 @@ export default function PrimarySearchAppBar() {
         >
           <ProfileImageComponents data={profileDatas} />
         </IconButton>
-        <p>Profile</p>
+        <p>{activeLanguage.appBar.profile}</p>
       </MenuItem>
     </Menu>
   );
@@ -298,7 +301,7 @@ export default function PrimarySearchAppBar() {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Search…"
+                placeholder={activeLanguage.search}
                 inputProps={{ "aria-label": "search" }}
                 value={searchText}
                 onChange={(e) => {

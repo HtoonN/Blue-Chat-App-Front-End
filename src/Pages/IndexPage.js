@@ -23,7 +23,6 @@ const IndexPage = () => {
   useEffect(() => {
     socket.on("connect", () => {});
     socket.on("disconnect", () => {});
-
     return () => {
       socket.off("connect", () => {});
       socket.off("disconnect", () => {});

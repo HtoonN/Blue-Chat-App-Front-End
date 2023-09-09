@@ -5,6 +5,6 @@ export const socket = io("http://localhost:3001", {
   autoConnect: false,
   withCredentials: true,
   auth: {
-    token: localStorage.getItem("data"),
+    // token: localStorage.getItem("data"),
   },
 });

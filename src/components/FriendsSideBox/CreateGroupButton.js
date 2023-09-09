@@ -1,11 +1,14 @@
 import { Diversity1 } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCreateGroupModel } from "../../Redux/Reducer/OpenCloseReducer";
 
 const CreateGroupButton = () => {
   const dispatch = useDispatch();
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
   return (
     <div className="w-full h-10 p-1">
       <Button
@@ -17,7 +20,7 @@ const CreateGroupButton = () => {
         }}
       >
         <Diversity1 className="text-white mr-2 p-1" />
-        Create Group +
+        {activeLanguage.friendlistsidebar.creategroup} +
       </Button>
     </div>
   );

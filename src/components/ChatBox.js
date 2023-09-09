@@ -13,6 +13,10 @@ const ChatBox = () => {
 
   const isOwner = useSelector((state) => state.userDatas.chatFriend.status);
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <Box
       className="h-full relative"
@@ -25,7 +29,9 @@ const ChatBox = () => {
           <TypeMessageSession />
         </Box>
       ) : (
-        <EmptyMessagedComponent message="Select a friends or group to Chat!" />
+        <EmptyMessagedComponent
+          message={activeLanguage.chatBox.plsSelectUser}
+        />
       )}
     </Box>
   );

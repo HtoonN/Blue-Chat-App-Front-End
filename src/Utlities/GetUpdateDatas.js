@@ -4,6 +4,11 @@ const {
   setProfileDatas,
   setFriendsDatas,
 } = require("../Redux/Reducer/UserDataREducer");
+const {
+  default: setDelieveredAndGetUnseen,
+} = require("./SetDelieveredAndGetUnseen");
+const { default: joinToGroupRoom } = require("./JoinToGroupRoom");
+const { default: getGroupNoti } = require("./GetGroupNoti");
 
 async function getData(redirect, dispatch, status) {
   const url = `${process.env.REACT_APP_API_A}/get_updated_user_datas_and_update_user_age`;
@@ -25,8 +30,13 @@ async function getData(redirect, dispatch, status) {
     if (result.status === 200) {
       dispatch(setProfileDatas(result.data.profile));
       dispatch(setFriendsDatas(result.data.friend));
-
       dispatch(setAuth("true"));
+      setDelieveredAndGetUnseen(dispatch);
+      joinToGroupRoom(result.data.profile.groups);
+      getGroupNoti(result.data.profile.groups, dispatch);
+      if (result.data.profile.language !== localStorage.getItem("language")) {
+        localStorage.setItem("language", result.data.profile.language);
+      }
     } else {
       location.assign(redirect);
     }

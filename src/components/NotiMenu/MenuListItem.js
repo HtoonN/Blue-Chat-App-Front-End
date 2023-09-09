@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import setNotiSeen from "../../Utlities/SetNotiSeen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MenuListItem = ({ data, index }) => {
   const dispatch = useDispatch();
@@ -13,6 +13,10 @@ const MenuListItem = ({ data, index }) => {
       setNotiSeen(index, data._id, dispatch);
     }
   }
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <Box
       onClick={clickControl}
@@ -45,7 +49,9 @@ const MenuListItem = ({ data, index }) => {
         </div>
 
         {!data.seen && (
-          <div className="font-bold mt-1 text-[10px] text-blue-900">Unread</div>
+          <div className="font-bold mt-1 text-[10px] text-blue-900">
+            {activeLanguage.notification.unread}
+          </div>
         )}
       </Box>
     </Box>

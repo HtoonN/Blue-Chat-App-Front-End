@@ -26,6 +26,10 @@ const NotiMenuMobile = () => {
     function: addMoreNotiList,
   };
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       <Dialog
@@ -44,7 +48,7 @@ const NotiMenuMobile = () => {
             width: { xs: "350px", md: "400px" },
           }}
         >
-          Notifications
+          {activeLanguage.notification.notification}
         </DialogTitle>
         <Box
           sx={{
@@ -70,7 +74,7 @@ const NotiMenuMobile = () => {
             </div>
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-500 opacity-50">
-              Notifications
+              {activeLanguage.notification.notification}
             </div>
           )}
         </Box>

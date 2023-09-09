@@ -23,12 +23,16 @@ const FriendRequestModel = () => {
     }
   }, [open]);
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       {friendRequest ? (
         <Dialog open={open} onClose={handleClose} className=" w-full h-full ">
           <DialogTitle className="w-[350px] text-center text-blue-900 md:w-[400px]">
-            Friends Request
+            {activeLanguage.friendRequest.title}
           </DialogTitle>
           <FriendRequestDialogBos />
         </Dialog>

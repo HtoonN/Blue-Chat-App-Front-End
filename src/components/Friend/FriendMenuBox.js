@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import callFunForConformationDialog from "../../Utlities/ConformationDialogFunfciton/CallFunForConformationDialog";
 
 export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
@@ -14,6 +14,10 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
   };
 
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   return (
     <Popper
@@ -50,7 +54,7 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
                     });
                   }}
                 >
-                  UnFriend
+                  {activeLanguage.friendMenuBox.unfriend}
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -62,7 +66,9 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
                     });
                   }}
                 >
-                  <div className="text-red-500">Block</div>
+                  <div className="text-red-500">
+                    {activeLanguage.friendMenuBox.block}
+                  </div>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -74,7 +80,9 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
                     });
                   }}
                 >
-                  <div className="text-red-500">Delete Chat</div>
+                  <div className="text-red-500">
+                    {activeLanguage.friendMenuBox.deletechat}
+                  </div>
                 </MenuItem>
               </MenuList>
             </ClickAwayListener>

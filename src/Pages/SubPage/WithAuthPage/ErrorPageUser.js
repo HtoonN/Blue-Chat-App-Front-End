@@ -20,6 +20,10 @@ const ErrorPageUser = () => {
     return () => clearInterval(interval);
   }, [count]);
 
+  useEffect(() => {
+    document.title = "Blue Chat App | Error";
+  }, []);
+
   return (
     <div
       className=" flex flex-col w-[100vw] h-[100vh]  items-center justify-start

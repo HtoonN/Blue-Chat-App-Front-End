@@ -1,7 +1,7 @@
 import { AttachFile, Close, Send } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import sendingMessageController from "../Utlities/SendingMessageControl";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,8 +14,13 @@ const TypeMessageSession = () => {
   const [buffer, setBuffer] = useState("");
 
   const dispatch = useDispatch();
+  const textArea = useRef();
 
   const receiverData = useSelector((state) => state.userDatas.chatFriend.data);
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   const fileOnChangeController = (e) => {
     if (e.target.files[0]) {
@@ -35,8 +40,19 @@ const TypeMessageSession = () => {
     }
   };
 
+  const clearData = () => {
+    setText("");
+    setFile("");
+    setBuffer("");
+    setFileType("");
+    setFileUrl("");
+    setl("");
+    textArea.current?.focus();
+  };
+
   const sendController = () => {
     sendingMessageController({ text, file, receiverData, l, buffer, dispatch });
+    clearData();
   };
 
   return (
@@ -58,7 +74,8 @@ const TypeMessageSession = () => {
           <AttachFile className="text-blue-900" />
         </IconButton>
         <textarea
-          placeholder="Enter Message"
+          ref={textArea}
+          placeholder={activeLanguage.typeMessage.typemessage}
           className="h-10 px-2 py-[5px] border-2 border-blue-900 rounded-md 
           focus:outline-none resize-none w-96 ml-4 mr-2"
           value={text}

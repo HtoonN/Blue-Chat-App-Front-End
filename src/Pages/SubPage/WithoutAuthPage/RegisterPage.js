@@ -1,5 +1,5 @@
 import Logo from "../../../Images/logo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoComponent from "../../../components/logoComponent";
 import LabelAndInputText from "../../../components/LabelAndInputText";
 import LabelAndInputPassword from "../../../components/LabelAndInputPassword";
@@ -13,6 +13,10 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    document.title = "Blue Chat App | Register";
+  }, []);
 
   return (
     <div>

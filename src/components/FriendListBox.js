@@ -60,6 +60,10 @@ const FriendListBox = () => {
     }
   }, []);
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <Box
       className="w-[30vw] h-full border-r-2"
@@ -67,10 +71,13 @@ const FriendListBox = () => {
     >
       <div className="w-full  bg-blue-900 text-white px-2 pt-1 h-16 overflow-hidden">
         <div className="text-bold mb-2">
-          {query === "friends" ? "Messages" : "Groups"} List
+          {query === "friends"
+            ? activeLanguage.friendlistsidebar.messagelist
+            : activeLanguage.friendlistsidebar.grouplist}
         </div>
         <h1 className="text-xs font-thin opacity-70">
-          Total - {query === "friends" ? messagedFriends.length : groups.length}
+          {activeLanguage.friendlistsidebar.total} -{" "}
+          {query === "friends" ? messagedFriends.length : groups.length}
         </h1>
       </div>
       <div className="flex w-full justify-around">
@@ -80,7 +87,7 @@ const FriendListBox = () => {
             change("friends");
           }}
         >
-          Friends
+          {activeLanguage.friendlistsidebar.friend}
         </div>
         <div
           className={query === "groups" ? active : noActive}
@@ -88,7 +95,7 @@ const FriendListBox = () => {
             change("groups");
           }}
         >
-          Groups
+          {activeLanguage.friendlistsidebar.group}
         </div>
       </div>
       <div className="w-full h-[calc(100%_-_94.48px)] lg:h-[calc(100%_-_97.47px)] ">
@@ -120,7 +127,9 @@ const FriendListBox = () => {
               })}
             </List>
           ) : (
-            <EmptyMessagedComponent message="No Messaged Friend" />
+            <EmptyMessagedComponent
+              message={activeLanguage.friendList.nofriend}
+            />
           )}
         </div>
         <GroupList query={query} groupListDatas={groupListDatas} />

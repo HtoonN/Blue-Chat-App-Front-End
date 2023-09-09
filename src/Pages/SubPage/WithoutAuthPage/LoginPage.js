@@ -1,5 +1,5 @@
 import Logo from "../../../Images/logo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoComponent from "../../../components/logoComponent";
 import LabelAndInputText from "../../../components/LabelAndInputText";
 import LabelAndInputPassword from "../../../components/LabelAndInputPassword";
@@ -11,6 +11,11 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    document.title = "Blue Chat App | Login";
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col items-center justify-start lg:flex-row lg:items-center lg:justify-center lg:h-screen lg:w-screen ">

@@ -13,6 +13,10 @@ const FriendsBar = () => {
     getAFriendsData(friId, dispatch);
   }, []);
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       {arr.length ? (
@@ -37,7 +41,7 @@ const FriendsBar = () => {
         </div>
       ) : (
         <div className="h-24 w-full pl-1 border-b-2 text-center pt-9 text-gray-950 opacity-50">
-          You have no friends
+          {activeLanguage.friendbox.nofriendmessage}
         </div>
       )}
     </div>

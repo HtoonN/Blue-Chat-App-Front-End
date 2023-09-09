@@ -1,7 +1,7 @@
 import { Button, List, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import accFriend from "../Utlities/Friend/Accept";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cancelRequest from "../Utlities/Friend/CancelRequest";
 import blockPeople from "../Utlities/Friend/BlockPeople";
 import ProfileImageComponents from "./ProfileImageComponents";
@@ -12,6 +12,10 @@ const FriendRequestMenuList = ({ arr }) => {
   const [BtnBlock, setBtnBlock] = useState(false);
 
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   return (
     <div>
@@ -29,7 +33,7 @@ const FriendRequestMenuList = ({ arr }) => {
               sx={{ color: "#1e3a8a" }}
               disabled={BtnAccept}
             >
-              Accept
+              {activeLanguage.friendRequest.accept}
             </Button>
             <Button
               onClick={() => {
@@ -38,7 +42,7 @@ const FriendRequestMenuList = ({ arr }) => {
               sx={{ color: "#1e3a8a" }}
               disabled={BtnCancel}
             >
-              Cancel
+              {activeLanguage.friendRequest.cancel}
             </Button>
             <Button
               onClick={() => {
@@ -47,7 +51,7 @@ const FriendRequestMenuList = ({ arr }) => {
               sx={{ color: "#ff0000" }}
               disabled={BtnBlock}
             >
-              Block
+              {activeLanguage.friendRequest.block}
             </Button>
           </div>
         </div>

@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import callFunForConformationDialog from "../../Utlities/ConformationDialogFunfciton/CallFunForConformationDialog";
 import {
   setGroupProfileModel,
@@ -25,6 +25,10 @@ export default function GroupMenuBox({
   };
 
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   return (
     <Popper
@@ -54,7 +58,7 @@ export default function GroupMenuBox({
                       dispatch(setManageGroupMembersModel());
                     }}
                   >
-                    Mange Members
+                    {activeLanguage.groupMenuBox.managemember}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -62,7 +66,7 @@ export default function GroupMenuBox({
                       dispatch(setGroupProfileModel());
                     }}
                   >
-                    Edit Group
+                    {activeLanguage.groupMenuBox.editgroup}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -74,7 +78,9 @@ export default function GroupMenuBox({
                       });
                     }}
                   >
-                    <div className="text-red-500">Delete</div>
+                    <div className="text-red-500">
+                      {activeLanguage.groupMenuBox.deletegroup}
+                    </div>
                   </MenuItem>
                 </MenuList>
               ) : (
@@ -85,7 +91,9 @@ export default function GroupMenuBox({
                       handleClose();
                     }}
                   >
-                    <div className="text-blue-900">Members</div>
+                    <div className="text-blue-900">
+                      {activeLanguage.groupMenuBox.member}
+                    </div>
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -97,7 +105,9 @@ export default function GroupMenuBox({
                       });
                     }}
                   >
-                    <div className="text-red-500">Leave Group</div>
+                    <div className="text-red-500">
+                      {activeLanguage.groupMenuBox.leavegroup}
+                    </div>
                   </MenuItem>
                 </MenuList>
               )}

@@ -25,6 +25,7 @@ export const userDatasReducer = createSlice({
     memberList: { nextPage: 1, list: [] },
     sendingMessageQueue: {},
     sendingFileStatusQueue: {},
+    messagedFriNoti: {},
   },
   reducers: {
     //Profile
@@ -110,10 +111,90 @@ export const userDatasReducer = createSlice({
       state.messages.nextPage = 1;
     },
 
+    setMessageEmptyForDeleteChat: (state, action) => {
+      if (state.selectedUser.id === action.payload) {
+        state.messages.list = [];
+        state.messages.nextPage = 1;
+      }
+    },
+
     //Unshift Message
     pushMessage: (state, action) => {
-      if (state.selectedUser.id === action.payload.receiver) {
+      if (
+        state.selectedUser.id === action.payload.groupId ||
+        state.selectedUser.id === action.payload.receiver
+      ) {
         state.messages.list.push(action.payload);
+      }
+    },
+
+    pushMessageFriMessage: (state, action) => {
+      //for group
+      if (action.payload.data.groupId) {
+        if (action.payload.data.sender !== state.profileDatas.userId) {
+          if (state.selectedUser.id === action.payload.data.groupId) {
+            state.messages.list.push(action.payload.data);
+          } else if (state.messagedFriNoti[action.payload.data.groupId]) {
+            state.messagedFriNoti[action.payload.data.groupId] =
+              state.messagedFriNoti[action.payload.data.groupId] + 1;
+          } else {
+            state.messagedFriNoti[action.payload.data.groupId] = 1;
+          }
+        }
+      } else if (state.selectedUser.id === action.payload.data.sender) {
+        //for message
+        state.messages.list.push(action.payload.data);
+      } else if (state.messagedFriNoti[action.payload.data.sender]) {
+        state.messagedFriNoti[action.payload.data.sender] =
+          state.messagedFriNoti[action.payload.data.sender] + 1;
+      } else {
+        state.messagedFriNoti[action.payload.data.sender] = 1;
+      }
+    },
+
+    setDelieveredMessage: (state, action) => {
+      if (action.payload.receiver === state.selectedUser.id) {
+        let get = false;
+        let i = 0;
+
+        while (!get && state.messages.list.length > i) {
+          if (state.messages.list[i]._id === action.payload._id) {
+            state.messages.list[i].delievered = true;
+            get = true;
+          } else {
+            i++;
+          }
+        }
+      }
+    },
+
+    setSeenMessage: (state, action) => {
+      if (action.payload.groupId) {
+        if (action.payload.groupId === state.selectedUser.id) {
+          let get = false;
+          let i = 0;
+
+          while (!get && state.messages.list.length > i) {
+            if (state.messages.list[i]._id === action.payload._id) {
+              state.messages.list[i].seenBy.push(action.payload.seenUserBy);
+              get = true;
+            } else {
+              i++;
+            }
+          }
+        }
+      } else if (action.payload.receiver === state.selectedUser.id) {
+        let get = false;
+        let i = 0;
+
+        while (!get && state.messages.list.length > i) {
+          if (state.messages.list[i]._id === action.payload._id) {
+            state.messages.list[i].seen = true;
+            get = true;
+          } else {
+            i++;
+          }
+        }
       }
     },
 
@@ -351,16 +432,21 @@ export const userDatasReducer = createSlice({
 
     //Set selected
     setSelectedUser: (state, action) => {
-      state.selectedUser.id = action.payload.id;
-      state.selectedUser.status = action.payload.status;
-      state.chatFriend.data = action.payload.data;
-      state.chatFriend.status = action.payload.owner;
-      state.groupMembersList = {
-        members: [],
-        accept: [],
-        add: [],
-      };
-      state.memberList.list = [];
+      if (state.selectedUser.id !== action.payload.id) {
+        state.selectedUser.id = action.payload.id;
+        state.selectedUser.status = action.payload.status;
+        state.chatFriend.data = action.payload.data;
+        state.chatFriend.status = action.payload.owner;
+        state.groupMembersList = {
+          members: [],
+          accept: [],
+          add: [],
+        };
+        state.memberList.list = [];
+        //Clear Message
+        state.messages.list = [];
+        state.messages.nextPage = 1;
+      }
     },
 
     //setAdded
@@ -825,6 +911,25 @@ export const userDatasReducer = createSlice({
     deleteObjFromSendingFileStatusQueue: (state, action) => {
       state.sendingFileStatusQueue[action.payload.tempId] = undefined;
     },
+
+    //messagedFriNoti
+    setMessagedFriNoti: (state, action) => {
+      state.messagedFriNoti = action.payload;
+    },
+
+    removeMessageFriNoti: (state, action) => {
+      if (state.messagedFriNoti[action.payload.userId]) {
+        state.messagedFriNoti[action.payload.userId] = 0;
+      }
+    },
+    addMessagedFriNoti: (state, action) => {
+      if (state.messagedFriNoti[action.payload.groupId]) {
+        state.messagedFriNoti[action.payload.groupId] =
+          state.messagedFriNoti[action.payload.groupId] + action.payload.notiNo;
+      } else {
+        state.messagedFriNoti[action.payload.groupId] = action.payload.notiNo;
+      }
+    },
   },
 });
 
@@ -896,5 +1001,12 @@ export const {
   deleteObjFormSendingMessageQueue,
   deleteObjFromSendingFileStatusQueue,
   addPreMessages,
+  setMessagedFriNoti,
+  addMessagedFriNoti,
+  removeMessageFriNoti,
+  setDelieveredMessage,
+  setSeenMessage,
+  pushMessageFriMessage,
+  setMessageEmptyForDeleteChat,
 } = userDatasReducer.actions;
 export default userDatasReducer.reducer;

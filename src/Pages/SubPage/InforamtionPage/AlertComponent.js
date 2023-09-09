@@ -2,9 +2,10 @@ import { Alert, AlertTitle, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const AlertComponent = () => {
+const AlertComponent = ({ selectFun }) => {
   const open = useSelector((state) => state.alert.value);
   const text = useSelector((state) => state.alert.text);
+  const header = useSelector((state) => state.alert.header);
 
   return (
     <Alert
@@ -16,8 +17,13 @@ const AlertComponent = () => {
         transition: "ease-in-out",
         transitionDuration: "1s",
       }}
+      onClick={() => {
+        if (selectFun) {
+          selectFun();
+        }
+      }}
     >
-      <AlertTitle>Success</AlertTitle>
+      <AlertTitle>{header}</AlertTitle>
       {text ? (
         <Typography sx={{ fontSize: "13px", opacity: "0.6" }}>
           {text}

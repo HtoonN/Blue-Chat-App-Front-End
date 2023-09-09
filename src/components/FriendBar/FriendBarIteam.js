@@ -18,6 +18,7 @@ import unFriend from "../../Utlities/Friend/Unfriend";
 import blockPeople from "../../Utlities/Friend/BlockPeople";
 import startMessageControl from "../../Utlities/StartMessageControl";
 import selectFunction from "../../Utlities/SelectedFunction";
+import clearNotiFun from "../../Utlities/ClearNotiFun";
 
 const FriendBarIteam = ({ arr, profileimage }) => {
   const messagedList = useSelector(
@@ -30,6 +31,10 @@ const FriendBarIteam = ({ arr, profileimage }) => {
   const [BtnStartMessage, setBtnStartMessage] = useState(false);
   const [BtnUnfriend, setBtnUnfriend] = useState(false);
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   const handleClose = () => {
     setOpen(false);
@@ -89,10 +94,11 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                         onClick={() => {
                           handleClose();
                           selectFunction(arr.userId, "friend", dispatch, arr);
+                          clearNotiFun(arr.userId, dispatch);
                         }}
                         sx={{ color: "blue" }}
                       >
-                        Chat Friend
+                        {activeLanguage.friendbarMenu.chatfriend}
                       </MenuItem>
                     ) : (
                       <MenuItem
@@ -108,7 +114,7 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                         sx={{ color: "blue" }}
                         disabled={BtnStartMessage}
                       >
-                        Start Message
+                        {activeLanguage.friendbarMenu.startmessage}
                       </MenuItem>
                     )}
                   </div>
@@ -121,7 +127,7 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                     sx={{ color: "blue" }}
                     disabled={BtnUnfriend}
                   >
-                    Unfriend
+                    {activeLanguage.friendbarMenu.unfriend}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -131,7 +137,7 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                     sx={{ color: "red" }}
                     disabled={BtnBlock}
                   >
-                    Block
+                    {activeLanguage.friendbarMenu.block}
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

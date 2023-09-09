@@ -42,7 +42,6 @@ const sendingMessageController = ({
         sendMessageObj.text = text;
       }
 
-      console.log(sendMessageObj);
       dispatch(pushMessage(sendMessageObj));
       dispatch(
         setSendingMessageQueue({

@@ -21,7 +21,7 @@ const logOutControl = async (dispatch) => {
     dispatch(setSuccess());
     setTimeout(() => {
       dispatch(setLoadingUnseen());
-      localStorage.removeItem("data");
+      localStorage.removeItem("userId");
       location.assign("/login");
     }, 1500);
 

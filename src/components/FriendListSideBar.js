@@ -8,6 +8,7 @@ import FriendsList from "./FriendsSideBox/FriendsList";
 import getMessagedFri from "../Utlities/GetMessagedFri";
 import selectFunction from "../Utlities/SelectedFunction";
 import GroupList from "./FriendsSideBox/GroupList";
+import { setFriendListSideBar } from "../Redux/Reducer/OpenCloseReducer";
 
 const FriendListSideBar = () => {
   const friendListSideBar = useSelector(
@@ -23,7 +24,13 @@ const FriendListSideBar = () => {
     (state) => state.userDatas.messagedFriendsList.list
   );
   const selectedUser = useSelector((state) => state.userDatas.selectedUser.id);
+  const notiObj = useSelector((state) => state.userDatas.messagedFriNoti);
+
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   const change = (option) => {
     if (option !== query) {
@@ -50,6 +57,10 @@ const FriendListSideBar = () => {
     (state) => state.userDatas.groupListDatas.list
   );
 
+  const friendListControl = () => {
+    dispatch(setFriendListSideBar());
+  };
+
   return (
     <Box
       className={
@@ -62,10 +73,12 @@ const FriendListSideBar = () => {
       <Paper className="w-[75vw] h-[100vh] md:w-[45vw]" elevation={3}>
         <div className="w-full  bg-blue-900 text-white px-2 py-3 ">
           <div className="text-bold mb-2">
-            {query === "friends" ? "Messages" : "Groups"} List
+            {query === "friends"
+              ? activeLanguage.friendlistsidebar.messagelist
+              : activeLanguage.friendlistsidebar.grouplist}
           </div>
           <h1 className="text-xs font-thin opacity-70">
-            Total -
+            {activeLanguage.friendlistsidebar.total} -
             {query === "friends" ? messagedFriends.length : groups.length}
           </h1>
         </div>
@@ -77,7 +90,7 @@ const FriendListSideBar = () => {
               change("friends");
             }}
           >
-            Friends
+            {activeLanguage.friendlistsidebar.friend}
           </div>
           <div
             className={query === "groups" ? active : noActive}
@@ -85,7 +98,7 @@ const FriendListSideBar = () => {
               change("groups");
             }}
           >
-            Groups
+            {activeLanguage.friendlistsidebar.group}
           </div>
         </div>
         <div className="w-full h-[calc(100%_-_149px)] ">
@@ -99,9 +112,14 @@ const FriendListSideBar = () => {
                 <List>
                   {messagedFriObj.map((data, index) => {
                     let profileImage;
+                    let noti = false;
 
                     if (data.profileImage) {
                       profileImage = changeImageStringToObj(data.profileImage);
+                    }
+
+                    if (notiObj[data.userId]) {
+                      noti = notiObj[data.userId];
                     }
 
                     return (
@@ -114,16 +132,24 @@ const FriendListSideBar = () => {
                         setSelectedUser={setSelectedUser}
                         selectFunction={selectFunction}
                         dispatch={dispatch}
+                        noti={noti}
+                        closeFriendListSideBar={friendListControl}
                       />
                     );
                   })}
                 </List>
               ) : (
-                <EmptyMessagedComponent message="No Messaged Friend" />
+                <EmptyMessagedComponent
+                  message={activeLanguage.friendList.nofriend}
+                />
               )}
             </div>
           ) : (
-            <GroupList query={query} groupListDatas={groupListDatas} />
+            <GroupList
+              query={query}
+              groupListDatas={groupListDatas}
+              closeFriendListSideBar={friendListControl}
+            />
           )}
         </div>
       </Paper>

@@ -1,7 +1,7 @@
 import { socket } from "../socket";
 
 const ConnectionManager = () => {
-  if (localStorage.getItem("data")) {
+  if (localStorage.getItem("userId")) {
     socket.connect();
   }
 };

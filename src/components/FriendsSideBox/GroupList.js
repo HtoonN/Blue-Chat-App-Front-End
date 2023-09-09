@@ -4,11 +4,15 @@ import { List } from "@mui/material";
 import changeImageStringToObj from "../../Utlities/ChangeImageStringToObj";
 import GroupListItems from "./GroupListItems";
 import selectFunction from "../../Utlities/SelectedFunction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CreateGroupButton from "./CreateGroupButton";
 
-const GroupList = ({ query, groupListDatas }) => {
+const GroupList = ({ query, groupListDatas, closeFriendListSideBar }) => {
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   return (
     <div className={`w-full h-full ${query === "groups" ? "" : "hidden"}`}>
@@ -27,12 +31,17 @@ const GroupList = ({ query, groupListDatas }) => {
                 data={data}
                 selectFunction={selectFunction}
                 profileImage={profileImage}
+                closeFriendListSideBar={closeFriendListSideBar}
               />
             );
           })}
         </List>
       ) : (
-        <EmptyMessagedComponent message="No Groups" />
+        <div className="w-full h-[calc(100%_-_40px)]">
+          <EmptyMessagedComponent
+            message={activeLanguage.groupListItem.nogroup}
+          />
+        </div>
       )}
     </div>
   );

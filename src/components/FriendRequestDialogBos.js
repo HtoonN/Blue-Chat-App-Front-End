@@ -47,6 +47,10 @@ const FriendRequestDialogBos = () => {
   });
   */
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <Box
       sx={{ pt: 0 }}
@@ -73,7 +77,7 @@ const FriendRequestDialogBos = () => {
           </div>
         ) : (
           <div className="text-gray-500 opacity-50 w-full h-full flex items-center justify-center">
-            No Friend Request
+            {activeLanguage.friendRequest.nofriendrequest}
           </div>
         )}
       </div>

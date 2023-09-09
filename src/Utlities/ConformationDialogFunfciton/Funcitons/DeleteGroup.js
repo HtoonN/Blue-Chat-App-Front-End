@@ -1,5 +1,8 @@
 import axios from "axios";
-import { deleteGroupR } from "../../../Redux/Reducer/UserDataREducer";
+import {
+  deleteGroupR,
+  setChatFriend,
+} from "../../../Redux/Reducer/UserDataREducer";
 import setAlertFun from "../../SetAlertFun";
 
 const deleteGroup = (dispatch, groupId) => {
@@ -15,6 +18,7 @@ const deleteGroup = (dispatch, groupId) => {
           setTimeout(() => {
             dispatch(deleteGroupR(groupId));
           }, 1000);
+          dispatch(setChatFriend({ data: "", status: "" }));
         }
       })
       .catch((e) => {

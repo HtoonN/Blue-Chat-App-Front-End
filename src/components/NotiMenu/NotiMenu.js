@@ -33,6 +33,10 @@ const NotiMenu = ({ notiMenuRef }) => {
     function: addMoreNotiList,
   };
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       <Popper
@@ -78,7 +82,7 @@ const NotiMenu = ({ notiMenuRef }) => {
                   </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-500 opacity-50">
-                    Notifications
+                    {activeLanguage.notification.notification}
                   </div>
                 )}
               </ClickAwayListener>

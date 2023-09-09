@@ -1,24 +1,14 @@
 import { List } from "@mui/material";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import getGroupMembersData from "../../Utlities/Group/getGroupMembersData";
+import React from "react";
+import { useSelector } from "react-redux";
 import EmptyMessagedComponent from "../EmptyMessagedComponent";
 import GroupMemberListItem from "./GroupMemberListItem";
 
 const GroupMemberList = () => {
   const groupDatas = useSelector((state) => state.userDatas.chatFriend.data);
-  const selectedUser = useSelector((state) => state.userDatas.selectedUser);
   const groupMembersList = useSelector(
     (state) => state.userDatas.groupMembersList.members
   );
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (selectedUser.status === "group") {
-      getGroupMembersData(groupDatas.members, dispatch);
-    }
-  }, [selectedUser]);
 
   return (
     <div className="w-full h-full">
