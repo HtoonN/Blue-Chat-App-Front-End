@@ -1,6 +1,6 @@
 import { Button, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import changeImageStringToObj from "../../Utlities/ChangeImageStringToObj";
 import cancelAdd from "../../Utlities/Group/CancelAdd";
 import GroupImageComponent from "../GroupImageComponent";
@@ -16,6 +16,10 @@ const AddedGRoupListItems = ({ data }) => {
     profileImage = changeImageStringToObj(data.profileImage);
   }
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <ListItem
       className="border-b-2  hover:bg-gray-100 cursor-pointer"
@@ -25,7 +29,7 @@ const AddedGRoupListItems = ({ data }) => {
           disabled={BtnCancel}
           sx={{ color: "#1e3a8a" }}
         >
-          Cancel
+          {activeLanguage.waitingList.group.cancel}
         </Button>
       }
     >

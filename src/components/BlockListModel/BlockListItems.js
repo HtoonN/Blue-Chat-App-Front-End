@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import unBlock from "../../Utlities/Friend/UnBlock";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import changeImageStringToObj from "../../Utlities/ChangeImageStringToObj";
 
 const BlockListItems = ({ obj }) => {
@@ -24,6 +24,10 @@ const BlockListItems = ({ obj }) => {
     data.profileImage = changeImageStringToObj(data.profileImage);
   }
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <ListItem
       className="border-b-2  hover:bg-gray-100 cursor-pointer"
@@ -33,7 +37,7 @@ const BlockListItems = ({ obj }) => {
           disabled={BtnUnblock}
           sx={{ color: "#ff0000" }}
         >
-          remove
+          {activeLanguage.blockList.cancel}
         </Button>
       }
     >
@@ -48,7 +52,10 @@ const BlockListItems = ({ obj }) => {
           )}
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary={data.username} secondary="Person" />
+      <ListItemText
+        primary={data.username}
+        secondary={activeLanguage.blockList.person}
+      />
     </ListItem>
   );
 };

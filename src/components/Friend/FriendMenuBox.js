@@ -47,8 +47,11 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
                 <MenuItem
                   onClick={() => {
                     callFunForConformationDialog(handleClose, dispatch, {
-                      header: "UnFriend",
-                      body: "Are you sure to UNFIREND with this user!",
+                      header:
+                        activeLanguage.friendmenuboxandFribaritem.unfriend
+                          .header,
+                      body: activeLanguage.friendmenuboxandFribaritem.unfriend
+                        .body,
                       funName: "unfriend",
                       data: data.userId,
                     });
@@ -59,8 +62,10 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
                 <MenuItem
                   onClick={() => {
                     callFunForConformationDialog(handleClose, dispatch, {
-                      header: "Block",
-                      body: "Are you sure to block the user!",
+                      header:
+                        activeLanguage.friendmenuboxandFribaritem.block.header,
+                      body: activeLanguage.friendmenuboxandFribaritem.block
+                        .body,
                       funName: "blockUser",
                       data: data.userId,
                     });
@@ -73,8 +78,11 @@ export default function FriendMenuBox({ open, setOpen, anchorRef, data }) {
                 <MenuItem
                   onClick={() => {
                     callFunForConformationDialog(handleClose, dispatch, {
-                      header: "Delete Chats",
-                      body: "Are you sure to delete chat with this user!",
+                      header:
+                        activeLanguage.friendmenuboxandFribaritem.deletechat
+                          .header,
+                      body: activeLanguage.friendmenuboxandFribaritem.deletechat
+                        .body,
                       funName: "deleteChat",
                       data: data.userId,
                     });

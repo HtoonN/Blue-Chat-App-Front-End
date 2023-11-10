@@ -16,6 +16,8 @@ export const openCloseReducer = createSlice({
     profileModel: false,
     groupProfileModel: false,
     scroll: false,
+    getPasswordForAccountDeactivation: false,
+    changeLanguage: false,
   },
   reducers: {
     setFriendListSideBar: (state) => {
@@ -57,6 +59,13 @@ export const openCloseReducer = createSlice({
     setScroll: (state) => {
       state.scroll = !state.scroll;
     },
+    setGetPasswordForAccountDeactivation: (state) => {
+      state.getPasswordForAccountDeactivation =
+        !state.getPasswordForAccountDeactivation;
+    },
+    setChangeLanguage: (state) => {
+      state.changeLanguage = !state.changeLanguage;
+    },
   },
 });
 
@@ -74,6 +83,8 @@ export const {
   setProfileModel,
   setGroupProfileModel,
   setScroll,
+  setGetPasswordForAccountDeactivation,
+  setChangeLanguage,
 } = openCloseReducer.actions;
 
 export default openCloseReducer.reducer;

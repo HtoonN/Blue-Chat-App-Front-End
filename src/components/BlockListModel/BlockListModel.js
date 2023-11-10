@@ -19,12 +19,16 @@ const BlockListModel = () => {
     }
   }, [open]);
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       {blockedList ? (
         <Dialog open={open} onClose={handleClose} className=" w-full h-full ">
           <DialogTitle className="w-[350px] text-center text-blue-900 md:w-[400px]">
-            Blocked List
+            {activeLanguage.blockList.title}
           </DialogTitle>
           <Box
             sx={{ pt: 0 }}
@@ -38,7 +42,7 @@ const BlockListModel = () => {
               </List>
             ) : (
               <div className="text-gray-500 opacity-50 w-full h-full flex items-center justify-center ">
-                No Blocked Users
+                {activeLanguage.blockList.noblockuser}
               </div>
             )}
           </Box>

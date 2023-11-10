@@ -12,7 +12,7 @@ import addPeople from "../Utlities/Friend/AddPeople";
 import blockPeople from "../Utlities/Friend/BlockPeople";
 import unFriend from "../Utlities/Friend/Unfriend";
 import cancelAddFriend from "../Utlities/Friend/CancelAddFriend";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import accFriend from "../Utlities/Friend/Accept";
 import cancelRequest from "../Utlities/Friend/CancelRequest";
 
@@ -25,6 +25,10 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
   const [BtnCancelRequested, setBtnCancelRequested] = useState(false);
 
   const dispatch = useDispatch();
+
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   return (
     <div>
@@ -53,7 +57,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
                 sx={{ color: "#1e3a8a" }}
                 disabled={BtnUnfriend}
               >
-                UnFriend
+                {activeLanguage.searchFriend.peopletext.unfriend}
               </Button>
             ) : isAdded ? (
               <Button
@@ -63,7 +67,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
                 sx={{ color: "#1e3a8a" }}
                 disabled={BtncancelAddFriend}
               >
-                Cancel Request
+                {activeLanguage.searchFriend.peopletext.cancelrequest}
               </Button>
             ) : isRequested ? (
               <>
@@ -74,7 +78,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
                   sx={{ color: "#1e3a8a" }}
                   disabled={BtnAccept}
                 >
-                  Accept
+                  {activeLanguage.searchFriend.peopletext.accept}
                 </Button>
                 <Button
                   onClick={() => {
@@ -83,7 +87,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
                   sx={{ color: "#1e3a8a" }}
                   disabled={BtnCancelRequested}
                 >
-                  Cancel
+                  {activeLanguage.searchFriend.peopletext.cancel}
                 </Button>
               </>
             ) : (
@@ -94,7 +98,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
                 sx={{ color: "#1e3a8a" }}
                 disabled={BtnAdd}
               >
-                Add
+                {activeLanguage.searchFriend.peopletext.add}
               </Button>
             )}
             <Button
@@ -104,7 +108,7 @@ const FriendMenuList = ({ arr, isFri, isRequested, isAdded, profileimage }) => {
               sx={{ color: "#ff0000" }}
               disabled={BtnBlock}
             >
-              Block
+              {activeLanguage.searchFriend.peopletext.block}
             </Button>
           </div>
         </div>

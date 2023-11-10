@@ -36,63 +36,73 @@ const AddedListModel = () => {
     }
   }, [open]);
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
-      <Dialog open={open} onClose={handleClose} className=" w-full h-full ">
-        <DialogTitle className="w-[350px] text-center text-blue-900 md:w-[400px]">
-          Waiting Access
-        </DialogTitle>
-        <div className="w-full flex justify-around">
-          <div className="w-full flex flex-row justify-around">
-            <div
-              className={person ? active : noActive}
-              onClick={() => setPerson(true)}
-            >
-              Peoples:{added ? added.list.length : ""}
-            </div>
-            <div
-              className={person ? noActive : active}
-              onClick={() => setPerson(false)}
-            >
-              Groups:{added ? added.groups.length : ""}
-            </div>
-          </div>
-        </div>
-        <Box
-          sx={{ pt: 0 }}
-          className="w-[350px] h-[500px] bg-white p-2  md:w-[400px]"
-        >
-          <div className="w-full h-full">
-            {person ? (
-              <div className="w-full h-full">
-                {addedListPeoples.length ? (
-                  <List className=" w-full  overflow-y-scroll h-full">
-                    {addedListPeoples.map((data, index) => {
-                      return <AddedListItems obj={data} key={index} />;
-                    })}
-                  </List>
-                ) : (
-                  <div className="text-gray-500 opacity-50 w-full h-full flex items-center justify-center ">
-                    No Waiting Accept
-                  </div>
-                )}
+      {added && (
+        <Dialog open={open} onClose={handleClose} className=" w-full h-full ">
+          <DialogTitle className="w-[350px] text-center text-blue-900 md:w-[400px]">
+            {activeLanguage.waitingList.title}
+          </DialogTitle>
+          <div className="w-full flex justify-around">
+            <div className="w-full flex flex-row justify-around">
+              <div
+                className={person ? active : noActive}
+                onClick={() => setPerson(true)}
+              >
+                {activeLanguage.waitingList.friend.title}:
+                {added ? added.list.length : 0}
               </div>
-            ) : (
-              <Box className="w-full h-full">
-                {addedGroupList.length ? (
-                  <List className=" w-full  overflow-y-scroll h-full">
-                    {addedGroupList.map((data, index) => {
-                      return <AddedGRoupListItems data={data} key={index} />;
-                    })}
-                  </List>
-                ) : (
-                  <EmptyMessagedComponent message="No Waiting Accept" />
-                )}
-              </Box>
-            )}
+              <div
+                className={person ? noActive : active}
+                onClick={() => setPerson(false)}
+              >
+                {activeLanguage.waitingList.group.title}:
+                {added ? added.groups.length : 0}
+              </div>
+            </div>
           </div>
-        </Box>
-      </Dialog>
+          <Box
+            sx={{ pt: 0 }}
+            className="w-[350px] h-[500px] bg-white p-2  md:w-[400px]"
+          >
+            <div className="w-full h-full">
+              {person ? (
+                <div className="w-full h-full">
+                  {addedListPeoples.length ? (
+                    <List className=" w-full  overflow-y-scroll h-full">
+                      {addedListPeoples.map((data, index) => {
+                        return <AddedListItems obj={data} key={index} />;
+                      })}
+                    </List>
+                  ) : (
+                    <div className="text-gray-500 opacity-50 w-full h-full flex items-center justify-center ">
+                      {activeLanguage.waitingList.nowaitingaccept}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Box className="w-full h-full">
+                  {addedGroupList.length ? (
+                    <List className=" w-full  overflow-y-scroll h-full">
+                      {addedGroupList.map((data, index) => {
+                        return <AddedGRoupListItems data={data} key={index} />;
+                      })}
+                    </List>
+                  ) : (
+                    <EmptyMessagedComponent
+                      message={activeLanguage.waitingList.nowaitingaccept}
+                    />
+                  )}
+                </Box>
+              )}
+            </div>
+          </Box>
+        </Dialog>
+      )}
     </div>
   );
 };

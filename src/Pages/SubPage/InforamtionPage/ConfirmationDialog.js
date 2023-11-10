@@ -21,40 +21,45 @@ export default function ConfirmationDialog() {
     dispatch(setOpenCD());
   };
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
   return (
     <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className="text-blue-900">
-          {header}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText
-            id="alert-dialog-description"
-            sx={{ width: "400px" }}
-          >
-            {body}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} sx={{ color: "#0d47a1" }}>
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              handleClose();
-              conformationFunctions[funName](dispatch, data);
-            }}
-            sx={{ color: "#0d47a1" }}
-          >
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {open && (
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className="text-blue-900">
+            {header}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-description"
+              sx={{ width: "400px" }}
+            >
+              {body}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} sx={{ color: "#0d47a1" }}>
+              {activeLanguage.confirmationAlert.cancel}
+            </Button>
+            <Button
+              onClick={() => {
+                handleClose();
+                conformationFunctions[funName](dispatch, data);
+              }}
+              sx={{ color: "#0d47a1" }}
+            >
+              {activeLanguage.confirmationAlert.ok}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 }

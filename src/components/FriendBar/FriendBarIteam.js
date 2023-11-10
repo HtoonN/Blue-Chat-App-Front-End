@@ -14,11 +14,10 @@ import {
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import unFriend from "../../Utlities/Friend/Unfriend";
-import blockPeople from "../../Utlities/Friend/BlockPeople";
 import startMessageControl from "../../Utlities/StartMessageControl";
 import selectFunction from "../../Utlities/SelectedFunction";
 import clearNotiFun from "../../Utlities/ClearNotiFun";
+import callFunForConformationDialog from "../../Utlities/ConformationDialogFunfciton/CallFunForConformationDialog";
 
 const FriendBarIteam = ({ arr, profileimage }) => {
   const messagedList = useSelector(
@@ -27,9 +26,9 @@ const FriendBarIteam = ({ arr, profileimage }) => {
   const friendMenuRef = useRef();
   const [open, setOpen] = useState(false);
   let isMessaged = false;
-  const [BtnBlock, setBtnBlock] = useState(false);
+
   const [BtnStartMessage, setBtnStartMessage] = useState(false);
-  const [BtnUnfriend, setBtnUnfriend] = useState(false);
+
   const dispatch = useDispatch();
 
   const activeLanguage = useSelector(
@@ -121,21 +120,35 @@ const FriendBarIteam = ({ arr, profileimage }) => {
                   <Divider />
                   <MenuItem
                     onClick={() => {
-                      handleClose();
-                      unFriend(arr.userId, setBtnUnfriend, dispatch);
+                      //unFriend(arr.userId, setBtnUnfriend, dispatch);
+                      callFunForConformationDialog(handleClose, dispatch, {
+                        header:
+                          activeLanguage.friendmenuboxandFribaritem.unfriend
+                            .header,
+                        body: activeLanguage.friendmenuboxandFribaritem.unfriend
+                          .body,
+                        funName: "unfriend",
+                        data: arr.userId,
+                      });
                     }}
                     sx={{ color: "blue" }}
-                    disabled={BtnUnfriend}
                   >
                     {activeLanguage.friendbarMenu.unfriend}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      handleClose();
-                      blockPeople(arr.userId, dispatch, setBtnBlock);
+                      //blockPeople(arr.userId, dispatch, setBtnBlock);
+                      callFunForConformationDialog(handleClose, dispatch, {
+                        header:
+                          activeLanguage.friendmenuboxandFribaritem.block
+                            .header,
+                        body: activeLanguage.friendmenuboxandFribaritem.block
+                          .body,
+                        funName: "blockUser",
+                        data: arr.userId,
+                      });
                     }}
                     sx={{ color: "red" }}
-                    disabled={BtnBlock}
                   >
                     {activeLanguage.friendbarMenu.block}
                   </MenuItem>

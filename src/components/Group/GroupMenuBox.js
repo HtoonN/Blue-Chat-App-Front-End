@@ -71,8 +71,10 @@ export default function GroupMenuBox({
                   <MenuItem
                     onClick={() => {
                       callFunForConformationDialog(handleClose, dispatch, {
-                        header: "Delete Group",
-                        body: "You can't restore group again!",
+                        header:
+                          activeLanguage.groupMenuBoxdetail.deletegroup.header,
+                        body: activeLanguage.groupMenuBoxdetail.deletegroup
+                          .body,
                         funName: "deleteGroup",
                         data: data.groupId,
                       });
@@ -98,8 +100,8 @@ export default function GroupMenuBox({
                   <MenuItem
                     onClick={() => {
                       callFunForConformationDialog(handleClose, dispatch, {
-                        header: "Leave",
-                        body: "You can add again",
+                        header: activeLanguage.leaveGroup.title,
+                        body: activeLanguage.leaveGroup.body,
                         funName: "leaveGroup",
                         data: data.groupId,
                       });

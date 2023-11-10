@@ -7,7 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import changeImageStringToObj from "../../Utlities/ChangeImageStringToObj";
 import blockPeople from "../../Utlities/Friend/BlockPeople";
 import cancelAddFriend from "../../Utlities/Friend/CancelAddFriend";
@@ -27,6 +27,10 @@ const AddedListItems = ({ obj }) => {
     data.profileImage = changeImageStringToObj(data.profileImage);
   }
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <ListItem
       className="border-b-2  hover:bg-gray-100 cursor-pointer"
@@ -37,14 +41,14 @@ const AddedListItems = ({ obj }) => {
             disabled={BtnCancel}
             sx={{ color: "#1e3a8a" }}
           >
-            Cancel
+            {activeLanguage.waitingList.friend.cancel}
           </Button>
           <Button
             onClick={() => blockPeople(data.userId, dispatch, setBtnblock)}
             disabled={Btnblock}
             sx={{ color: "#ff0000" }}
           >
-            Block
+            {activeLanguage.waitingList.friend.block}
           </Button>
         </>
       }

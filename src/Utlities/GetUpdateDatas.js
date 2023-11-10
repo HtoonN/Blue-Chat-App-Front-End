@@ -9,6 +9,7 @@ const {
 } = require("./SetDelieveredAndGetUnseen");
 const { default: joinToGroupRoom } = require("./JoinToGroupRoom");
 const { default: getGroupNoti } = require("./GetGroupNoti");
+const { setActiveLanguage } = require("../Redux/Reducer/Preferences");
 
 async function getData(redirect, dispatch, status) {
   const url = `${process.env.REACT_APP_API_A}/get_updated_user_datas_and_update_user_age`;
@@ -34,9 +35,7 @@ async function getData(redirect, dispatch, status) {
       setDelieveredAndGetUnseen(dispatch);
       joinToGroupRoom(result.data.profile.groups);
       getGroupNoti(result.data.profile.groups, dispatch);
-      if (result.data.profile.language !== localStorage.getItem("language")) {
-        localStorage.setItem("language", result.data.profile.language);
-      }
+      dispatch(setActiveLanguage(result.data.profile.language));
     } else {
       location.assign(redirect);
     }

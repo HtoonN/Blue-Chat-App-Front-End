@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import EmptyMessagedComponent from "../EmptyMessagedComponent";
 import GroupMemberListItem from "./GroupMemberListItem";
 
-const GroupMemberList = () => {
+const GroupMemberList = ({ activeLanguage }) => {
   const groupDatas = useSelector((state) => state.userDatas.chatFriend.data);
   const groupMembersList = useSelector(
     (state) => state.userDatas.groupMembersList.members
@@ -20,7 +20,12 @@ const GroupMemberList = () => {
               isAdmin = true;
             }
             return (
-              <GroupMemberListItem data={data} isAdmin={isAdmin} key={index} />
+              <GroupMemberListItem
+                data={data}
+                isAdmin={isAdmin}
+                key={index}
+                activeLanguage={activeLanguage}
+              />
             );
           })}
         </List>

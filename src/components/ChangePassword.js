@@ -2,13 +2,16 @@ import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import React, { useState } from "react";
 import LabelAndInputPassword from "./LabelAndInputPassword";
 import changePassword from "../Utlities/ChangePassword";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ChangePassword = ({ open, setOpen }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [reNewPassword, setReNewPassword] = useState("");
   const [btnChangePassword, setBtnChangePassword] = useState(false);
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
   const dispatch = useDispatch();
 
@@ -19,21 +22,21 @@ const ChangePassword = ({ open, setOpen }) => {
   return (
     <Dialog open={open}>
       <DialogTitle className="w-[350px] text-blue-900">
-        Change Password
+        {activeLanguage.profile.changePassword.title}
       </DialogTitle>
       <div className="flex flex-col items-center justify-center h-500">
         <LabelAndInputPassword
-          name="Old Password"
+          name={activeLanguage.profile.changePassword.oldpassword}
           value={oldPassword}
           setValue={setOldPassword}
         />
         <LabelAndInputPassword
-          name="New Password"
+          name={activeLanguage.profile.changePassword.newpassword}
           value={newPassword}
           setValue={setNewPassword}
         />
         <LabelAndInputPassword
-          name="Re-New Password"
+          name={activeLanguage.profile.changePassword.renewpassword}
           value={reNewPassword}
           setValue={setReNewPassword}
         />
@@ -48,7 +51,7 @@ const ChangePassword = ({ open, setOpen }) => {
             setReNewPassword("");
           }}
         >
-          Cancel
+          {activeLanguage.profile.changePassword.btn.cancel}
         </Button>
         <Button
           sx={{ color: "#0d47a1" }}
@@ -63,11 +66,12 @@ const ChangePassword = ({ open, setOpen }) => {
               setOldPassword,
               setNewPassword,
               setReNewPassword,
+              activeLanguage,
             });
           }}
           disabled={btnChangePassword}
         >
-          Change Password
+          {activeLanguage.profile.changePassword.btn.changepassword}
         </Button>
       </DialogActions>
     </Dialog>

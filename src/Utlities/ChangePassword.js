@@ -12,6 +12,7 @@ const changePassword = ({
   setOldPassword,
   setNewPassword,
   setReNewPassword,
+  activeLanguage,
 }) => {
   if (oldPassword && newPassword && reNewPassword) {
     setBtnChangePassword(true);
@@ -34,26 +35,34 @@ const changePassword = ({
             setNewPassword("");
             setReNewPassword("");
             handleClose();
-            setAlertFun(dispatch, "Password changed!");
+            setAlertFun(
+              dispatch,
+              activeLanguage.profile.changePassword.alert.success.text
+            );
           }
         })
         .catch((e) => {
           showAlertDialog(
             dispatch,
             e.response.data.information,
-            "Change Password"
+            activeLanguage.profile.changePassword.alert.title
           );
           setBtnChangePassword(false);
         });
     } else {
-      showAlertDialog(dispatch, "Password don't match", "Change Password");
+      showAlertDialog(
+        dispatch,
+        activeLanguage.profile.changePassword.alert.error.passworddonotmatch
+          .text,
+        activeLanguage.profile.changePassword.alert.title
+      );
       setBtnChangePassword(false);
     }
   } else {
     showAlertDialog(
       dispatch,
-      "Fill all of three completely",
-      "Change Password"
+      activeLanguage.profile.changePassword.alert.error.requirefill.text,
+      activeLanguage.profile.changePassword.alert.title
     );
     setBtnChangePassword(false);
   }

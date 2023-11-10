@@ -21,19 +21,20 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setAddedListModel,
   setBlockListModel,
+  setChangeLanguage,
   setFriendListSideBar,
   setFriendRequestModel,
   setNotiMenuMobileModel,
   setNotiMenuModel,
   setProfileModel,
 } from "../Redux/Reducer/OpenCloseReducer";
-import logOutControl from "../Utlities/LogOutControl";
 import findFriendsControl from "../Utlities/FindFriendsControl";
 import { AccountCircle, PersonAdd } from "@mui/icons-material";
 import changeImageStringToObj from "../Utlities/ChangeImageStringToObj";
 import NotiMenu from "./NotiMenu/NotiMenu";
 import NotiMenuMobile from "./NotificationBoxForMobileView/NotiMenuMobile";
 import ProfileImageComponents from "./ProfileImageComponents";
+import callFunForConformationDialog from "../Utlities/ConformationDialogFunfciton/CallFunForConformationDialog";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -168,13 +169,42 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem
         onClick={() => {
+          if (profileDatas) {
+            handleMenuClose();
+            dispatch(setChangeLanguage());
+          }
+        }}
+      >
+        {activeLanguage.changeLanguage}
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
           handleMenuClose();
-          logOutControl(dispatch);
+          if (profileDatas) {
+            callFunForConformationDialog(handleMenuClose, dispatch, {
+              header: activeLanguage.logout.header,
+              body: activeLanguage.logout.body,
+              funName: "logOutControl",
+              data: "Logging out",
+            });
+          }
         }}
       >
         {activeLanguage.profileMenu.logout}
       </MenuItem>
-      <MenuItem sx={{ color: "red" }} onClick={handleMenuClose}>
+      <MenuItem
+        sx={{ color: "red" }}
+        onClick={() => {
+          if (profileDatas) {
+            callFunForConformationDialog(handleMenuClose, dispatch, {
+              header: activeLanguage.accountdeactivation.header,
+              body: activeLanguage.accountdeactivation.body,
+              funName: "deleteAccount",
+              data: profileDatas.userId,
+            });
+          }
+        }}
+      >
         {activeLanguage.profileMenu.deleteaccount}
       </MenuItem>
     </Menu>

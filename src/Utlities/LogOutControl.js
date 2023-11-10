@@ -11,8 +11,8 @@ import {
 } from "../Redux/Reducer/LoadingReducer";
 import logout from "./API_Call/LogOut";
 
-const logOutControl = async (dispatch) => {
-  dispatch(setTitle("Logging Out"));
+const logOutControl = async (dispatch, title) => {
+  dispatch(setTitle(title));
   dispatch(setLoadingSeen());
 
   const ans = await logout();

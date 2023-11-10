@@ -45,149 +45,157 @@ const Profile = () => {
     dispatch(setProfileModel());
   };
 
-  return (
-    <Dialog open={open} sx={{ zIndex: "90" }}>
-      <DialogTitle
-        className=" text-center text-blue-900"
-        sx={{ width: { xs: "350px", md: "450px" } }}
-      >
-        Profile
-      </DialogTitle>
-      <div className="h-[500px] w-full flex flex-col justify-start items-center">
-        <div className=" flex flex-col justify-center items-center relative w-20 h-20 rounded-full overflow-hidden ">
-          <img
-            className="w-full h-full object-cover"
-            src={
-              imageUrl
-                ? imageUrl
-                : "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Picture.png"
-            }
-          />
-          <input
-            type="file"
-            className="w-full h-full absolute opacity-0"
-            onChange={(e) => {
-              setFile(e.target.files[0]);
-              setImageUrl(URL.createObjectURL(e.target.files[0]));
-              setRemoveProfileImage(false);
-            }}
-          />
-        </div>
-        {profileDatas.profileImage ? (
-          <>
-            {removeProfileImage || file ? (
-              <Typography
-                sx={{
-                  fontSize: "13px",
-                  opacity: "0.5",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setFile("");
-                  setProfileImageFun(profileDatas.profileImage);
-                  setRemoveProfileImage(false);
-                }}
-              >
-                Restore photo
-              </Typography>
-            ) : (
-              <Typography
-                sx={{
-                  fontSize: "13px",
-                  opacity: "0.5",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setFile("");
-                  setImageUrl("");
-                  setRemoveProfileImage(true);
-                }}
-              >
-                Remove Image
-              </Typography>
-            )}
-          </>
-        ) : (
-          <>
-            {file && (
-              <Typography
-                sx={{
-                  fontSize: "13px",
-                  opacity: "0.5",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setFile("");
-                  setImageUrl("");
-                  setRemoveProfileImage(false);
-                }}
-              >
-                Remove Selected
-              </Typography>
-            )}
-          </>
-        )}
-        <div className="mb-10" />
-        <LabelAndInputText
-          name={`Username - \n ${profileDatas.username}`}
-          value={username}
-          setValue={setUsername}
-        />
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
-        <LabelAndInputText
-          name={`Email - \n ${profileDatas.email}`}
-          value={email}
-          setValue={setEmail}
-        />
-        <Button
-          sx={{
-            marginTop: "50px",
-            color: "#0d47a1",
-            fontWeight: "800",
-          }}
-          onClick={() => {
-            setOpenChangePassword(true);
-          }}
-        >
-          Change Password
-        </Button>
-      </div>
-      <ChangePassword
-        open={openChangePasswored}
-        setOpen={setOpenChangePassword}
-      />
-      <DialogActions>
-        <Button
-          sx={{ color: "#0d47a1" }}
-          onClick={() => {
-            handleClose();
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          sx={{ color: "#0d47a1" }}
-          onClick={() => {
-            setBtnUpdate(true);
-            updateProfile({
-              username,
-              email,
-              profileImage: file,
-              removeProfileImage,
-              data: profileDatas,
-              dispatch: dispatch,
-              btnDisabled: setBtnUpdate,
-              setUsernameP: setUsername,
-              setEmailP: setEmail,
-              setFile,
-            });
-          }}
-          disabled={btnUpdate}
-        >
-          Update
-        </Button>
-      </DialogActions>
-    </Dialog>
+  return (
+    <div>
+      {open && (
+        <Dialog open={open} sx={{ zIndex: "90" }}>
+          <DialogTitle
+            className=" text-center text-blue-900"
+            sx={{ width: { xs: "350px", md: "450px" } }}
+          >
+            {activeLanguage.profile.title}
+          </DialogTitle>
+          <div className="h-[500px] w-full flex flex-col justify-start items-center">
+            <div className=" flex flex-col justify-center items-center relative w-20 h-20 rounded-full overflow-hidden ">
+              <img
+                className="w-full h-full object-cover"
+                src={
+                  imageUrl
+                    ? imageUrl
+                    : "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Picture.png"
+                }
+              />
+              <input
+                type="file"
+                className="w-full h-full absolute opacity-0"
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                  setImageUrl(URL.createObjectURL(e.target.files[0]));
+                  setRemoveProfileImage(false);
+                }}
+              />
+            </div>
+            {profileDatas.profileImage ? (
+              <>
+                {removeProfileImage || file ? (
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      opacity: "0.5",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setFile("");
+                      setProfileImageFun(profileDatas.profileImage);
+                      setRemoveProfileImage(false);
+                    }}
+                  >
+                    {activeLanguage.profile.removephoto}
+                  </Typography>
+                ) : (
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      opacity: "0.5",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setFile("");
+                      setImageUrl("");
+                      setRemoveProfileImage(true);
+                    }}
+                  >
+                    {activeLanguage.profile.removeimage}
+                  </Typography>
+                )}
+              </>
+            ) : (
+              <>
+                {file && (
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      opacity: "0.5",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setFile("");
+                      setImageUrl("");
+                      setRemoveProfileImage(false);
+                    }}
+                  >
+                    {activeLanguage.profile.removeselected}
+                  </Typography>
+                )}
+              </>
+            )}
+            <div className="mb-10" />
+            <LabelAndInputText
+              name={`${activeLanguage.profile.username} - \n ${profileDatas.username}`}
+              value={username}
+              setValue={setUsername}
+            />
+
+            <LabelAndInputText
+              name={`${activeLanguage.profile.email} - \n ${profileDatas.email}`}
+              value={email}
+              setValue={setEmail}
+            />
+            <Button
+              sx={{
+                marginTop: "50px",
+                color: "#0d47a1",
+                fontWeight: "800",
+              }}
+              onClick={() => {
+                setOpenChangePassword(true);
+              }}
+            >
+              {activeLanguage.profile.changepassword}
+            </Button>
+          </div>
+          <ChangePassword
+            open={openChangePasswored}
+            setOpen={setOpenChangePassword}
+          />
+          <DialogActions>
+            <Button
+              sx={{ color: "#0d47a1" }}
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              {activeLanguage.profile.cancel}
+            </Button>
+            <Button
+              sx={{ color: "#0d47a1" }}
+              onClick={() => {
+                setBtnUpdate(true);
+                updateProfile({
+                  username,
+                  email,
+                  profileImage: file,
+                  removeProfileImage,
+                  data: profileDatas,
+                  dispatch: dispatch,
+                  btnDisabled: setBtnUpdate,
+                  setUsernameP: setUsername,
+                  setEmailP: setEmail,
+                  setFile,
+                });
+              }}
+              disabled={btnUpdate}
+            >
+              {activeLanguage.profile.update}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </div>
   );
 };
 

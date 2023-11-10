@@ -19,6 +19,7 @@ const updateGroupProfile = ({
   setName,
   setType,
   setFile,
+  activeLanguage,
 }) => {
   if (name || type || profileImage || removeProfileImage) {
     const updateObj = {};
@@ -57,7 +58,6 @@ const updateGroupProfile = ({
         withCredentials: true,
       })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             setBtnUpdate(false);
             setName("");
@@ -96,22 +96,35 @@ const updateGroupProfile = ({
               );
             }
             dispatch(setGroupProfileModel());
-            setAlertFun(dispatch, "Group update successfully!");
+            setAlertFun(
+              dispatch,
+              activeLanguage.groupMenuBoxdetail.editgroup.alert
+                .groupupdatesuccessfully
+            );
           }
         })
         .catch((e) => {
-          showAlertDialog(dispatch, "Check your data again!", "Invalid Data");
+          showAlertDialog(
+            dispatch,
+            activeLanguage.groupMenuBoxdetail.editgroup.alert.invaliddata.body,
+            activeLanguage.groupMenuBoxdetail.editgroup.alert.invaliddata.title
+          );
           setBtnUpdate(false);
         });
     } else {
-      showAlertDialog(dispatch, "No update data!", "Update Profile");
+      showAlertDialog(
+        dispatch,
+        activeLanguage.groupMenuBoxdetail.editgroup.alert.noupdatedata.body,
+        activeLanguage.groupMenuBoxdetail.editgroup.alert.noupdatedata.title
+      );
       setBtnUpdate(false);
     }
   } else {
+    console.log("go");
     showAlertDialog(
       dispatch,
-      "Please fill the data you want to chage!",
-      "Update Profile"
+      activeLanguage.groupMenuBoxdetail.editgroup.alert.nodata.body,
+      activeLanguage.groupMenuBoxdetail.editgroup.alert.nodata.title
     );
     setBtnUpdate(false);
   }

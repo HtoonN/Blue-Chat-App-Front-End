@@ -5,7 +5,7 @@ import acceptGroupMember from "../../Utlities/Group/AcceptGroupMember";
 import { useDispatch, useSelector } from "react-redux";
 import cancelRequestedGroup from "../../Utlities/Group/CancelRequestedGroup";
 
-const GroupAcceptListItem = ({ data }) => {
+const GroupAcceptListItem = ({ data ,activeLanguage}) => {
   const [BtnAccept, setBtnAccept] = useState(false);
   const [BtnReject, setBtnReject] = useState(false);
 
@@ -24,7 +24,7 @@ const GroupAcceptListItem = ({ data }) => {
           }}
           disabled={BtnAccept}
         >
-          Accept
+          {activeLanguage.groupMenuBoxdetail.managemember.accept.accept}
         </Button>
         <Button
           sx={{ color: "#e91e63" }}
@@ -33,7 +33,7 @@ const GroupAcceptListItem = ({ data }) => {
           }}
           disabled={BtnReject}
         >
-          Reject
+         {activeLanguage.groupMenuBoxdetail.managemember.accept.reject}
         </Button>
       </ListItemIcon>
     </ListItem>

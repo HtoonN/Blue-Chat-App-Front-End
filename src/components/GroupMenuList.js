@@ -37,6 +37,10 @@ const GroupMenuList = ({ arr }) => {
     (state) => state.userDatas.groupListDatas.list
   );
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   if (arr.profileImage) {
     profileimage = changeImageStringToObj(arr.profileImage);
   }
@@ -72,7 +76,7 @@ const GroupMenuList = ({ arr }) => {
                         disabled={BtnLeave}
                         sx={{ color: "#ff0000" }}
                       >
-                        Leave
+                        {activeLanguage.searchFriend.grouptext.leave}
                       </Button>
                     ) : (
                       <div>
@@ -84,7 +88,10 @@ const GroupMenuList = ({ arr }) => {
                             disabled={BtnCancel}
                             sx={{ color: "#1e3a8a" }}
                           >
-                            Cancel Request
+                            {
+                              activeLanguage.searchFriend.grouptext
+                                .cancelrequest
+                            }
                           </Button>
                         ) : (
                           <Button
@@ -94,7 +101,7 @@ const GroupMenuList = ({ arr }) => {
                             disabled={BtnAdd}
                             sx={{ color: "#1e3a8a" }}
                           >
-                            Add
+                            {activeLanguage.searchFriend.grouptext.add}
                           </Button>
                         )}
                       </div>
@@ -119,7 +126,7 @@ const GroupMenuList = ({ arr }) => {
                       }}
                       sx={{ color: "#1e3a8a" }}
                     >
-                      Manage
+                      {activeLanguage.searchFriend.grouptext.manage}
                     </Button>
                   </>
                 )}

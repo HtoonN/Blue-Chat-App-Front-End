@@ -5,7 +5,7 @@ import ProfileImageComponents from "../ProfileImageComponents";
 import removeFromGroup from "../../Utlities/Group/RemoveFromGroup";
 import { useDispatch, useSelector } from "react-redux";
 
-const GroupMemberListItem = ({ data, isAdmin }) => {
+const GroupMemberListItem = ({ data, isAdmin, activeLanguage }) => {
   const groupId = useSelector((state) => state.userDatas.selectedUser.id);
   const dispatch = useDispatch();
 
@@ -15,7 +15,11 @@ const GroupMemberListItem = ({ data, isAdmin }) => {
       <ProfileImageComponents data={data} />
       <ListItemText
         primary={data.username}
-        secondary={isAdmin ? "Admin" : "Member"}
+        secondary={
+          isAdmin
+            ? activeLanguage.groupMenuBoxdetail.managemember.member.admin
+            : activeLanguage.groupMenuBoxdetail.managemember.member.member
+        }
       />
 
       {!isAdmin && (

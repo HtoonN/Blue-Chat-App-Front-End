@@ -18,12 +18,19 @@ const ManageGroupMembersModel = () => {
 
   const handleClose = () => dispatch(setManageGroupMembersModel());
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       {data.status && (
         <Dialog open={open} onClose={handleClose} className=" w-full h-full ">
           <DialogTitle className="w-[350px] text-center text-blue-900 md:w-[400px] ">
-            <div className="text-base">Group - ( {data.data.name} )</div>
+            <div className="text-base">
+              {activeLanguage.groupMenuBoxdetail.managemember.title} - ({" "}
+              {data.data.name} )
+            </div>
           </DialogTitle>
           <div className="overflow-hidden flex flex-row">
             <Button
@@ -48,7 +55,7 @@ const ManageGroupMembersModel = () => {
                 }
               }}
             >
-              Members
+              {activeLanguage.groupMenuBoxdetail.managemember.member.header}
             </Button>
             <Button
               className="flex-1"
@@ -72,7 +79,7 @@ const ManageGroupMembersModel = () => {
                 }
               }}
             >
-              Accept
+              {activeLanguage.groupMenuBoxdetail.managemember.accept.header}
             </Button>
             <Button
               className="flex-1"
@@ -96,13 +103,13 @@ const ManageGroupMembersModel = () => {
                 }
               }}
             >
-              Add
+              {activeLanguage.groupMenuBoxdetail.managemember.add}
             </Button>
           </div>
           <div className="h-[500px]">
-            {BtnMembers && <GroupMemberList />}
+            {BtnMembers && <GroupMemberList activeLanguage={activeLanguage} />}
             {BtnAdd && <GroupAddList />}
-            {BtnAccept && <GroupAcceptList />}
+            {BtnAccept && <GroupAcceptList activeLanguage={activeLanguage} />}
           </div>
         </Dialog>
       )}

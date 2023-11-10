@@ -20,19 +20,25 @@ export default function CreateGroup() {
     dispatch(setCreateGroupModel());
   };
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <div>
       {open ? (
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle className="text-blue-900">Create Group</DialogTitle>
+          <DialogTitle className="text-blue-900">
+            {activeLanguage.createGroup.title}
+          </DialogTitle>
           <DialogContent>
             <LabelAndInputText
-              name="Group Name"
+              name={activeLanguage.createGroup.name}
               value={groupName}
               setValue={setGroupName}
             />
             <LabelAndInputText
-              name="Group Type"
+              name={activeLanguage.createGroup.type}
               value={groupType}
               setValue={setGroupType}
             />
@@ -46,7 +52,7 @@ export default function CreateGroup() {
               }}
               sx={{ color: "#0d47a1" }}
             >
-              Cancel
+              {activeLanguage.createGroup.cancelbutton}
             </Button>
             <Button
               onClick={() => {
@@ -65,7 +71,7 @@ export default function CreateGroup() {
               sx={{ color: "#0d47a1" }}
               disabled={BtnCreate}
             >
-              Create Group
+              {activeLanguage.createGroup.creategroupbutton}
             </Button>
           </DialogActions>
         </Dialog>

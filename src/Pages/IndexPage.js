@@ -18,6 +18,8 @@ import GroupProfileChange from "../components/GroupProfileChange";
 import { socket } from "../socket";
 import ConnectionManager from "../components/ConnectionManager";
 import SocketListening from "../SocketListening";
+import GetPasswordForAccountDeactivation from "../components/GetPasswordForAccountDeactivation";
+import ChangeLanguage from "../components/ChangeLanguage";
 
 const IndexPage = () => {
   useEffect(() => {
@@ -32,6 +34,8 @@ const IndexPage = () => {
   return (
     <div>
       <Provider store={store}>
+        <ChangeLanguage />
+        <GetPasswordForAccountDeactivation />
         <ConnectionManager />
         <SocketListening />
         <Profile />

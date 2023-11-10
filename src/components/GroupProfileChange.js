@@ -41,134 +41,146 @@ const GroupProfileChange = () => {
     }
   }, [groupDatas.profileImage]);
 
-  return (
-    <Dialog open={open}>
-      <DialogTitle
-        sx={{
-          width: { xs: "350px", md: "450px" },
-          textAlign: "center",
-          fontSize: "18px",
-          color: "#0d47a1",
-        }}
-      >
-        Group Profile
-      </DialogTitle>
-      <div className="h-[450px]">
-        <div className="h-[500px] w-full flex flex-col justify-start items-center">
-          <div className=" flex flex-col justify-center items-center relative w-20 h-20 rounded-full overflow-hidden ">
-            <img
-              className="w-full h-full object-cover"
-              src={
-                imageUrl
-                  ? imageUrl
-                  : "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Picture.png"
-              }
-            />
-            <input
-              type="file"
-              className="w-full h-full absolute opacity-0"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-                setImageUrl(URL.createObjectURL(e.target.files[0]));
-                setRemoveProfileImage(false);
-              }}
-            />
-          </div>
-          {groupDatas.profileImage ? (
-            <>
-              {removeProfileImage || file ? (
-                <Typography
-                  sx={{
-                    fontSize: "13px",
-                    opacity: "0.5",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setFile("");
-                    setProfileImageFun(groupDatas.profileImage);
-                    setRemoveProfileImage(false);
-                  }}
-                >
-                  Restore photo
-                </Typography>
-              ) : (
-                <Typography
-                  sx={{
-                    fontSize: "13px",
-                    opacity: "0.5",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setFile("");
-                    setImageUrl("");
-                    setRemoveProfileImage(true);
-                  }}
-                >
-                  Remove Image
-                </Typography>
-              )}
-            </>
-          ) : (
-            <>
-              {file && (
-                <Typography
-                  sx={{
-                    fontSize: "13px",
-                    opacity: "0.5",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setFile("");
-                    setImageUrl("");
-                    setRemoveProfileImage(false);
-                  }}
-                >
-                  Remove Selected
-                </Typography>
-              )}
-            </>
-          )}
-          <div className="mb-10" />
-          <LabelAndInputText
-            name={`Name - \n ${groupDatas.name}`}
-            value={name}
-            setValue={setName}
-          />
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
 
-          <LabelAndInputText
-            name={`Type - \n ${groupDatas.type}`}
-            value={type}
-            setValue={setType}
-          />
-        </div>
-      </div>
-      <DialogActions>
-        <Button sx={{ color: "#0d47a1" }} onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button
-          sx={{ color: "#0d47a1" }}
-          onClick={() => {
-            setBtnUpdate(true);
-            updateGroupProfile({
-              name,
-              type,
-              profileImage: file,
-              removeProfileImage,
-              groupDatas,
-              dispatch,
-              setBtnUpdate,
-              setName,
-              setType,
-              setFile,
-            });
-          }}
-          disabled={btnUpdate}
-        >
-          Update
-        </Button>
-      </DialogActions>
-    </Dialog>
+  return (
+    <div>
+      {open && (
+        <Dialog open={open}>
+          <DialogTitle
+            sx={{
+              width: { xs: "350px", md: "450px" },
+              textAlign: "center",
+              fontSize: "18px",
+              color: "#0d47a1",
+            }}
+          >
+            {activeLanguage.groupMenuBoxdetail.editgroup.title}
+          </DialogTitle>
+          <div className="h-[450px]">
+            <div className="h-[500px] w-full flex flex-col justify-start items-center">
+              <div className=" flex flex-col justify-center items-center relative w-20 h-20 rounded-full overflow-hidden ">
+                <img
+                  className="w-full h-full object-cover"
+                  src={
+                    imageUrl
+                      ? imageUrl
+                      : "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Picture.png"
+                  }
+                />
+                <input
+                  type="file"
+                  className="w-full h-full absolute opacity-0"
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                    setImageUrl(URL.createObjectURL(e.target.files[0]));
+                    setRemoveProfileImage(false);
+                  }}
+                />
+              </div>
+              {groupDatas.profileImage ? (
+                <>
+                  {removeProfileImage || file ? (
+                    <Typography
+                      sx={{
+                        fontSize: "13px",
+                        opacity: "0.5",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setFile("");
+                        setProfileImageFun(groupDatas.profileImage);
+                        setRemoveProfileImage(false);
+                      }}
+                    >
+                      {activeLanguage.groupMenuBoxdetail.editgroup.restorephoto}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      sx={{
+                        fontSize: "13px",
+                        opacity: "0.5",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setFile("");
+                        setImageUrl("");
+                        setRemoveProfileImage(true);
+                      }}
+                    >
+                      {activeLanguage.groupMenuBoxdetail.editgroup.removeimage}
+                    </Typography>
+                  )}
+                </>
+              ) : (
+                <>
+                  {file && (
+                    <Typography
+                      sx={{
+                        fontSize: "13px",
+                        opacity: "0.5",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setFile("");
+                        setImageUrl("");
+                        setRemoveProfileImage(false);
+                      }}
+                    >
+                      {
+                        activeLanguage.groupMenuBoxdetail.editgroup
+                          .removeselected
+                      }
+                    </Typography>
+                  )}
+                </>
+              )}
+              <div className="mb-10" />
+              <LabelAndInputText
+                name={`${activeLanguage.groupMenuBoxdetail.editgroup.name} - \n ${groupDatas.name}`}
+                value={name}
+                setValue={setName}
+              />
+
+              <LabelAndInputText
+                name={`${activeLanguage.groupMenuBoxdetail.editgroup.type} - \n ${groupDatas.type}`}
+                value={type}
+                setValue={setType}
+              />
+            </div>
+          </div>
+          <DialogActions>
+            <Button sx={{ color: "#0d47a1" }} onClick={handleClose}>
+              {activeLanguage.groupMenuBoxdetail.editgroup.cancel}
+            </Button>
+            <Button
+              sx={{ color: "#0d47a1" }}
+              onClick={() => {
+                setBtnUpdate(true);
+                updateGroupProfile({
+                  name,
+                  type,
+                  profileImage: file,
+                  removeProfileImage,
+                  groupDatas,
+                  dispatch,
+                  setBtnUpdate,
+                  setName,
+                  setType,
+                  setFile,
+                  activeLanguage,
+                });
+              }}
+              disabled={btnUpdate}
+            >
+              {activeLanguage.groupMenuBoxdetail.editgroup.update}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </div>
   );
 };
 

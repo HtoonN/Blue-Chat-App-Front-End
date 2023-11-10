@@ -11,6 +11,10 @@ const SendingMessge = ({ selectedUserId }) => {
 
   const dispatch = useDispatch();
 
+  const activeLanguage = useSelector(
+    (state) => state.preference.activePreference.language
+  );
+
   return (
     <>
       {Object.entries(sendingFileStatusQueue).map(([k, v], i) => {
@@ -20,13 +24,15 @@ const SendingMessge = ({ selectedUserId }) => {
               {!sendingFileStatusQueue[k].senting && (
                 <Cancel
                   className="absolute top-1 right-1 bg-red-500 rounded-xl p-1 border-white text-white border-2 cursor-pointer"
-                  onClick={() => {cancelSendingFile(v.tempId, dispatch)}}
+                  onClick={() => {
+                    cancelSendingFile(v.tempId, dispatch);
+                  }}
                 />
               )}
               <div className="ml-auto w-[300px] bg-blue-900 text-white px-2 py-1 rounded-lg ">
                 {sendingFileStatusQueue[k].length && (
                   <div className="p-2">
-                    File -{" "}
+                    {activeLanguage.sendingFile.file} -{" "}
                     <span className="text-xs font-extralight opacity-50">
                       {sendingFileStatusQueue[k].senting
                         ? "100"
@@ -54,14 +60,14 @@ const SendingMessge = ({ selectedUserId }) => {
                   </div>
                 )}
                 <div className="p-2">
-                  Message -{" "}
+                  {activeLanguage.sendingFile.message} -{" "}
                   {sendingFileStatusQueue[k].senting ? (
                     <span className="text-xs font-extralight opacity-50">
-                      Senting...
+                      {activeLanguage.sendingFile.sending}
                     </span>
                   ) : (
                     <span className="text-xs font-extralight opacity-50">
-                      Waiting...
+                      {activeLanguage.sendingFile.waiting}
                     </span>
                   )}
                   {sendingFileStatusQueue[k].senting && <LinearProgress />}
