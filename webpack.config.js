@@ -34,9 +34,9 @@ const webpackPlugins = [
 ];
 
 module.exports = {
-  // mode: "development",
+  mode: "production",
   entry: {
-    main: path.resolve(__dirname, "src/index.js"),
+    main: path.resolve(__dirname, "./src/index.js"),
   },
 
   resolve: {
