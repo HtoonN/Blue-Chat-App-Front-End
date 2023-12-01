@@ -34,7 +34,7 @@ const webpackPlugins = [
 ];
 
 module.exports = {
-  mode: "development",
+  // mode: "development",
   entry: {
     main: path.resolve(__dirname, "src/index.js"),
   },
