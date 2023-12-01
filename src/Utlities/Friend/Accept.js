@@ -9,7 +9,7 @@ const accFriend = async (userId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
   const result = await axios({
     method: "PATCH",
-    url: `http://localhost:3001/api/v1/account/user/accept_friend/${userId}`,
+    url: `${process.env.REACT_APP_API_A}/accept_friend/${userId}`,
     withCredentials: true,
   });
 

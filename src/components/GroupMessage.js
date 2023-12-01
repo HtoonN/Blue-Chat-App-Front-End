@@ -81,7 +81,7 @@ const GroupMessage = ({ data, index, memberData }) => {
           <div className="mr-auto flex flex-row items-center mb-[2px]">
             {memberData.profileImage ? (
               <img
-                src={`http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
+                src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
                 className="max-w-full max-h-full object-cover w-7 h-7 rounded-full"
               />
             ) : (
@@ -169,7 +169,7 @@ const GroupMessage = ({ data, index, memberData }) => {
             <div>
               {mediaType === "image" ? (
                 <img
-                  src={`http://localhost:3001/api/v1/account/user/get_image/${publicId}/${data.attachFiles[0].version}/${data.attachFiles[0].format}/${data.attachFiles[0].type}`}
+                  src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${publicId}/${data.attachFiles[0].version}/${data.attachFiles[0].format}/${data.attachFiles[0].type}`}
                   className="max-w-[300px] max-h-[300px]   object-contain bg-gray-500  ml-auto mr-auto"
                 />
               ) : (

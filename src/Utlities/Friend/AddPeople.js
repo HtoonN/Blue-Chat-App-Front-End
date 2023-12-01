@@ -5,7 +5,7 @@ const addPeople = async (userId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
   const result = await axios({
     method: "PATCH",
-    url: `http://localhost:3001/api/v1/account/user/add_friend/${userId}`,
+    url: `${process.env.REACT_APP_API_A}/add_friend/${userId}`,
     withCredentials: true,
   });
 

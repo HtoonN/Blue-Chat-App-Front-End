@@ -8,7 +8,7 @@ const GroupImageComponent = ({ data, profileImage }) => {
       <Avatar>
         {data.profileImage ? (
           <img
-            src={`http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
+            src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
           />
         ) : (
           <Diversity1 className="text-blue-900" />

@@ -22,6 +22,7 @@ const login = async (email, password) => {
   });
 
   if (result.status === 200) {
+    console.log(result);
     return {
       error: false,
       data: result,

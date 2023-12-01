@@ -4,7 +4,7 @@ import { setRequested } from "../../Redux/Reducer/UserDataREducer";
 const getRequestedUserData = (dispatch) => {
   axios({
     method: "get",
-    url: `http://localhost:3001/api/v1/account/user/get_all_requested_users/1`,
+    url: `${process.env.REACT_APP_API_A}/get_all_requested_users/1`,
     withCredentials: true,
   })
     .then((result) => {

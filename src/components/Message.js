@@ -49,8 +49,8 @@ const Message = ({ data, index }) => {
 
   const messageDeleteControl = (messageId, index) => {
     callFunForConformationDialog(handleClose, dispatch, {
-      header: "Delete Message",
-      body: "You can't restore it!, It'll remove only for you but you friend will still",
+      header: activeLanguage.deleteMessage.header,
+      body: activeLanguage.deleteMessage.body,
       funName: "deleteMessageFri",
       data: { messageId, index },
     });
@@ -113,7 +113,7 @@ const Message = ({ data, index }) => {
             <div>
               {mediaType === "image" ? (
                 <img
-                  src={`http://localhost:3001/api/v1/account/user/get_image/${publicId}/${data.attachFiles[0].version}/${data.attachFiles[0].format}/${data.attachFiles[0].type}`}
+                  src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${publicId}/${data.attachFiles[0].version}/${data.attachFiles[0].format}/${data.attachFiles[0].type}`}
                   className="max-w-[300px] max-h-[300px]   object-contain bg-gray-500  ml-auto mr-auto"
                 />
               ) : (

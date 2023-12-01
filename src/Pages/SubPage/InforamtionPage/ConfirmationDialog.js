@@ -33,7 +33,10 @@ export default function ConfirmationDialog() {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title" className="text-blue-900">
+          <DialogTitle
+            id="alert-dialog-title"
+            className="text-blue-900 font-bolder"
+          >
             {header}
           </DialogTitle>
           <DialogContent>

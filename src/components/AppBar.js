@@ -402,7 +402,7 @@ export default function PrimarySearchAppBar() {
               <Avatar>
                 {profileDatas.profileImage ? (
                   <img
-                    src={`http://localhost:3001/api/v1/account/user/get_image/${profileimage.public_id}/${profileimage.version}/${profileimage.format}/${profileimage.resource_type}`}
+                    src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${profileimage.public_id}/${profileimage.version}/${profileimage.format}/${profileimage.resource_type}`}
                   />
                 ) : (
                   <AccountCircle className="text-blue-900" />

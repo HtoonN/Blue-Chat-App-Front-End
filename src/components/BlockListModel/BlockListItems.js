@@ -45,7 +45,7 @@ const BlockListItems = ({ obj }) => {
         <Avatar>
           {data.profileImage ? (
             <img
-              src={`http://localhost:3001/api/v1/account/user/get_image/${data.profileImage.public_id}/${data.profileImage.version}/${data.profileImage.format}/${data.profileImage.resource_type}`}
+              src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${data.profileImage.public_id}/${data.profileImage.version}/${data.profileImage.format}/${data.profileImage.resource_type}`}
             />
           ) : (
             <AccountCircle className="text-blue-900" />

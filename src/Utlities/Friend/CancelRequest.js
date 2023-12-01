@@ -8,7 +8,7 @@ const cancelRequest = async (userId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
   const result = await axios({
     method: "patch",
-    url: `http://localhost:3001/api/v1/account/user/cancel_friend_requested/${userId}`,
+    url: `${process.env.REACT_APP_API_A}/cancel_friend_requested/${userId}`,
     withCredentials: true,
   });
   console.log(result);

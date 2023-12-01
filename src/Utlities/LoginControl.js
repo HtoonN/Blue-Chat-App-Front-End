@@ -20,6 +20,7 @@ const loginControl = async ({ email, password, dispatch }) => {
 
     if (!result.error) {
       dispatch(setSuccess());
+      console.log(result);
       setTimeout(() => {
         dispatch(setLoadingUnseen());
         location.assign("/user/home_page");

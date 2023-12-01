@@ -13,7 +13,7 @@ const ProfileImageComponents = ({ data }) => {
       <Avatar>
         {data.profileImage ? (
           <img
-            src={`http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
+            src={`https://bluechatapp.onrender.com/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`}
             className="max-w-full max-h-full object-cover"
           />
         ) : (

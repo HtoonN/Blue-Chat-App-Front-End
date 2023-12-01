@@ -279,6 +279,10 @@ export const preference = createSlice({
           waiting: "Waiting...",
           message: "Message",
         },
+        deleteMessage: {
+          header: "Delete Message",
+          body: "You can't restore it!, It'll remove only for you but you friend will still",
+        },
       },
       myanmar: {
         search: "ရှာဖွေရန်...",
@@ -547,6 +551,10 @@ export const preference = createSlice({
           sending: "‌ပေးပို့နေပါသည်...",
           waiting: "စောင့်ဆိုင်းနေပါသည်",
           message: "စာတို",
+        },
+        deleteMessage: {
+          header: "စာအားဖျက်ပြစ်ရန်",
+          body: "သင်ဖျက်ပြစ်လိုက်သောစာတိုအားပြန်လည်ရရှိနိုင်တော့မည်မဟုတ်ပါ သင်တစ်ယောက်တည်းအတွက်သာဖျက်ပြစ်ခြင်းဖြစ်သောကြောင့်တစ်ခြားတစ်ဖက်တွင်ကျန်ရှိနေမည်ဖြစ်ပါသည်",
         },
       },
     },

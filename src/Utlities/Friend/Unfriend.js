@@ -9,7 +9,7 @@ const unFriend = async (userId, setBtnDisabled, dispatch) => {
   setBtnDisabled(true);
   const result = await axios({
     method: "PATCH",
-    url: `http://localhost:3001/api/v1/account/user/unfriend_user`,
+    url: `${process.env.REACT_APP_API_A}/unfriend_user`,
     data: {
       data: {
         friendId: userId,
