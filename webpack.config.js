@@ -23,8 +23,8 @@ const webpackPlugins = [
       { from: "./public/logo192.png", to: "./user/public" },
       { from: "./public/logo512.png", to: "./public" },
       { from: "./public/logo512.png", to: "./user/public" },
+      { from: "./public/_redirects", to: "./" },
       { from: "./public/_redirects", to: "./public" },
-      { from: "./public/_redirects", to: "./user/public" },
     ],
   }),
   // new InjectManifest({
