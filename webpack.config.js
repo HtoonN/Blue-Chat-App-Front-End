@@ -16,13 +16,15 @@ const webpackPlugins = [
   new CopyPlugin({
     patterns: [
       { from: "./public/favicon.ico", to: "./public" },
-      { from: "./public/favicon.ico", to: "..user/public" },
+      { from: "./public/favicon.ico", to: "./user/public" },
       { from: "./public/manifest.json", to: "./public" },
       { from: "./public/manifest.json", to: "./user/public" },
       { from: "./public/logo192.png", to: "./public" },
       { from: "./public/logo192.png", to: "./user/public" },
       { from: "./public/logo512.png", to: "./public" },
       { from: "./public/logo512.png", to: "./user/public" },
+      { from: "./public/_redirects", to: "./public" },
+      { from: "./public/_redirects", to: "./user/public" },
     ],
   }),
   // new InjectManifest({
