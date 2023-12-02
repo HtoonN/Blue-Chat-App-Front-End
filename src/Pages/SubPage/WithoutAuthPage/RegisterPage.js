@@ -1,6 +1,6 @@
 import Logo from "../../../Images/logo.png";
 import React, { useEffect, useState } from "react";
-import LogoComponent from "../../../components/logoComponent";
+import LogoComponent from "../../../components/LogoComponent";
 import LabelAndInputText from "../../../components/LabelAndInputText";
 import LabelAndInputPassword from "../../../components/LabelAndInputPassword";
 import LargeButton from "../../../components/LargeButton";
