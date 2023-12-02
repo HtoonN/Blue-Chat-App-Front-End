@@ -31,7 +31,7 @@ const GroupProfileChange = () => {
 
   const setProfileImageFun = (imgUrl) => {
     const profileImage = changeImageStringToObj(imgUrl);
-    const url = `http://localhost:3001/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`;
+    const url = `https://bluechatapp.onrender.com/api/v1/account/user/get_image/${profileImage.public_id}/${profileImage.version}/${profileImage.format}/${profileImage.resource_type}`;
     setImageUrl(url);
   };
 

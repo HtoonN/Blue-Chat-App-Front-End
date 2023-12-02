@@ -34,15 +34,12 @@ const webpackPlugins = [
 ];
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: {
     main: path.resolve(__dirname, "./src/index.js"),
   },
 
   resolve: {
-    alias: {
-      components: path.resolve(__dirname, "src/components"),
-    },
     extensions: [".js", ".jsx", ".json"],
   },
 
