@@ -14,9 +14,9 @@ window.onbeforeunload = function (e) {
   return undefined;
 };
 root.render(
-  <React.StrictMode>
+  
     <App />
-  </React.StrictMode>
+
 );
 
 //registerServiceWorker();
